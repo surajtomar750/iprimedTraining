@@ -1,0 +1,1 @@
+exports.products = ['shoes','top','shirt','pants','toys'];

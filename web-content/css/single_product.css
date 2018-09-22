@@ -1,0 +1,18 @@
+button{
+    margin: 0;
+    color:white;
+    background-color: black;
+    font-style: bold;
+    width: 100%;
+}
+
+.card {
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.2);
+    max-width: 90%;
+    margin: 5px;
+    
+    text-align: left;
+    font-family: arial;
+   padding: 5px;
+  
+  }

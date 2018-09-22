@@ -1,0 +1,54 @@
+
+.card-body custom{
+shape-outside: -webkit-linear-gradient();
+}
+ng-view{
+  margin-top: 20px;
+}
+
+.card {
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    margin: 5px;
+    
+    text-align: left;
+    font-family: arial;
+   padding: 5px;
+  
+  }
+  
+  .pro-info {
+    color:grey;
+    font-size: 22px;
+   
+  };
+  
+  div{
+    padding: 1px;
+  }
+  .card button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color:azure;
+    background-color: #555;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+    transition: .25s color linear, 1.25s background-color linear;
+  }
+  
+  .card button:hover {
+    opacity: 0.7;
+  }
+
+  .card img{
+        width: auto;
+        height: 300px;
+        max-width: 100%;
+        max-height: 100%;
+        
+  }
+
+ 
