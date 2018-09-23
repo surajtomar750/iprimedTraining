@@ -8,4 +8,4 @@ var productSchema = schema({
     description:String,
     image:String
 });
-module.exports = mongoose.model("product",productSchema);
+module.exports = mongoose.model("products",productSchema);

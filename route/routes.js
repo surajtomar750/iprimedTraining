@@ -18,7 +18,7 @@ mRouter.get('/login',(req,res)=>{
 
 mRouter.get('/products',(req,res)=>{
     console.log("products requested")
-   // pController.getProducts(req,res);
+    pController.getProducts(req,res);
     });
     
 mRouter.get('/product/:index',(req,res)=>{
