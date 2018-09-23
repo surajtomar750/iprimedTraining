@@ -6,12 +6,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/surajtomar750/iprimedTraining.git"
+  },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/surajtomar750/iprimedTraining/issues"
+  },
+  "homepage": "https://github.com/surajtomar750/iprimedTraining#readme",
   "dependencies": {
     "express": "^4.16.3",
-    "express-session": "^1.15.6",
-    "mongoose": "^5.2.15",
-    "nodemon": "^1.18.4"
+    "mongoose": "^5.2.17"
   }
 }
