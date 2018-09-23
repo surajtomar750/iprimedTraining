@@ -20,7 +20,7 @@ app.config(function($routeProvider){
 
  app.controller("productCtrl",function($scope,$http,$location){
 
-    $http.get("https://fir-c90c5.firebaseio.com/products.json")
+    $http.get("https://localhost:8080/products")
    .then(function(response) {
       if(!$scope.products){
         $scope.products = response.data;
