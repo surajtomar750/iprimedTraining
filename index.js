@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 const mongoose = require('mongoose')
 
-const routes = require('./route/routes');
+const routes = require('./routes');
 url="mongodb://localhost:27017/mybase"
 mongoose.connect(url);
 const dbConnection = mongoose.connection;
@@ -12,7 +12,7 @@ dbConnection.on('open',()=>{
 
 dbConnection.on('error', console.error.bind(console, 'connection error:'));
 
-// 
+
 
 app.use(express.static("web-content"))
 app.use('/',routes);
