@@ -41,7 +41,7 @@ mRouter.get('/products',(req,res)=>{
     
 //     });
     
-    mRouter.post('/login',(req,res)=>{
+    mRouter.post('/LoginData',(req,res)=>{
      for(var i=0;i<users.length;i++){
          if(users[i].userid == req.body.userid){
              if(users[i].pass == req.body.password){

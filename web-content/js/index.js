@@ -14,6 +14,8 @@ app.config(function($routeProvider){
                   templateUrl: 'single_product.html',
                  
               
+              }).when('/signup',{
+                templateUrl: 'signup.htm',
               });
    });
 
