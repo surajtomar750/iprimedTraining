@@ -1,8 +1,8 @@
 var express = require('express');
 var app = express();
 const mongoose = require('mongoose')
-
 const routes = require('./routes');
+
 url="mongodb://localhost:27017/mybase"
 mongoose.connect(url);
 const dbConnection = mongoose.connection;

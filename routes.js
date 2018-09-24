@@ -25,9 +25,7 @@ const path = require('path');
 //     res.send("this is product");
 //     });
 
-mRouter.get('/login',(req,res)=>{
-        res.send("login is working");
-    });
+
 
 
 mRouter.get('/products',(req,res)=>{
@@ -35,11 +33,11 @@ mRouter.get('/products',(req,res)=>{
     pController.getProducts(req,res);
     });
     
-// mRouter.get('/product/:index',(req,res)=>{
+mRouter.get('/product/:name',(req,res)=>{
     
-//     res.send(products[req.params.index]);
+    pController.getProduct(req,res);
     
-//     });
+    });
     
     mRouter.post('/LoginData',(req,res)=>{
      for(var i=0;i<users.length;i++){

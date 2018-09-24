@@ -12,6 +12,7 @@ app.config(function($routeProvider){
                 }).when('/single_product',{
    
                   templateUrl: 'single_product.html',
+                  controller: 'productCtrl'
                  
               
               }).when('/signup',{
@@ -20,25 +21,27 @@ app.config(function($routeProvider){
    });
 
 
- app.controller("productCtrl",function($scope,$http,$location){
+ app.controller("productCtrl",function(,$scope,$http,$location){
 
     $http.get("http://localhost:8080/products")
    .then(function(response) {
       if(!$scope.products){
         $scope.products = response.data;
       }
-      
-      
-      $scope.tempProduct='';
      
    });
 
-   $scope.go = function(path,index){
-        $scope.selectedProduct=index;
-        // $scope.selectedProduct=$scope.products[index];
-        // console.log("hello call is working"+$scope.selectedProduct);
-        // console.log("name "+$scope.selectedProduct.name);
-        $location.path(path);
+   $scope.go = function(index){
+        $scope.getSingleProduct($scope.products[index].name);        
+        $location.path('single_product');
+    }
+    $scope.getSingleProduct = function(name){
+        $http.get('/product/'+name).then(function(response){
+          console.log("hello call is working");
+          console.log(response.data)
+          $scope.selectedProduct=[];
+          $scope.selectedProduct=response.data;
+       })
     }
    
    
