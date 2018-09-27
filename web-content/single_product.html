@@ -18,7 +18,7 @@ img{
        <div ng-repeat="item in selectedProduct">
    
            
-               <img src="{{item.image}}">
+               <img src={{item.image}}>
         
          
                <table>
@@ -30,10 +30,10 @@ img{
                        
                    </tr>
                    <tr>
-                       <td>{{'description'+item.discription}}</td>
+                       <td>{{'description '+item.description}}</td>
                    </tr>
                    <tr>
-                      <td><button class="btn btn"><a href="">Add To Cart </a> </button></td>
+                      <td><button class="btn btn">Add To Cart</button></td>
                        <td><button class="btn"> Buy </button></td>
                    </tr>
                </table>

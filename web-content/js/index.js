@@ -12,7 +12,7 @@ app.config(function($routeProvider){
                 }).when('/single_product',{
    
                   templateUrl: 'single_product.html',
-                  controller: 'productCtrl'
+                  controller: 'productCtrl2'
                  
               
               }).when('/signup',{
@@ -21,28 +21,40 @@ app.config(function($routeProvider){
    });
 
 
- app.controller("productCtrl",function(,$scope,$http,$location){
+
+
+app.controller("productCtrl2",function($rootScope,$scope,$http){
+  console.log("inside of single product and id is "+$scope.pId)
+  $http.get("http://localhost:8080/product/"+$scope.pId)
+  .then(function(response) {
+    console.log("inside of single product response is here")
+        console.log(response.data);
+       $rootScope.selectedProduct = response.data;
+   
+  });
+})
+
+
+
+
+
+ app.controller("productCtrl",function($rootScope,$scope,$http,$location){
 
     $http.get("http://localhost:8080/products")
    .then(function(response) {
       if(!$scope.products){
+
         $scope.products = response.data;
+        console.log(response.data)
       }
      
    });
 
    $scope.go = function(index){
-        $scope.getSingleProduct($scope.products[index].name);        
+                $rootScope.pId =$scope.products[index].id;
         $location.path('single_product');
     }
-    $scope.getSingleProduct = function(name){
-        $http.get('/product/'+name).then(function(response){
-          console.log("hello call is working");
-          console.log(response.data)
-          $scope.selectedProduct=[];
-          $scope.selectedProduct=response.data;
-       })
-    }
+   
    
    
   $scope.order='';

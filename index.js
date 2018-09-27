@@ -3,7 +3,7 @@ var app = express();
 const mongoose = require('mongoose')
 const routes = require('./routes');
 
-url="mongodb://localhost:27017/mybase"
+url="mongodb://localhost:27017/mydb"
 mongoose.connect(url);
 const dbConnection = mongoose.connection;
 dbConnection.on('open',()=>{

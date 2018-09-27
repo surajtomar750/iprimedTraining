@@ -1,4 +1,4 @@
-const productModel = require('../model/productModel');
+const productModel = require('../model/product');
 const mongoose = 
 exports.getProducts = (req,res)=>{
 productModel.find({},function(err,data){
@@ -9,9 +9,9 @@ productModel.find({},function(err,data){
 
 
 exports.getProduct = (req,res)=>{
-    productModel.find({name:req.params.name},function(err,data){
+    productModel.find({id:req.params.id},function(err,data){
         if(err) {throw err}
-        console.log("single product requested with id "+req.params.name)
+        console.log("single product requested with params "+req.params.id)
         res.send(data) 
     })
     }

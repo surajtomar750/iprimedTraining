@@ -3,8 +3,8 @@ const schema = mongoose.Schema;
 
 var productSchema = schema({
     _id:String,
+    id:String,
     name:String,
-    id:Number,
     price:String,
     description:String,
     image:String
