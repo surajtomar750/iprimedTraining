@@ -4,7 +4,28 @@
 
         </div>
         <div class="col-sm-2">
-            <table></table>
+                <div class="table-responsive">          
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Firstname</th>
+                              <th>Lastname</th>
+                              <th>Age</th>
+                              <th>City</th>
+                              <th>Country</th>
+                            </tr>
+                          </thead>
+                          <tbody ng-repeat="item in cart">
+                            <tr>
+                              
+                              <td>{{item.name}}</td>
+                              <td>{{item.quantity}}</td>
+                              <td>{{item.price}}</td>
+                             
+                            </tr>
+                          </tbody>
+                        </table>
         </div>
     </div>
 

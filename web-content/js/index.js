@@ -16,13 +16,19 @@ app.config(function($routeProvider){
                  
               
               }).when('/signup',{
-                templateUrl: 'signup.htm',
+                
+                templateUrl: 'signup.htm'
+
+              }).when('/admin',{
+                
+                templateUrl: 'admin.html',
+              
               });
    });
 
 
 
-
+// controller for fetching single product
 app.controller("productCtrl2",function($rootScope,$scope,$http){
   console.log("inside of single product and id is "+$scope.pId)
   $http.get("http://localhost:8080/product/"+$scope.pId)
@@ -37,7 +43,7 @@ app.controller("productCtrl2",function($rootScope,$scope,$http){
 
 
 
-
+//controller for fetching product
  app.controller("productCtrl",function($rootScope,$scope,$http,$location){
 
     $http.get("http://localhost:8080/products")
@@ -50,17 +56,34 @@ app.controller("productCtrl2",function($rootScope,$scope,$http){
      
    });
 
-   $scope.go = function(index){
-                $rootScope.pId =$scope.products[index].id;
-        $location.path('single_product');
-    }
-   
-   
-   
-  $scope.order='';
-   $scope.orderList=function(order){
-        $scope.order=order;
-   };
+    $scope.go = function(index){
+    $rootScope.pId =$scope.products[index].id;
+    $location.path('single_product');
+  }
+    $scope.order='';
+    $scope.orderList=function(order){
+    $scope.order=order;
+    };
+
+})
+
+// controller for cart data
+   app.controller("cartCtrl",function($scope,$http){
+
+    $http.get("http://localhost:8080/cart/userId")
+   .then(function(response) {
+      if(!$scope.products){
+
+        $scope.products = response.data;
+        console.log(response.data)
+      }
+     
+   });
+
+
+
+
+
   
 
- }); 
+ })

@@ -1,29 +1,25 @@
 const express = require('express')
+
+
+            
 const pController = require('./controller/productController')
 const mRouter = express.Router();
 const path = require('path');
 
 
-// mRouter.get('/',(req,res)=>{
-//     res.sendFile(path.join(__dirname+'/web-content/index.html'));
+mRouter.post('/adminaddproduct', function (req, res, next) {
+    console.log("admin requested to add product : weldone admin")
+    pController.setProducts(req,res);
     
-//     });
+})
 
-// mRouter.get('/:dir/:filename',(req,res)=>{
-//     res.sendFile(path.join(__dirname+'/web-content/'+req.params.filname));
-// })
+mRouter.post('/signUpData',(req,res)=>{
+         res.send("not working");
+})
 
-// mRouter.get('/:dir/:filename',(req,res)=>{
-//     res.sendFile(path.join(__dirname+'/web-content/'+req.params.filname));
-// })
-
-// mRouter.get('/:dir/:filename',(req,res)=>{
-//     res.sendFile(path.join(__dirname+'/web-content/'+req.params.filname));
-// })
-
-// mRouter.get('/product',(req,res)=>{
-//     res.send("this is product");
-//     });
+mRouter.get('/cart/:userId',(req,res)=>{
+    res.send("this is product");
+    });
 
 
 
