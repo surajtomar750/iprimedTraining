@@ -1,7 +1,7 @@
 const productModel = require('../model/product');
 var multer = require('multer');
-var DIR = '/web-content/image/';
-var upload = multer({dest: DIR}).single('photo');
+var DIR = 'web-content/image';
+var upload = multer({dest: DIR}).array('image'); // here image within quotes is name of property of input element of html
 
 
 
@@ -21,16 +21,31 @@ exports.getProduct = (req,res)=>{
         res.send(data) 
     })
     }
+
+
 // for adding new product
 exports.setProducts = function(req,res){
+    console.log(req.body.id)
+    console.log(req.body.name)
+    console.log(req.body.category)
+    console.log(req.body.description)
+    console.log(req.body.image)
+    var image = req.body.image
+    
+   var mObject=[];
+//list of image uploaded
+    for(let i=0;i<image.length;i++){
+            mObject.push({"image":image[i]})
+    }
+
     let pObject = productModel({
-        _id:req.body.id,
+        id:req.body.id,
         name:req.body.name,
         price:req.body.price,
         description:req.body.description,
         category:req.body.category,
-        image:'image/'+req.body.name+'.jpeg'
-
+        image:mObject
+         
 
         });
     var path = '';
@@ -41,9 +56,9 @@ exports.setProducts = function(req,res){
          return res.status(422).send("an Error occured")
        }  
       // No error occured.
-       path = req.file.Path;
+       //path = req.files.path;
        //return res.send(); 
-       console.log("file is saved to "+path)
+       console.log("file is saved to ")
         }); 
 
     pObject.save(function(err,data){

@@ -6,8 +6,10 @@ const pController = require('./controller/productController')
 const mRouter = express.Router();
 const path = require('path');
 
-
-mRouter.post('/adminaddproduct', function (req, res, next) {
+mRouter.get('/admin',(req,res)=>{
+    res.sendFile(__dirname+"/web-content/admin.html");
+})
+mRouter.post('/adminaddproduct', function (req, res) {
     console.log("admin requested to add product : weldone admin")
     pController.setProducts(req,res);
     
@@ -57,8 +59,6 @@ mRouter.get('/product/:id',(req,res)=>{
     
  
     
-    // mRouter.get(/.*.htm$/,(req,res)=>{
-    //     res.sendFile(path.join(__dirname+'/web-content/'+req.url));
-    // });
+   
 
 module.exports = mRouter;
