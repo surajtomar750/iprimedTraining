@@ -29,14 +29,20 @@ exports.setProducts = function(req,res){
     console.log(req.body.name)
     console.log(req.body.category)
     console.log(req.body.description)
-    console.log(req.body.image)
+    //console.log(req.body.image)
     var image = req.body.image
     
    var mObject=[];
 //list of image uploaded
     for(let i=0;i<image.length;i++){
-            mObject.push({"image":image[i]})
+            mObject.push({image:'image/'+image[i]})
     }
+
+    for(let i=0;i<mObject.length;i++){
+       console.log( mObject[i])
+    }
+
+
 
     let pObject = productModel({
         id:req.body.id,
