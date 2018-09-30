@@ -19,11 +19,9 @@ app.config(function($routeProvider){
                 
                 templateUrl: 'signup.htm'
 
-              }).when('/admin',{
-                
-                templateUrl: 'admin.html',
-              
-              });
+              }).otherwise({
+                templateUrl: 'notfound.html'
+              })
    });
 
 

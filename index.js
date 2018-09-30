@@ -1,4 +1,5 @@
 var express = require('express');
+var path = require('path')
 var app = express();
 var bodyparser = require('body-parser')
 const mongoose = require('mongoose')
@@ -13,9 +14,15 @@ dbConnection.on('open',()=>{
 
 dbConnection.on('error', console.error.bind(console, 'connection error:'));
 
-
+app.use(bodyparser.json()); // for parsing application/json
 app.use(bodyparser.urlencoded({extended:true}));
-app.use(express.static("web-content"))
+// headers and content type
+app.use(function (req, res, next) {
+    req.header("Access-Control-Allow-Origin", "*");
+    req.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+app.use(express.static(path.join(__dirname, 'web-content')))
 
 app.use('/',routes);
 

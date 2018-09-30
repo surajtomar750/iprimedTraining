@@ -1,23 +1,48 @@
 const express = require('express')
 
-
+var multer = require('multer');
+var storage = multer.diskStorage({
+    // destination
+    destination: function (req, file, cb) {
+      cb(null, './web-content/image')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname);
+    }
+  });
+var upload = multer({storage: storage})
             
 const pController = require('./controller/productController')
+const uController = require('./controller/userController')
 const mRouter = express.Router();
 const path = require('path');
+
+
+
+
 
 mRouter.get('/admin',(req,res)=>{
     res.sendFile(__dirname+"/web-content/admin.html");
 })
-mRouter.post('/adminaddproduct', function (req, res) {
+
+
+
+mRouter.post('/adminaddproduct', upload.array('image',10),function (req, res) {
     console.log("admin requested to add product : weldone admin")
     pController.setProducts(req,res);
     
 })
 
+
+
+
 mRouter.post('/signUpData',(req,res)=>{
-         res.send("not working");
+        //uController.registerUser(req,res);
+     res.redirect('/signup');
 })
+
+
+
 
 mRouter.get('/cart/:userId',(req,res)=>{
     res.send("this is product");
@@ -59,6 +84,8 @@ mRouter.get('/product/:id',(req,res)=>{
     
  
     
-   
+//    mRouter.get('/image/:name',(req,res)=>{
+//        res.sendFile(__dirname+'/web-content/image/'+req.params.name);
+//    })
 
 module.exports = mRouter;

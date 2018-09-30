@@ -1,20 +1,36 @@
-<div style="width:26%;margin-left:37%">
+<style>
+  .card {
+  width:500px;
+  padding: 30px;
+  z-index: 5;
+  background-color:rgb(255, 225, 225);
+  visibility: transparent;
+}
+</style>
+
+<div style="width:26%;margin-left:37%" class="card">
     <form method="post" action="http://localhost:8080/SignUpData">
         <div class="form-group">
-          <label for="FirstName">FirstName</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your First Name">
+          <label for="Name">User Name</label>
+          <input type="text" class="form-control" name ="userName" id="Name" aria-describedby="emailHelp" placeholder="Enter Your First Name">
            </div>
+
+           <div class="form-group">
+              <label for="InputUserId">User ID</label>
+              <input type="text" class="form-control" name = "userId" id="InputUserId" aria-describedby="emailHelp" placeholder="Enter Your Number">
+            </div>
+
         <div class="form-group">
-          <label for="LastName">Last Name</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your Last Name">
+          <label for="mobile">User Number</label>
+          <input type="text" class="form-control" name = "userNumber" id="mobile" aria-describedby="emailHelp" placeholder="Enter Your Number">
         </div>
         <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+          <label for="InputEmail1">Email address</label>
+          <input type="email" class="form-control" name="userEmail" id="InputEmail1" aria-describedby="emailHelp" placeholder="Enter your Email id">
          </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+          <label for="InputPassword1">Password</label>
+          <input type="password" class="form-control" name="userPassword" id="InputPassword1" placeholder="Enter Your Password">
         </div>
         <div class="form-group">
           

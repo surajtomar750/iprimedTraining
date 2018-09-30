@@ -45,7 +45,7 @@ button{
                   <div class="col-md-4" ng-repeat="product in products | filter:myFilter | orderBy:order">
                         <div class="card " style="border: 1px solid #555;">  
                             
-                            <img ng-src="{{product.image}}" >
+                            <img ng-src="{{product.image[0].image}}" class="card-img-top" >
 
                             <p class="pro-info">{{product.name}}</p>
                             <p class="pro-info">{{"PRICE: "+product.price}}</p>
