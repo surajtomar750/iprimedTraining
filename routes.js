@@ -84,8 +84,8 @@ mRouter.get('/product/:id',(req,res)=>{
     
  
     
-//    mRouter.get('/image/:name',(req,res)=>{
-//        res.sendFile(__dirname+'/web-content/image/'+req.params.name);
-//    })
+   mRouter.get('/admin-control-panel',(req,res)=>{
+       res.sendFile(__dirname+'/web-content/admin-control-panel.html');
+   })
 
 module.exports = mRouter;

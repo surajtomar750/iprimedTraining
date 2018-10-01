@@ -9,7 +9,7 @@
 </style>
 
 <div style="width:26%;margin-left:37%" class="card">
-    <form method="post" action="http://localhost:8080/SignUpData">
+    <form method="post" name="Signupform" ng-submit="submit()"  action="http://localhost:8080/SignUpData">
         <div class="form-group">
           <label for="Name">User Name</label>
           <input type="text" class="form-control" name ="userName" id="Name" aria-describedby="emailHelp" placeholder="Enter Your First Name">

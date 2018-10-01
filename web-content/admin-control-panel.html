@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="js/admin-control-panel.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {box-sizing: border-box}
+
+/* Set height of body and the document to 100% */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial;
+}
+
+/* Style tab links */
+.tablink {
+    background-color: #555;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 25%;
+}
+
+.tablink:hover {
+    background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+    color: white;
+    display: none;
+    padding: 100px 20px;
+    height: 100%;
+}
+
+#Add-product {background-color: rgb(255, 255, 255);}
+#View-product {background-color: rgb(81, 116, 81);}
+#Contact {background-color: rgb(53, 53, 58);}
+#About {background-color: rgb(83, 75, 58);}
+</style>
+</head>
+<body ng-app="adminApp">
+          
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="position: fixed; z-index:8; width:100%;box-shadow:0px 0px 2px 0px;">
+                <div class="form-group">
+                <table>
+                    <tr>
+                        <td>GREAT OUTDOORS</td>
+                         <td><input type="text"  ng-model="myFilter" class="form-control" placeholder="Search">
+                         <td> <a class="nav-link" href="#!Login"> LOGIN<span class="sr-only"></span></a></td>
+                         <td> <a class="nav-link" href="#!">ADD PRODUCT<span class="sr-only"></span></a></td>
+                         <td> <a class="nav-link" href="#!View-modify-product">VIEW PRODUCT<span class="sr-only"></span></a></td>
+                        
+                </table>  
+                  
+                </div>  
+                
+          </nav>
+          <div class="container-fluid" style="margin-top:100px; position:absolute">
+            <ng-view></ng-view>          
+          </div>      
+
+          
+</body>
+</html> 
