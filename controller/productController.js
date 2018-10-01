@@ -58,7 +58,7 @@ exports.setProducts = function(req,res){
             console.log(" error not insert : "+err)
         }
         //res.send("Upload Completed for  product added with id:  into the database");
-        res.redirect('/admin-control-panel');
+        res.redirect('/admin');
          });
    
 

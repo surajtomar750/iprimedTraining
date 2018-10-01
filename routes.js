@@ -63,17 +63,18 @@ mRouter.get('/product/:id',(req,res)=>{
     });
     
     mRouter.post('/LoginData',(req,res)=>{
-     for(var i=0;i<users.length;i++){
-         if(users[i].userid == req.body.userid){
-             if(users[i].pass == req.body.password){
-                 res.send("login successfull");
-             }else{
-                res.send("incorrect user or password");
-             }
-         }else{
-            res.send("user do not exist");
-         }
-     }
+    //  for(var i=0;i<users.length;i++){
+    //      if(users[i].userid == req.body.userid){
+    //          if(users[i].pass == req.body.password){
+    //              res.send("login successfull");
+    //          }else{
+    //             res.send("incorrect user or password");
+    //          }
+    //      }else{
+    //         res.send("user do not exist");
+    //      }
+    //  }
+    res.end();
     });
     
     mRouter.get('/Status',(req,res)=>{
