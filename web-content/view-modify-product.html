@@ -26,6 +26,8 @@
       
       border: solid black;
       display: inline;
+      margin-left:5px ;
+      margin-right: 5px
     }
   #editData{
     display: inline;
@@ -35,8 +37,9 @@
     text-align: left;
   }
   </style>
-</head>  
-<body  ng-app="app" ng-controller="view-modify-product-ctrl" ng-init="hide=false">
+</head> 
+
+  <body  ng-app="app" ng-controller="view-modify-product-ctrl" ng-init="hide=false">
   
     <header class="w3-container w3-light-grey w3-padding-16">
       
@@ -83,7 +86,19 @@
                                             <span ng-click="deleteItem($index)" style="cursor:pointer;" class="w3-right w3-margin-right">delete</span>
                                           
                                       </td>
-                                    
+                                    </tr>
+                                    <tr  id="form" ng-hide="hide">
+                                      <td><input type="text"  name="productid" ng-model="productid"></td>
+                                      <td><input type="text"  name="productname" ng-model="productname"></td>
+                                      <td><input type="text"  name="productprice" ng-model="productprice"></td>
+                                      <td><input type="text"  name="productdescription" ng-model="productdescription"></td>
+                                      <td><input type="text"  name="category" ng-model="category"></td>
+                                      <td>
+                                            <span ng-click="submitUpdate()"  style="cursor:pointer;">update</span>
+                                            <span ng-click="disableeditItem()" style="cursor:pointer;" class="w3-right w3-margin-right">x</span>
+                                          
+                                      </td>
+                                  </tr>
                                   
                                 </table>
                               
@@ -108,21 +123,7 @@
       
         </ul>
  <div style="width:100; position: fixed; margin: 15px; ">
-<table>
-  
-  <tr  ng-hide="hide">
-      <td><input type="text"  name="productid" ng-model="productid"></td>
-      <td><input type="text"  name="productname" ng-model="productname"></td>
-      <td><input type="text"  name="productprice" ng-model="productprice"></td>
-      <td><input type="text"  name="productdescription" ng-model="productdescription"></td>
-      <td><input type="text"  name="category" ng-model="category"></td>
-      <td>
-            <span ng-click="submitUpdate()"  style="cursor:pointer;">update</span>
-            <span ng-click="disableeditItem()" style="cursor:pointer;" class="w3-right w3-margin-right">x</span>
-          
-      </td>
-  </tr>
-</table>
+
 
 </div>
   </div>
@@ -130,5 +131,7 @@
  
     
 </body>      
+
+
       
 </html>
