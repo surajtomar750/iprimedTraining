@@ -88,4 +88,8 @@ mRouter.get('/product/:id',(req,res)=>{
        res.sendFile(__dirname+'/web-content/admin-control-panel.html');
    })
 
+   mRouter.get('/view-modify-product',(req,res)=>{
+    res.sendFile(__dirname+'/web-content/view-modify-product.html');
+   })
+
 module.exports = mRouter;
