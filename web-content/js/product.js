@@ -9,13 +9,7 @@ fourthApp.controller("productsController", function($scope,$http) {
       
        $scope.products = response.data;
 
-   });
-
-    
-
-    
-
-
+   }); 
 });
 
 

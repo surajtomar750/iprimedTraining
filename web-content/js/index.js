@@ -19,8 +19,6 @@ app.config(function($routeProvider){
                 
                 templateUrl: 'signup.htm'
 
-              }).otherwise({
-                templateUrl: 'notfound.html'
               })
    });
 

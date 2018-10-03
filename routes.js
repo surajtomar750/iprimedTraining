@@ -93,4 +93,13 @@ mRouter.get('/product/:id',(req,res)=>{
     res.sendFile(__dirname+'/web-content/view-modify-product.html');
    })
 
+
+   mRouter.get('/removeproduct/:pid',(req,res)=>{
+        pController.removeProduct(req,res);
+   })
+
+   mRouter.post('/updateproduct',(req,res)=>{
+       pController.updateProduct(req,res);
+   })
+
 module.exports = mRouter;

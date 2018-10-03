@@ -1,25 +1,46 @@
-var app = angular.module("app",[]);
-app.controller("view-modify-product-ctrl",function($scope,$http){
+var app = angular.module("app",["ngRoute"]);
+
+app.config(function($routeProvider){
+  $routeProvider.when('/modify-view',{
+ 
+                  templateUrl: 'modify-product.html',
+                  controller: 'modify-product-ctrl'
+                  
+              
+              }).when('/view-modify-product',{
+                    templateUrl: 'view-modify-product.html',
+                    controller: 'view-modify-product-ctrl'
+              })
+ });
+
+app.controller("view-modify-product-ctrl",function($rootScope,$scope,$http,$location){
   $http.get("http://localhost:8080/products")
   .then(function(response) {
     $scope.ProductList = response.data;
     console.log($scope.ProductList);
-$scope.editItem = function(index){
-      var temp = $scope.ProductList[index];
-      $scope.productid=temp.id;
-      $scope.productname = temp.name;
-      $scope.productprice= temp.price;
-      $scope.productdescription = temp.description;
-      $scope.category = temp.category;
-        $scope.hide=false;
-        $scope.lock=true;
-    
+  });
 
-}
+ $scope.deleteItem = function(index){
+
+    console.log("deleteing item of id " +$scope.ProductList[index]._id)
+    $http.get("http://localhost:8080/removeproduct/"+$scope.ProductList[index]._id).then(function(response){
+          console.log("server returned "+response)
+          $location.path('view-modify-product')
+  })
 
 
-$scope.disableeditItem = function(){
-    $scope.hide=true;
-}    
-});
+
+  }
+
+    $scope.editItem = function(x){
+      console.log(x);
+      $rootScope.productSelected = $scope.ProductList[x]; 
+      $location.path('modify-view')
+    }
+
+
+
+    $scope.disableeditItem = function(){
+      $scope.hide=true;
+    }    
 })

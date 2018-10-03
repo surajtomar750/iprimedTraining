@@ -32,7 +32,7 @@ exports.setProducts = function(req,res){
    var mObject=[];
 //list of image uploaded
     for(let i=0;i<image.length;i++){
-            mObject.push({image:'image/'+image[i].originalname})
+            mObject.push({image:'image/'+Date.now()+image[i].originalname})
     }
 
     for(let i=0;i<mObject.length;i++){
@@ -63,5 +63,32 @@ exports.setProducts = function(req,res){
    
 
 }
+
+
+exports.updateProduct = (req,res)=>{
+    productModel.findByIdAndUpdate(req.body.id,{$set:req.body},function(err,data){
+        if(err) {
+                    console.log("ERROR in productController inside update product: \n"+err) 
+                    res.end()
+                }
+        console.log("product is updated "+data.id)
+        res.send("true"); 
+    })
+    }
+
+
+
+    exports.removeProduct = (req,res)=>{
+        productModel.findByIdAndDelete('ObjectId('+req.params.pid+')',(err)=>{
+            if(err){
+                console.log("error in removeProduct function "+err)
+                res.send()
+            }else{
+               res.send("true"); 
+            }
+            
+            }
+    )
+    }
 
 

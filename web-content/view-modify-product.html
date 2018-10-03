@@ -2,7 +2,7 @@
 <html>
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
   
@@ -36,85 +36,64 @@
   thead{
     text-align: left;
   }
+  input{
+    border: none;
+  }
+  textarea{
+    border: none;
+  }
   </style>
 </head> 
 
-  <body  ng-app="app" ng-controller="view-modify-product-ctrl" ng-init="hide=false">
+  <body  ng-app="app" ng-controller="view-modify-product-ctrl" ng-init="hide=true">
   
     <header class="w3-container w3-light-grey w3-padding-16">
       
     </header>
-    <table class="table" style="margin-left:10px; margin-right:10px; text-align:left; content: initial ">
-        <thead>
-            <tr>
-              <th>#product id</th>
-              <th>product name</th>
-              <th>price</th>
-              <th>product desc</th>
-              <th>Category</th>
-              <th>modify</th>
-              
-            </tr>
-            
-          </thead>
-    </table>
+    
+             
     
      
         
             
-                <div  >
+                
                     
       <ul class="w3-ul"   >
-                <div  ng-repeat="x in ProductList" width="100%">
+                <div  >
                   
                       
                       <div class="list-group" >
                         
                         
                             <div class="list-group-item"  > 
-                              <form action="http://localhost:8080/adminaddproduct">
-                                <table class="table">
-                                
-                                    <tr style="text-align:center" id="view-data">
-                                      <td>{{x.id}}</td>
-                                      <td>{{x.name}}</td>
-                                      <td>{{x.price}}</td>
-                                      <td>{{x.description}}</td>
-                                      <td>{{x.category}}</td>
+                             
+                                 <table class="table">
+                                  <thead>
+                                    
+                                    <th>#product id</th>
+                                    <th>product name</th>
+                                    <th>price</th>
+                                    <th>product desc</th>
+                                    <th>Category</th>
+                                    <th>modify</th>
+                                      </thead>
+                                    <tr style="text-align:center" id="view-data" ng-repeat="x in ProductList" width="100%">
+                                      <td><input type="text" disabled ng-model="x.id"></td>
+                                      <td><input type="text" disabled ng-model="x.name"></td>
+                                      <td><input type="text" disabled ng-model="x.price"></td>
+                                      <td><textarea ng-model="x.description" disabled></textarea></td>
+                                      <td><input type="text" disabled ng-model="x.category"></td>
                                       <td>
-                                            <span ng-click="editItem($index)"  style="cursor:pointer;">edit</span>
+                                            <span ng-click="editItem($index)"  style="cursor:pointer;" class="w3-right w3-margin-right">edit</span>
                                             <span ng-click="deleteItem($index)" style="cursor:pointer;" class="w3-right w3-margin-right">delete</span>
                                           
                                       </td>
                                     </tr>
-                                    <tr  id="form" ng-hide="hide">
-                                      <td><input type="text"  name="productid" ng-model="productid"></td>
-                                      <td><input type="text"  name="productname" ng-model="productname"></td>
-                                      <td><input type="text"  name="productprice" ng-model="productprice"></td>
-                                      <td><input type="text"  name="productdescription" ng-model="productdescription"></td>
-                                      <td><input type="text"  name="category" ng-model="category"></td>
-                                      <td>
-                                            <span ng-click="submitUpdate()"  style="cursor:pointer;">update</span>
-                                            <span ng-click="disableeditItem()" style="cursor:pointer;" class="w3-right w3-margin-right">x</span>
-                                          
-                                      </td>
-                                  </tr>
+                                   
                                   
                                 </table>
+                             
                               
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                            </form>
-                                
-                              
-                        
-                      
                       </div>
                  
                 </div> 
@@ -122,11 +101,9 @@
   
       
         </ul>
- <div style="width:100; position: fixed; margin: 15px; ">
+        </div>
 
 
-</div>
-  </div>
 
  
     
