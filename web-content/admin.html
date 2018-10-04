@@ -16,22 +16,47 @@
      z-index: 8;
      margin-top: 10px;
    }
+
+   .btn{
+        background-color: black;
+        color: white;
+   }
+   #demo{
+     border: aqua solid ;
+     z-index: 10;
+     box-shadow: 0px 0px 1px 1px;
+   }
+   td{
+     text-align: left;
+   }
+  #admintext{
+    background-color:11111; 
+  }
+
+ #imagelabel{
+    box-shadow: 0px 0px 2px 2px;
+  }
+
+  #imagelabel:hover{
+    box-shadow: 0px 0px 4px 4px;
+  }
+
    </style>
 </head>  
 <body>
  
-  <div class="container-fluid">
+  <div class="container">
           <div class="row">
               
               <div class="col-sm-12">
                       <div class="table-responsive">          
                              <form  method="post" action="http://localhost:8080/adminaddproduct"  class="card" enctype="multipart/form-data">
-                              <legend><h2>ADMIN</h2></legend>
+                              <legend ><h2 id="admintext">ADMIN</h2></legend>
                               
                                 <table class="table">
                                   <thead>
                                     <tr>
-                                      <th>#product id</th>
+                                   
                                       <th>product name</th>
                                       <th>price</th>
                                       <th>product desc</th>
@@ -43,14 +68,14 @@
                                   <tbody>
                                     <tr>
                                       
-                                      <td><input type="text" name="id" required></td>
+                                      
                                       <td><input type="text" name="name" required></td>
                                       <td><input type="text" name="price" required></td>
                                       <td><input type="text" name="description" required></td>
                                       <td><input type="text" name="category" required></td>
                                       <td>
-                                        <label for="inputpicker" #labelimagepicker">add images</label>
-                                        <input type="file" style="z-index: 2; opacity: 5; position: relative" id=inputpicker name="image"  multiple  accept="image/png, image/jpeg" (change)="#labelimagepicker.value="images added"</td>
+                                        <div id="imagelabel"style="border: 1px solid; z-index: 100; box-shadow: 0px 0px 1px 1px; width: 100px; padding-left: 4px; height: 30px"><label for="inputpicker" #labelimagepicker">add images</label></div>
+                                        <input type="file" style="z-index: 2; opacity: 0; position: relative" id=inputpicker name="image"  multiple  accept="image/png, image/jpeg" (change)="#labelimagepicker.value="images added"</td>
                                      
                                      
                                     </tr>
@@ -58,19 +83,24 @@
                                           <td></td>
                                           <td></td>
                                           <td></td>
-                                          <td></td>
-                                          <td></td>
+                                          <td> </div id="demo" >
+                                            <a href="http://localhost:8080/view-modify-product.html">view product</a>
+                                    </div></td>
+                                       
                                          
-                                          <td ><input type="submit" class="btn "  ></td> </tr>
+                                          <td ><button class="btn"  >SUBMIT</button></td> </tr>
                                   </tbody>
                                 </table>
                              
                                  
                              </form>
               </div>
+             <style>
              
-          </div>
-      
-      </div>
+             #demo{
+               -webkit-box-align: center;
+             }
+             </style>
+         
 </body>
 </html>

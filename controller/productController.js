@@ -12,7 +12,7 @@ productModel.find({},function(err,data){
 
 // for single product
 exports.getProduct = (req,res)=>{
-    productModel.find({id:req.params.id},function(err,data){
+    productModel.find({id:req.params._id},function(err,data){
         if(err) {throw err}
         console.log("single product requested with params "+req.params.id)
         res.send(data) 
@@ -42,7 +42,6 @@ exports.setProducts = function(req,res){
 
 
     let pObject = productModel({
-        id:req.body.id,
         name:req.body.name,
         price:req.body.price,
         description:req.body.description,
@@ -66,7 +65,7 @@ exports.setProducts = function(req,res){
 
 
 exports.updateProduct = (req,res)=>{
-    productModel.findByIdAndUpdate(req.body.id,{$set:req.body},function(err,data){
+    productModel.findByIdAndUpdate(req.body._id,{$set:req.body},function(err,data){
         if(err) {
                     console.log("ERROR in productController inside update product: \n"+err) 
                     res.end()
@@ -79,7 +78,7 @@ exports.updateProduct = (req,res)=>{
 
 
     exports.removeProduct = (req,res)=>{
-        productModel.findByIdAndDelete('ObjectId('+req.params.pid+')',(err)=>{
+        productModel.findByIdAndDelete(req.params._id,(err)=>{
             if(err){
                 console.log("error in removeProduct function "+err)
                 res.send()

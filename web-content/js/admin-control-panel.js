@@ -15,6 +15,9 @@ app.config(function($routeProvider){
                   controller: 'view-modify-product-ctrl'
                  
               
+              }).when('/modify-admin',{
+                  templateUrl: 'modify-product.html',
+                  controller: 'modify-product'
               });
             })
 

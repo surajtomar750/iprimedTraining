@@ -1,4 +1,5 @@
 const express = require('express')
+const aController = require('./controller/adminController')
 
 var multer = require('multer');
 var storage = multer.diskStorage({
@@ -94,12 +95,26 @@ mRouter.get('/product/:id',(req,res)=>{
    })
 
 
-   mRouter.get('/removeproduct/:pid',(req,res)=>{
+   mRouter.get('/removeproduct/:_id',(req,res)=>{
+    console.log('delete product requested')
         pController.removeProduct(req,res);
    })
 
-   mRouter.post('/updateproduct',(req,res)=>{
+   mRouter.get('/updateproduct/:_id',(req,res)=>{
+       console.log('update product requested')
        pController.updateProduct(req,res);
    })
+
+   mRouter.get('/admin-login',(req,res)=>{
+    res.sendFile(__dirname+'/web-content/admin-login.html');
+   })
+
+    mRouter.post('/admin-login-check',(req,res)=>{
+        console.log("admin-login-check")
+                aController.authenticate(req,res);
+    
+   })
+
+ 
 
 module.exports = mRouter;
