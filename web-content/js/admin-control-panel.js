@@ -14,10 +14,16 @@ app.config(function($routeProvider){
                     controller: 'adminctrlpanel'
 
 
-                }).when('/view-modify-product',{
+                }).when('/admin-add-product',{
+
+                  templateUrl: 'admin.html',
+                  controller: 'admin-add-product-ctrl'
+
+
+              }).when('/view-modify-product',{
 
                   templateUrl: 'view-modify-product.html',
-                  controller: 'view-modify-product-ctrl'
+                  controller: 'viewmodifyproductctrl'
 
 
               }).when('/modify-admin',{
@@ -47,7 +53,7 @@ app.controller("adminctrlpanel",function($rootScope,$scope,$http){
 
 
 
-app.controller("view-modify-product-ctrl",function($rootScope,$scope,$http,$location){
+app.controller("viewmodifyproductctrl",function($rootScope,$scope,$http,$location){
   $http.get("http://localhost:8080/products")
   .then(function(response) {
     $scope.ProductList = response.data;
@@ -68,7 +74,7 @@ app.controller("view-modify-product-ctrl",function($rootScope,$scope,$http,$loca
     $scope.editItem = function(x){
       console.log(x);
       $rootScope.productSelected = $scope.ProductList[x];
-      window.location.href="http://localhost:8080/modify-product.html"
+      //window.location.href="http://localhost:8080/modify-product.html"
       $location.path('modify-view')
     }
 
@@ -92,3 +98,29 @@ app.controller('adminloginctrl',function($scope,$http,$location){
     })
   }
 })
+
+
+
+
+
+
+
+app.controller("admin-add-product-Ctrl",function($scope,$http){
+
+  $scope.submitProduct = ()=>{
+              $http.post("http://localhost:8080/adminaddproduct",$scope.product).then(function(response){
+                      if(response.data!=""){
+                          
+                          $scope.product.name=""
+                          $scope.product.price=""
+                          $scope.product.description=""
+                          $scope.product.category=""
+                          $scope.product.image=""
+
+                      }
+              })
+  }
+
+})
+
+app.controller("modify-product-ctrl",)

@@ -33,7 +33,7 @@ app.controller("view-modify-product-ctrl",function($rootScope,$scope,$http,$loca
     $http.get("http://localhost:8080/removeproduct/"+$scope.ProductList[index]._id).then(function(response){
           console.log("server returned "+response)
           if(response=='true'){
-                $scope.ProductList.splice(index)
+                $location.path('view-modify-product')
           }
        
     })}
