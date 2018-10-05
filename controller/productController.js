@@ -32,7 +32,7 @@ exports.setProducts = function(req,res){
    var mObject=[];
 //list of image uploaded
     for(let i=0;i<image.length;i++){
-            mObject.push({image:'image/'+Date.now()+image[i].originalname})
+            mObject.push({image:'image/'+image[i].filename})
     }
 
     for(let i=0;i<mObject.length;i++){

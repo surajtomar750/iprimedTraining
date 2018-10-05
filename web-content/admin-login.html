@@ -1,8 +1,8 @@
 
-     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+     <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
 <style>
 h2{
     text-align: center;
@@ -11,14 +11,14 @@ h2{
      <h2> Admin Login</h2>
 <body>
     <div style="width:26%;margin-top:40px" class="container">
-    <form method="post" action="http://localhost:8080/admin-login-check" >
+    <form method="post" ng-submit="submitAdminLogin()"  >
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
-          <input type="email" name ="emailid" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+          <input type="email" name ="emailid" ng-model="adminloginform.emailid" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Password</label>
-          <input type="password" name = "password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+          <input type="password" name = "password" ng-model="adminloginform.password" class="form-control" id="exampleInputPassword1" placeholder="Password">
         </div>
         <div class="form-group form-check">
           <input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -31,4 +31,3 @@ h2{
 
 
 </body>
-    

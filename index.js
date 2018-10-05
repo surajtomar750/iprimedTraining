@@ -1,4 +1,6 @@
 var express = require('express');
+var session = require('express-session')
+var cookieParser = require('cookie-parser')
 var path = require('path')
 var app = express();
 var bodyparser = require('body-parser')
@@ -16,6 +18,18 @@ dbConnection.on('error', console.error.bind(console, 'connection error:'));
 
 app.use(bodyparser.json()); // for parsing application/json
 app.use(bodyparser.urlencoded({extended:true}));
+
+app.use(cookieParser());
+
+app.use(session({
+    key: 'user_sid',
+    secret: 'somerandonstuffs',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 600000
+    }
+}));
 // headers and content type
 app.use(function (req, res, next) {
     req.header("Access-Control-Allow-Origin", "*");

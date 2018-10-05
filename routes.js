@@ -8,11 +8,11 @@ var storage = multer.diskStorage({
       cb(null, './web-content/image')
     },
     filename: function (req, file, cb) {
-      cb(null, file.originalname);
+      cb(null, ''+Date.now()+file.originalname);
     }
   });
 var upload = multer({storage: storage})
-            
+
 const pController = require('./controller/productController')
 const uController = require('./controller/userController')
 const mRouter = express.Router();
@@ -25,13 +25,17 @@ const path = require('path');
 mRouter.get('/admin',(req,res)=>{
     res.sendFile(__dirname+"/web-content/admin.html");
 })
+mRouter.post('/admin',(req,res)=>{
+    res.sendFile(__dirname+"/web-content/admin.html");
+})
+
 
 
 
 mRouter.post('/adminaddproduct', upload.array('image',10),function (req, res) {
     console.log("admin requested to add product : weldone admin")
     pController.setProducts(req,res);
-    
+
 })
 
 
@@ -56,13 +60,13 @@ mRouter.get('/products',(req,res)=>{
     console.log("products requested")
     pController.getProducts(req,res);
     });
-    
+
 mRouter.get('/product/:id',(req,res)=>{
-    
+
     pController.getProduct(req,res);
-    
+
     });
-    
+
     mRouter.post('/LoginData',(req,res)=>{
     //  for(var i=0;i<users.length;i++){
     //      if(users[i].userid == req.body.userid){
@@ -77,18 +81,23 @@ mRouter.get('/product/:id',(req,res)=>{
     //  }
     res.end();
     });
-    
+
     mRouter.get('/Status',(req,res)=>{
-        
+
         res.status(404).send("this is a custom status code");
-        
+
     });
-    
- 
-    
+
+
+
    mRouter.get('/admin-control-panel',(req,res)=>{
        res.sendFile(__dirname+'/web-content/admin-control-panel.html');
    })
+
+   mRouter.post('/admin-control-panel',(req,res)=>{
+       res.sendFile(__dirname+'/web-content/admin-control-panel.html');
+   })
+
 
    mRouter.get('/view-modify-product',(req,res)=>{
     res.sendFile(__dirname+'/web-content/view-modify-product.html');
@@ -112,9 +121,9 @@ mRouter.get('/product/:id',(req,res)=>{
     mRouter.post('/admin-login-check',(req,res)=>{
         console.log("admin-login-check")
                 aController.authenticate(req,res);
-    
+
    })
 
- 
+
 
 module.exports = mRouter;
