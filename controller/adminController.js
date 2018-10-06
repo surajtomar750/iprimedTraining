@@ -3,15 +3,15 @@ var admin = require('../model/admin')
 var bodyParser = require('body-parser')
 
 exports.authenticate = function(req,res){
-console.log(req.body.emailid);
-console.log(req.body.password);
+console.log(req.body.data.emailid);
+console.log(req.body.data.password);
 
-admin.find({},function(err,data){
+admin.findOne({where:{emailid:req.body.data.emailid}},function(err,data){
     console.log("database returns "+data)
     if(err){
         console.log("error in admin controller "+err)
     }
-    else if(data.password==req.body.password){
+    else if(data.password==req.body.data.password){
         console.log("login success")
         res.send("true");
 

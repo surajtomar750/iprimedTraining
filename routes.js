@@ -1,5 +1,7 @@
 const express = require('express')
 const aController = require('./controller/adminController')
+const pController = require('./controller/productController')
+const uController = require('./controller/userController')
 
 var multer = require('multer');
 var storage = multer.diskStorage({
@@ -13,10 +15,18 @@ var storage = multer.diskStorage({
   });
 var upload = multer({storage: storage})
 
-const pController = require('./controller/productController')
-const uController = require('./controller/userController')
+
 const mRouter = express.Router();
 const path = require('path');
+
+
+
+// middleware function to check for logged-in users
+
+
+
+// route for user Login
+
 
 
 
@@ -25,9 +35,7 @@ const path = require('path');
 mRouter.get('/admin',(req,res)=>{
     res.sendFile(__dirname+"/web-content/admin.html");
 })
-mRouter.post('/admin',(req,res)=>{
-    res.sendFile(__dirname+"/web-content/admin.html");
-})
+
 
 
 

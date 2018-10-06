@@ -91,7 +91,7 @@ app.controller("viewmodifyproductctrl",function($rootScope,$scope,$http,$locatio
 
 app.controller('adminloginctrl',function($scope,$http,$location){
   $scope.submitAdminLogin  = function(){
-    $http.post("http://localhost:8080/admin-login-check").then(function(response){
+    $http.post("http://localhost:8080/admin-login-check",$scope.data).then(function(response){
       if(response){
         $location.path('view-modify-product')
       }
@@ -110,7 +110,7 @@ app.controller("admin-add-product-Ctrl",function($scope,$http){
   $scope.submitProduct = ()=>{
               $http.post("http://localhost:8080/adminaddproduct",$scope.product).then(function(response){
                       if(response.data!=""){
-                          
+
                           $scope.product.name=""
                           $scope.product.price=""
                           $scope.product.description=""

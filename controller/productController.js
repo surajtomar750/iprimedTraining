@@ -6,16 +6,16 @@ const productModel = require('../model/product');
 exports.getProducts = (req,res)=>{
 productModel.find({},function(err,data){
     if(err) {throw err}
-    res.send(data) 
+    res.send(data)
 })
 }
 
 // for single product
 exports.getProduct = (req,res)=>{
-    productModel.find({id:req.params._id},function(err,data){
+    productModel.find({_id:req.params._id},function(err,data){
         if(err) {throw err}
         console.log("single product requested with params "+req.params.id)
-        res.send(data) 
+        res.send(data)
     })
     }
 
@@ -28,7 +28,7 @@ exports.setProducts = function(req,res){
     console.log(req.body.description)
     console.log(req.files)
     var image = req.files;
-    
+
    var mObject=[];
 //list of image uploaded
     for(let i=0;i<image.length;i++){
@@ -47,11 +47,11 @@ exports.setProducts = function(req,res){
         description:req.body.description,
         category:req.body.category,
         image:mObject
-         
+
 
         });
     var path = '';
-    
+
     pObject.save(function(err,data){
         if(err){
             console.log(" error not insert : "+err)
@@ -59,7 +59,7 @@ exports.setProducts = function(req,res){
         //res.send("Upload Completed for  product added with id:  into the database");
         res.redirect('/admin');
          });
-   
+
 
 }
 
@@ -67,11 +67,11 @@ exports.setProducts = function(req,res){
 exports.updateProduct = (req,res)=>{
     productModel.findByIdAndUpdate(req.body._id,{$set:req.body},function(err,data){
         if(err) {
-                    console.log("ERROR in productController inside update product: \n"+err) 
+                    console.log("ERROR in productController inside update product: \n"+err)
                     res.end()
                 }
         console.log("product is updated "+data.id)
-        res.send("true"); 
+        res.send("true");
     })
     }
 
@@ -83,11 +83,9 @@ exports.updateProduct = (req,res)=>{
                 console.log("error in removeProduct function "+err)
                 res.send()
             }else{
-               res.send("true"); 
+               res.send("true");
             }
-            
+
             }
     )
     }
-
-

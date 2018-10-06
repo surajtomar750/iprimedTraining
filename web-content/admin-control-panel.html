@@ -42,6 +42,11 @@ body, html {
     padding: 100px 20px;
     height: 100%;
 }
+.my-nav{
+  color: white;
+  font-weight: bold;
+  font-size: 25;
+}
 
 #Add-product {background-color: rgb(255, 255, 255);}
 #View-product {background-color: rgb(81, 116, 81);}
@@ -51,12 +56,12 @@ body, html {
 </head>
 <body ng-app="app" >
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-light nav-tab" style="position: fixed; z-index:8; width:100%;box-shadow:0px 0px 2px 0px;">
-                <div class="form-group">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-tab" style="position: fixed; z-index:8; width:100%;box-shadow:0px 0px 2px 0px;">
+                <div class="form-group my-nav">
                 <table>
                     <tr>
-                        <td>GREAT OUTDOORS</td>
-                         <td><input type="text"  ng-model="myFilter" class="form-control" placeholder="Search">
+                        <td>GREAT OUTDOORS </td>
+                         <td><input type="text" ng-disable="d-a-n-search" ng-model="myFilter" class="form-control" placeholder="Search">
                          <td> <a class="nav-link" href="#!admin-login" class=""> LOGIN<span class="sr-only"></span></a></td>
                          <td> <a class="nav-link" href="#!admin">ADD PRODUCT<span class="sr-only"></span></a></td>
                          <td> <a class="nav-link" href="#!view-modify-product">VIEW PRODUCT<span class="sr-only"></span></a></td>

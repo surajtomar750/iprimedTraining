@@ -20,22 +20,17 @@ app.use(bodyparser.json()); // for parsing application/json
 app.use(bodyparser.urlencoded({extended:true}));
 
 app.use(cookieParser());
-
-app.use(session({
-    key: 'user_sid',
-    secret: 'somerandonstuffs',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        expires: 600000
-    }
-}));
 // headers and content type
 app.use(function (req, res, next) {
     req.header("Access-Control-Allow-Origin", "*");
     req.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
+
+  // This middleware will check if user's cookie is still saved in browser and user is not set, then automatically log the user out.
+// This usually happens when you stop your express server after login, your cookie still remains saved in the browser.
+
+
 app.use(express.static(path.join(__dirname, 'web-content')))
 
 app.use('/',routes);
