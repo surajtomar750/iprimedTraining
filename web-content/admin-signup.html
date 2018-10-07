@@ -1,0 +1,27 @@
+
+
+<div style="width:26%;margin-left:37%" class="list-group">
+    <!-- <form method="post" name="Signupform" ng-submit="submit()"  action="http://localhost:8080/SignUpData"> -->
+        <div class="form-group">
+          <label >User Name</label>
+          <input type="text" class="form-control" ng-model="data.name" aria-describedby="emailHelp" placeholder="Enter Your First Name">
+           </div>
+           <div class="form-group">
+          <label >Email address</label>
+          <input type="email" class="form-control" ng-model="data.emailid"  aria-describedby="emailHelp" placeholder="Enter your Email id">
+         </div>
+        <div class="form-group">
+          <label >Password</label>
+          <input type="password" class="form-control" ng-model="data.password" placeholder="Enter Your Password">
+        </div>
+
+        <button  class="btn btn-primary" ng-click="submit(data)">Submit</button>
+      <!-- </form> -->
+    </div>
+
+    <span>{{data.name}}
+    </span>
+    <span>{{data.emailid}}
+    </span>
+    <span>{{data.password}}
+    </span>

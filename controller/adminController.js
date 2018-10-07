@@ -1,25 +1,49 @@
-var admin = require('../model/admin')
+var adminModel = require('../model/admin')
+var bcrypt = require('bcrypt-nodejs')
+var jwt = require('jsonwebtoken')
 
-var bodyParser = require('body-parser')
+exports.signup = function(req,res){
+  console.log("new admin is being registered "+req.body.name)
+  console.log("new admin is being registered "+req.body.emailid)
+  console.log("new admin is being registered "+req.body.password)
+  let hash = bcrypt.hashSync(req.body.password);
+  console.log(hash)
+  let aObject =new adminModel({
+    name:req.body.name,
+    emailid:req.body.emailid,
+    password:hash
+  })
+
+
+  aObject.save((err,data)=>{
+    if(err){console.log(" error in admin-signup controller "+err)
+      res.send();
+      }
+      res.send('success')
+  });
+}
+
 
 exports.authenticate = function(req,res){
-console.log(req.body.data.emailid);
-console.log(req.body.data.password);
+  console.log("data submited to admin login ");
+  console.log(req.body);
 
-admin.findOne({where:{emailid:req.body.data.emailid}},function(err,data){
-    console.log("database returns "+data)
-    if(err){
-        console.log("error in admin controller "+err)
-    }
-    else if(data.password==req.body.data.password){
-        console.log("login success")
-        res.send("true");
+  adminModel.findOne({emailid:req.body.emailid}).then(function(data){
 
-    }else{ console.log("login failed")
-    console.log(data.password)
-        res.send();
-    }
+      if(!data){
+          console.log("error in admin controller function authenticate "+err)
+          return res.status(401).json({message:"user not found"});
+      }
+      bcrypt.compareSync(req.body.password,data.password)
+        .then(result=>{
+          if(!result){
+            return res.status(401).json({message:"user not found"});
+          }
+          const token = jwt.sign({emailid: data.emailid, userid:data._id },'this_is_secret_for_hashing',{expireIn:'1h'})
 
-})
+        })
+  }).catch(err=>{
+    return res.status(401).json({message:"user not found"});
+  })
 
 }

@@ -57,7 +57,7 @@ exports.setProducts = function(req,res){
             console.log(" error not insert : "+err)
         }
         //res.send("Upload Completed for  product added with id:  into the database");
-        res.redirect('/admin');
+        res.send('success');
          });
 
 
@@ -65,13 +65,14 @@ exports.setProducts = function(req,res){
 
 
 exports.updateProduct = (req,res)=>{
+      
     productModel.findByIdAndUpdate(req.body._id,{$set:req.body},function(err,data){
         if(err) {
                     console.log("ERROR in productController inside update product: \n"+err)
-                    res.end()
+                    res.send("")
                 }
-        console.log("product is updated "+data.id)
-        res.send("true");
+
+        res.send("success");
     })
     }
 

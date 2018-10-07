@@ -1,43 +1,32 @@
 <!DOCTYPE html>
+<!-- <script type="text/javascript" src="js/modify-product.js" -->
 <html>
-    
-
-
-
     <div class="list-group-item"  >
-
-     
-                 
-<div style="width:26%;margin-left:37%" >
-    <form method="post" name="Signupform" ng-submit="submit()"  action="http://localhost:8080/SignUpData">
+      <h2 style="text-align:center">Update Product</h2>
+<div style="width:26%;margin-left:37%" ng-repeat="data in updateproduct" >
+    <!-- <form method="post"   > -->
         <div class="form-group">
-          <label for="Name">User Name</label>
-          <input type="text" class="form-control" name ="userName" id="Name" aria-describedby="emailHelp" placeholder="Enter Your First Name">
+          <label for="name">Product Name</label>
+          <input type="text" class="form-control"  ng-model="data.name"id="Name" aria-describedby="emailHelp" >
            </div>
 
            <div class="form-group">
-              <label for="InputUserId">User ID</label>
-              <input type="text" class="form-control" name = "userId" id="InputUserId" aria-describedby="emailHelp" placeholder="Enter Your Number">
+              <label for="price">Price</label>
+              <input type="text" class="form-control"  ng-model="data.price" id="InputUserId" aria-describedby="emailHelp" placeholder="Price">
             </div>
 
         <div class="form-group">
-          <label for="mobile">User Number</label>
-          <input type="text" class="form-control" name = "userNumber" id="mobile" aria-describedby="emailHelp" placeholder="Enter Your Number">
+          <label for="description">Description</label>
+          <input type="text" class="form-control"  ng-model="data.description" id="mobile" aria-describedby="emailHelp" placeholder="Description">
         </div>
         <div class="form-group">
-          <label for="InputEmail1">Email address</label>
-          <input type="email" class="form-control" name="userEmail" id="InputEmail1" aria-describedby="emailHelp" placeholder="Enter your Email id">
+          <label for="category">Category</label>
+          <input type="text" class="form-control"  ng-model="data.category" id="InputEmail1" aria-describedby="emailHelp" placeholder="Category">
          </div>
-        <div class="form-group">
-          <label for="InputPassword1">Password</label>
-          <input type="password" class="form-control" name="userPassword" id="InputPassword1" placeholder="Enter Your Password">
-        </div>
-        <div class="form-group">
-          
-          <label ><a href="#!Login">already Signup? Login </a></label>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+
+
+        <button  class="btn btn-primary" ng-click="submitUpdate($index)" >Update</button>
+      <!-- </form> -->
     </div>
 
     </div>

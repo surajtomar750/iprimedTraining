@@ -117,10 +117,15 @@ mRouter.get('/product/:id',(req,res)=>{
         pController.removeProduct(req,res);
    })
 
-   mRouter.get('/updateproduct/:_id',(req,res)=>{
+   mRouter.post('/updateproduct',(req,res)=>{
        console.log('update product requested')
        pController.updateProduct(req,res);
    })
+   mRouter.get('/modify-product',(req,res)=>{
+          res.sendFile(__dirname+'/web-content/modify-product.html')
+        }
+
+   )
 
    mRouter.get('/admin-login',(req,res)=>{
     res.sendFile(__dirname+'/web-content/admin-login.html');
@@ -128,8 +133,16 @@ mRouter.get('/product/:id',(req,res)=>{
 
     mRouter.post('/admin-login-check',(req,res)=>{
         console.log("admin-login-check")
+        
                 aController.authenticate(req,res);
 
+
+   })
+   mRouter.get('/admin-signup',(req,res)=>{
+     res.sendFile(__dirname+'/web-content/admin-signup.html')
+   })
+   mRouter.post('/admin-signup-data',(req,res)=>{
+     aController.signup(req,res);
    })
 
 

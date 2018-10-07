@@ -11,13 +11,13 @@ app.config(function($routeProvider){
                 }).when('/admin',{
 
                     templateUrl: 'admin.html',
-                    controller: 'adminctrlpanel'
+
 
 
                 }).when('/admin-add-product',{
 
                   templateUrl: 'admin.html',
-                  controller: 'admin-add-product-ctrl'
+
 
 
               }).when('/view-modify-product',{
@@ -26,10 +26,16 @@ app.config(function($routeProvider){
                   controller: 'viewmodifyproductctrl'
 
 
-              }).when('/modify-admin',{
+              }).when('/modify-product',{
                   templateUrl: 'modify-product.html',
-                  controller: 'modify-product'
-              });
+                  controller: 'modify-product-ctrl'
+
+              }).when( '/admin-signup',{
+                templateUrl:'admin-signup',
+                controller:'admin-signup-ctrl'
+
+
+              })
             })
 
 
@@ -45,10 +51,6 @@ app.controller("adminctrlpanel",function($rootScope,$scope,$http){
 
   });
 })
-
-
-
-
 
 
 
@@ -71,11 +73,11 @@ app.controller("viewmodifyproductctrl",function($rootScope,$scope,$http,$locatio
 
     })}
 
-    $scope.editItem = function(x){
-      console.log(x);
-      $rootScope.productSelected = $scope.ProductList[x];
-      //window.location.href="http://localhost:8080/modify-product.html"
-      $location.path('modify-view')
+    $scope.editItem = function(index){
+      console.log(index);
+      console.log($scope.ProductList[index])
+      $rootScope.updateproduct = $scope.ProductList[index];
+      $location.path('modify-product')
     }
 
 
@@ -91,6 +93,11 @@ app.controller("viewmodifyproductctrl",function($rootScope,$scope,$http,$locatio
 
 app.controller('adminloginctrl',function($scope,$http,$location){
   $scope.submitAdminLogin  = function(){
+    console.log("email submitted "+$scope.data.emailid)
+    console.log("password submited"+$scope.data.password)
+    console.log($scope.data)
+
+
     $http.post("http://localhost:8080/admin-login-check",$scope.data).then(function(response){
       if(response){
         $location.path('view-modify-product')
@@ -122,5 +129,39 @@ app.controller("admin-add-product-Ctrl",function($scope,$http){
   }
 
 })
+app.controller("ctrl",function($rootScope,$scope,$location,$http){
+    console.log("controllerworking")
+    $scope.temp;
+    if($rootScope.updateproduct==$scope.temp){
+      $location.path('view-modify-product')
+    }
+    $scope.p=$rootScope.updateproduct
+    $scope.updateproduct=[{_id:$scope.p._id,image:$scope.p.image,name:$scope.p.name,description:$scope.p.description,price:$scope.p.price,category:$scope.p.category}]
+    console.log($scope.updateproduct)
+    $scope.submitUpdate=function(index){
+      console.log($scope.updateproduct[index]);
+      $http.post("http://localhost:8080/updateproduct/",$scope.updateproduct[index]).then(response=>{
+        if(response.data!=""){
+          $rootScope.updateproduct=""
+          $scope.updateproduct==""
+       }
+     })
+    }
 
-app.controller("modify-product-ctrl",)
+
+})
+
+app.controller('admin-signup-ctrl',function($scope,$http,$location){
+
+console.log("adminsignupctrl working")
+     $scope.submit = function(data){
+
+console.log("data submitted"+$scope.data)
+console.log("data submitted"+data.name)
+       $http.post("http://localhost:8080/admin-signup-data",data).then(function(response){
+         if(response.data!=""){
+           $location.path('admin-login');
+         }
+       })
+     }
+})
