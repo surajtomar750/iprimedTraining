@@ -49,9 +49,9 @@ mRouter.post('/adminaddproduct', upload.array('image',10),function (req, res) {
 
 
 
-mRouter.post('/signUpData',(req,res)=>{
-        //uController.registerUser(req,res);
-     res.redirect('/signup');
+mRouter.post('/signupdata',(req,res)=>{
+        uController.signup(req,res);
+
 })
 
 
@@ -75,19 +75,9 @@ mRouter.get('/product/:id',(req,res)=>{
 
     });
 
-    mRouter.post('/LoginData',(req,res)=>{
-    //  for(var i=0;i<users.length;i++){
-    //      if(users[i].userid == req.body.userid){
-    //          if(users[i].pass == req.body.password){
-    //              res.send("login successfull");
-    //          }else{
-    //             res.send("incorrect user or password");
-    //          }
-    //      }else{
-    //         res.send("user do not exist");
-    //      }
-    //  }
-    res.end();
+    mRouter.post('/loginData',(req,res)=>{
+        uController.authenticate(req,res);
+
     });
 
     mRouter.get('/Status',(req,res)=>{
@@ -133,7 +123,7 @@ mRouter.get('/product/:id',(req,res)=>{
 
     mRouter.post('/admin-login-check',(req,res)=>{
         console.log("admin-login-check")
-        
+
                 aController.authenticate(req,res);
 
 

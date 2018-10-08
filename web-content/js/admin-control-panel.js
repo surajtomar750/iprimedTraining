@@ -55,7 +55,7 @@ app.controller("adminctrlpanel",function($rootScope,$scope,$http){
 
 
 
-app.controller("viewmodifyproductctrl",function($rootScope,$scope,$http,$location){
+app.controller("viewmodifyproductctrl",function($rootScope,$scope,$http,$location,$window,$route){
   $http.get("http://localhost:8080/products")
   .then(function(response) {
     $scope.ProductList = response.data;
@@ -64,11 +64,12 @@ app.controller("viewmodifyproductctrl",function($rootScope,$scope,$http,$locatio
 
  $scope.deleteItem = function(index){
 
-    alert("deleteing item of id " +$scope.ProductList[index]._id)
+    console.log("deleteing item of id " +$scope.ProductList[index]._id)
     $http.get("http://localhost:8080/removeproduct/"+$scope.ProductList[index]._id).then(function(response){
           console.log("server returned "+response)
           if(response=='true'){
-                $scope.ProductList.splice(index)
+                $scope.ProductList.splice(index,1)
+                  $route.reload();
           }
 
     })}
@@ -78,6 +79,7 @@ app.controller("viewmodifyproductctrl",function($rootScope,$scope,$http,$locatio
       console.log($scope.ProductList[index])
       $rootScope.updateproduct = $scope.ProductList[index];
       $location.path('modify-product')
+
     }
 
 
@@ -100,6 +102,7 @@ app.controller('adminloginctrl',function($scope,$http,$location){
 
     $http.post("http://localhost:8080/admin-login-check",$scope.data).then(function(response){
       if(response){
+        console.log(response.data);
         $location.path('view-modify-product')
       }
     })
@@ -129,7 +132,7 @@ app.controller("admin-add-product-Ctrl",function($scope,$http){
   }
 
 })
-app.controller("ctrl",function($rootScope,$scope,$location,$http){
+app.controller("modify-product-ctrl",function($rootScope,$scope,$location,$http){
     console.log("controllerworking")
     $scope.temp;
     if($rootScope.updateproduct==$scope.temp){
@@ -144,6 +147,7 @@ app.controller("ctrl",function($rootScope,$scope,$location,$http){
         if(response.data!=""){
           $rootScope.updateproduct=""
           $scope.updateproduct==""
+          $location.path('view-modify-product')
        }
      })
     }
@@ -160,6 +164,7 @@ console.log("data submitted"+$scope.data)
 console.log("data submitted"+data.name)
        $http.post("http://localhost:8080/admin-signup-data",data).then(function(response){
          if(response.data!=""){
+           console.log(response)
            $location.path('admin-login');
          }
        })
