@@ -1,6 +1,6 @@
 
-    
-    
+
+
     <style>
 button{
     display: block; border: 1px solid #555; width: 120px;
@@ -15,26 +15,26 @@ button{
 
 
                     <div class="card custom" style="width: 80%;margin-left:10%;height: 100%">
-    
+
                                     <table>
-                                            
-                                            <tr> 
+
+                                            <tr>
                                                 <td>Sort By </td>
                                             </tr>
-                                            <tr> 
-                                                <td><button id="price_check_box"  class="btn btn-primary"  ng-click="orderList('price')" >Price</button></td></tr> 
+                                            <tr>
+                                                <td><button id="price_check_box"  class="btn btn-primary"  ng-click="orderList('price')" >Price</button></td></tr>
                                             <tr> <td>
                                                     <button id="category_check_box" class="btn btn-primary" ng-click="orderList('category')">Category</button>
                                                 </td>
-                                            </tr> 
+                                            </tr>
                                             <tr>
                                                 <td><input ng-model="myRange" type=range min=100 max=100000 ng-model="myRange"></td>
                                             </tr>
-                                            
+
                                     </table>
                             </div>
-                    
-                        
+
+
             </div>
 
 
@@ -43,27 +43,26 @@ button{
                <div class="row">
 
                   <div class="col-md-4" ng-repeat="product in products | filter:myFilter | orderBy:order">
-                        <div class="card " style="border: 1px solid #555;">  
-                            
+                        <div class="card " style="border: 1px solid #555;">
+
                             <img ng-src="{{product.image[0].image}}" class="card-img-top" >
 
                             <p class="pro-info">{{product.name}}</p>
                             <p class="pro-info">{{"PRICE: "+product.price}}</p>
                             <p class="pro-info">{{"CATEGORY: "+product.category}}</p>
-                     
+
 
                                 <button class="btn btn-primary" ng-click="go($index)">check out</button>
                                 <!-- <div class="btn" style="display: block; border: 1px solid #555; width: 120px;"><a href="#!single_product">go to product</a></div> -->
-                          
-                            
-                        </div>                  
+
+
+                        </div>
                     </div>
-          
+
 
                </div>
             </div>
-            <script src="Product.js"></script>
+            <!-- <script src="Product.js"></script> -->
         </div>
-          
-          <!-- <script scr="product.js"></script>       -->
 
+          <!-- <script scr="product.js"></script>       -->

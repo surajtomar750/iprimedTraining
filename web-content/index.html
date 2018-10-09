@@ -1,40 +1,237 @@
 <!DOCTYPE html>
 <html>
-    <head>
-       
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-   
-        <script src="/js/index.js"></script>
-        
-        <link rel="stylesheet" href="css/index.css">
-        
-        
- 
-        </head>
-        <body ng-app="mainApp">
-          
-                <nav class="navbar navbar-expand-lg navbar-light bg-light" style="position: fixed; z-index:8; width:100%;box-shadow:0px 0px 2px 0px;">
-                        <div class="form-group">
-                        <table>
-                            <tr>
-                                <td>GREAT OUTDOORS</td>
-                                 <td><input type="text"  ng-model="myFilter" class="form-control" placeholder="Search">
-                                 <td> <a class="nav-link" href="#!Login">LOGIN <span class="sr-only"></span></a></td>
-                                 <td> <a class="nav-link" href="#!signup">REGISTER<span class="sr-only"></span></a></td>
-                                 <td> <a class="nav-link" href="#!cart">CART<span class="sr-only"></span></a></td>
-                                
-                        </table>  
-                          
-                        </div>  
-                        
-                  </nav>
-                  <div class="container-fluid" style="margin-top:100px; position:absolute">
-                    <ng-view></ng-view>          
-                  </div>      
+<head>
+		<!-- <meta charset="UTF-8">  -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="css/index.css">
+	<link rel = "stylesheet" href="css/style.css">
 
-                  
-    </body>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+  <script type = "text/javascript" src="js/index.js"></script>
+	<script type="text/text/javascript" src="js/dropdown.js"></script>
+  <style>
+  /* Make the image fully responsive */
+  .carousel-inner img {
+      width: 100%;
+      height: 30%;
+  }
+  </style>
+</head>
+<body ng-app="app" ng-controller="appController">
+<div class="container-fluid">
+	<nav class="navbar navbar-inverse  navbar-fixed-top">
+		<div class="navbar-header">
+			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#"><span
+				class="glyphicon glyphicon-home" href="#login"></span> Great
+				Outdoors
+			</a>
+		</div>
+
+		<div class="collapse navbar-collapse js-navbar-collapse">
+			<ul class="nav navbar-nav">
+
+				<li>
+					<form class="navbar-form navbar-left">
+						<div class="input-group">
+							<input type="text" class="form-control" placeholder="Search" style="height: 30px; width: 400px;"> <span class="input-group-btn">
+								<button type="button" class="btn btn"
+									style="height: 30px; width: 40px;">
+									<span class="glyphicon glyphicon-search"></span>
+							</button>
+							</span>
+						</div>
+					</form>
+				</li>
+
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My
+						account <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu" role="menu">
+
+						<li><a href="#login" data-toggle="modal" data-target="#signout"><span
+							class="glyphicon glyphicon-log-in"></span> SignUp</a>
+					</li>
+
+						<li class="divider"></li>
+
+						<li><a href="#login" data-toggle="modal" data-target="#myModal"><span
+								class="glyphicon glyphicon-log-in"></span> Login</a>
+						</li>
+						<li class="divider"></li>
+						<li><a href="#myadd"><span
+								class="glyphicon glyphicon-log-in"></span> my address</a></li>
+						<li class="divider"></li>
+						<li><a href="#track"><span
+								class="glyphicon glyphicon-user"></span> My orders</a></li>
+					</ul>
+				</li>
+				<li><a href="#mycart"> <span
+						class="glyphicon glyphicon-shopping-cart"></span> My Cart
+				</a></li>
+				<li>...</li>
+			</ul>
+			<!-- Category -->
+			<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">Category <span class="caret"></span>	</a>
+						<ul class="dropdown-menu" role="menu">
+
+							<li><a href="#login"><span
+								class="glyphicon glyphicon-log-in"></span> Camping Equipment</a>
+						    </li>
+
+							<li class="divider"></li>
+
+							<li><a href="#login"><span
+									class="glyphicon glyphicon-log-in"></span> Golf Equipment</a>
+							</li>
+							<li class="divider"></li>
+							<li><a href="#myadd"><span
+									class="glyphicon glyphicon-log-in"></span> Mountaineering Equipment</a></li>
+							<li class="divider"></li>
+							<li><a href="#track"><span
+									class="glyphicon glyphicon-log-in"></span> Outdoor Protection</a>
+							</li>
+							<li class="divider"></li>
+							<li><a href="#track"><span
+								class="glyphicon glyphicon-log-in"></span> Personal Accessories</a>
+						</li>
+						</ul>
+					</li>
+			</ul><!--category-->
+		</div>
+	</nav>
+</div>
+
+<!-- login -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">Log in</h4>
+			</div>
+
+			<div class="modal-body">
+				<form role="form">
+					<div class="form-group">
+						<div class="input-group">
+							<input type="text" class="form-control" required ng-model="login.emailid" placeholder="Login">
+							<label  class="input-group-addon glyphicon glyphicon-user"></label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="input-group">
+							<input type="password" required class="form-control" required ng-model="login.password" placeholder="Password">
+							<label  class="input-group-addon glyphicon glyphicon-lock"></label>
+						</div>
+					</div>
+
+					<div class="checkbox">
+						<label>
+							<input type="checkbox"> Remember me
+						</label>
+					</div>
+				</form>
+			</div>
+
+			<div class="modal-footer">
+				<button class="form-control btn btn-primary" ng-click="submitlogin()">Login</button>
+
+				<div class="progress">
+					<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 0%;">
+						<span class="sr-only">progress</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Signup -->
+<div class="modal fade" id="signout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" ng-click="resetfields('signupreset')" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">Sign Up</h4>
+			</div>
+
+			<div class="modal-body">
+				<form role="form">
+					<div class="form-group">
+						<div class="input-group">
+							<input type="text" class="form-control" required ng-model="signup.name" placeholder="Name">
+							<label  class="input-group-addon glyphicon glyphicon-user"></label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="input-group">
+							<input type="text" class="form-control" required ng-model="signup.number" placeholder="Contacts">
+							<label  class="input-group-addon "><i class="fa fa-phone"></i></label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="input-group">
+							<input type="text" class="form-control" required id="uLogin" ng-model="signup.emailid" placeholder="Email">
+							<label for="uLogin" class="input-group-addon glyphicon glyphicon-envelope"></label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="input-group">
+							<input type="password" class="form-control" required ng-model="signup.password" placeholder="Password">
+							<label  class="input-group-addon glyphicon glyphicon-lock"></label>
+						</div>
+					</div>
+
+					<div class="checkbox">
+						<label>
+							<input type="checkbox"> Remember me
+						</label>
+					</div>
+				</form>
+			</div>
+
+			<div class="modal-footer">
+				<button class="form-control btn btn-primary" ng-click="submitsignup()">Sign Up</button>
+
+				<div class="progress">
+					<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width: 0%;">
+						<span class="sr-only">progress</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<br/>
+
+<!-- Bootstrap grid where sidebar and product page -->
+<div>
+	<div class="row">
+
+	  <div class="col-md-12">
+		<ng-view></ng-view>
+	   </div>
+	</div>
+</div>
+</body>
 </html>

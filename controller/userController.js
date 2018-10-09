@@ -3,7 +3,7 @@ var bcrypt = require('bcryptjs')
 var jwt = require('jsonwebtoken')
 
 exports.signup = function(req,res){
-  console.log("new user is being registered "+req.body.name)
+  console.log("new user is being registered "+req.body.emailid)
 
   let uObject;
   bcrypt.hash(req.body.password,10,function(err,hash){

@@ -1,14 +1,13 @@
-var app =angular.module('mainApp',["ngRoute"]);
+var app =angular.module('app',["ngRoute"]);
 app.config(function($routeProvider){
     $routeProvider.when('/Login',{
 
                     templateUrl: 'Login.htm',
-                    controller: 'login-ctrl'
+                    controller: 'loginctrl'
 
                 }).when('/',{
-
-                    templateUrl: 'products.htm',
-                    controller: 'productCtrl'
+                  templateUrl:'products.htm',
+                  controller:'productCtrl'
 
                 }).when('/single_product',{
 
@@ -27,6 +26,53 @@ app.config(function($routeProvider){
               })
    });
 
+
+
+app.controller("appController",function($rootScope,$scope,$http,$location){
+  console.log("app controller is loaded")
+  $scope.submitlogin = function(){
+    console.log($scope.login)
+    $http.post("http://localhost:8080/logindata",$scope.login).then(function(response){
+      if(response!=""){
+        console.log(response.data)
+        console.log("user registered successful")
+        $scope.login.emailid=""
+        $scope.login.password=""
+
+        $location.path('products')
+
+      }
+    })
+  }
+
+  $scope.resetfields= function(arg){
+    console.log("reset function call")
+
+      $scope.signup=""
+      $scope.login=""
+
+
+
+  }
+  $scope.submitsignup = function(){
+    console.log($scope.signup)
+    $http.post("http://localhost:8080/signupdata",$scope.signup).then(function(response){
+      if(response!==""){
+        console.log("user registered successful")
+        $scope.signup.name=""
+        $scope.signup.number=""
+        $scope.signup.emailid=""
+        $scope.signup.password;
+
+        $location.path('products')
+      }
+    })
+  }
+
+
+
+
+})
 
 
 // controller for fetching single product
@@ -65,20 +111,24 @@ app.controller("productCtrl",function($rootScope,$scope,$http,$location){
 
 // controller for cart data
 app.controller("cartCtrl",function($scope,$http){
+    if($scope.products.length){
 
-    $http.get("http://localhost:8080/cart/userId")
-   .then(function(response) {
-      if(!$scope.products){
+    }else{
+      $http.get("http://localhost:8080/cart/userId")
+     .then(function(response) {
+        if(!$scope.products){
 
-        $scope.products = response.data;
-        console.log(response.data)
-      }
+          $scope.products = response.data;
+          console.log(response.data)
+        }
 
-   });
+     });
+    }
+
  })
 
 
-app.controller('signupCtrl',function($scope,$http,$location){
+app.controller('signupctrl',function($scope,$http,$location){
   $scope.submit = function(){
     console.log($scope.data)
     $http.post("http://localhost:8080/signupdata",$scope.data).then(function(response){
@@ -90,11 +140,12 @@ app.controller('signupCtrl',function($scope,$http,$location){
   }
 })
 
-app.controller("login-Ctrl",function($scope,$http){
+app.controller("loginctrl",function($scope,$http,$location){
   $scope.submit = function(){
     console.log($scope.data)
     $http.post("http://localhost:8080/logindata",$scope.data).then(function(response){
-      if(response!==""){
+      if(response!=""){
+        console.log(response.data)
         console.log("user registered successful")
         $location.path('products')
       }

@@ -2,6 +2,7 @@ const express = require('express')
 const aController = require('./controller/adminController')
 const pController = require('./controller/productController')
 const uController = require('./controller/userController')
+const authcheck= require('./auth/auth-check')
 
 var multer = require('multer');
 var storage = multer.diskStorage({
@@ -30,7 +31,9 @@ const path = require('path');
 
 
 
-
+mRouter.get('/',(req,res)=>{
+  res.sendFile(__dirname+'/web-content/home.html')
+})
 
 mRouter.get('/admin',(req,res)=>{
     res.sendFile(__dirname+"/web-content/admin.html");
@@ -102,12 +105,12 @@ mRouter.get('/product/:id',(req,res)=>{
    })
 
 
-   mRouter.get('/removeproduct/:_id',(req,res)=>{
+   mRouter.get('/removeproduct/:_id',authcheck,(req,res)=>{
     console.log('delete product requested')
         pController.removeProduct(req,res);
    })
 
-   mRouter.post('/updateproduct',(req,res)=>{
+   mRouter.post('/updateproduct',authcheck,(req,res)=>{
        console.log('update product requested')
        pController.updateProduct(req,res);
    })
@@ -123,8 +126,7 @@ mRouter.get('/product/:id',(req,res)=>{
 
     mRouter.post('/admin-login-check',(req,res)=>{
         console.log("admin-login-check")
-
-                aController.authenticate(req,res);
+        aController.authenticate(req,res);
 
 
    })
