@@ -30,7 +30,9 @@ exports.signup = function(req,res){
 exports.authenticate = function(req,res){
   console.log("data submited for user login ");
   console.log(req.body);
-
+if(!(body.emailid && body.password)){
+    res.send("")
+}
 
 userModel.find({emailid:req.body.emailid}).then((user)=>{
   console.log("data return by db "+user)

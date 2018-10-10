@@ -12,7 +12,7 @@ app.config(function($routeProvider){
                 }).when('/single_product',{
 
                   templateUrl: 'single_product.html',
-                  controller: 'productCtrl2'
+                  controller: 'singlepctrl'
 
 
               }).when('/signup',{
@@ -54,7 +54,7 @@ app.controller("appController",function($rootScope,$scope,$http,$location){
 
 
   }
-  $scope.submitsignup = function(){
+  $scope.submitsignup = function(signup){
     console.log($scope.signup)
     $http.post("http://localhost:8080/signupdata",$scope.signup).then(function(response){
       if(response!==""){
@@ -62,7 +62,7 @@ app.controller("appController",function($rootScope,$scope,$http,$location){
         $scope.signup.name=""
         $scope.signup.number=""
         $scope.signup.emailid=""
-        $scope.signup.password;
+        $scope.signup.password="";
 
         $location.path('products')
       }
@@ -76,9 +76,9 @@ app.controller("appController",function($rootScope,$scope,$http,$location){
 
 
 // controller for fetching single product
-app.controller("productCtrl2",function($rootScope,$scope,$http){
-  console.log("inside of single product and id is "+$scope.pId)
-  $http.get("http://localhost:8080/product/"+$scope.pId)
+app.controller("singlepctrl",function($rootScope,$scope,$http){
+  console.log("inside of single product and id is "+$rootScope.pId)
+  $http.get("http://localhost:8080/product/"+$rootScope.pId)
   .then(function(response) {
     console.log("inside of single product response is here")
         console.log(response.data);
@@ -93,13 +93,14 @@ app.controller("productCtrl",function($rootScope,$scope,$http,$location){
       if(!$scope.products){
 
         $scope.products = response.data;
+        //$rootScope.products=response.data;
         console.log(response.data)
       }
 
    });
 
     $scope.go = function(index){
-    $rootScope.pId =$scope.products[index].id;
+    $rootScope.pId =$scope.products[index]._id;
     $location.path('single_product');
   }
     $scope.order='';

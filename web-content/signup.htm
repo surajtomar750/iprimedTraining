@@ -1,38 +1,52 @@
 <style>
-  .card {
-  width:500px;
-  padding: 30px;
-  z-index: 5;
-  background-color:rgb(255, 225, 225);
-  visibility: transparent;
+
+.mContainer{
+width: 400px;
+}
+.list-group-item{
+  width: 350px;
+  padding: 30px 30px;
+  margin-top: 40px;
+}
+.mHeading{
+  text-align:center;
+  margin-top: 20px;
+  font-family: sans-serif;
+}
+.myform input.invalid.ng-touched{
+  background-color: #FA787E;
+}
+.myform input.valid.ng-touched{
+  background-color: #a12d45;
 }
 </style>
-
-<div style="width:26%;margin-left:37%" class="container">
-    <!-- <form method="post" ng-submit="submit()" "> -->
-        <div class="form-group">
-          <label for="Name">User Name</label>
-          <input type="text" class="form-control" ng-model="data.name" aria-describedby="emailHelp" placeholder="Enter Your First Name">
-           </div>
-
-
-
-        <div class="form-group">
-          <label for="mobile">User Number</label>
-          <input type="text" class="form-control" ng-model="data.number" aria-describedby="emailHelp" placeholder="Enter Your Number">
-        </div>
-        <div class="form-group">
-          <label for="InputEmail1">Email address</label>
-          <input type="email" class="form-control" ng-model="data.emailid" aria-describedby="emailHelp" placeholder="Enter your Email id">
-         </div>
-        <div class="form-group">
-          <label for="InputPassword1">Password</label>
-          <input type="password" class="form-control" ng-model="data.password" placeholder="Enter Your Password">
-        </div>
-        <div class="form-group">
-
-          <label ><a href="#!Login">already Signup? Login </a></label>
-        </div>
-        <button ng-click="submit()" class="btn btn-primary">Submit</button>
-      <!-- </form> -->
+<h2 class="mHeading">SIGNUP FORM</h2>
+<div  class="container mContainer">
+  <div class="list-group-item">
+    <form class="myform">
+    <div class="form-group">
+      <label for="Name">User Name</label>
+      <input type="text" class="form-control" ng-model="data.name" aria-describedby="emailHelp" placeholder="Enter Your First Name">
+       </div>
+    <div class="form-group">
+      <label for="mobile">User Number</label>
+      <input type="text" class="form-control" ng-model="data.number" aria-describedby="emailHelp" placeholder="Enter Your Number">
     </div>
+    <div class="form-group">
+      <label for="InputEmail1">Email address</label>
+      <input type="email" class="form-control" ng-model="data.emailid" aria-describedby="emailHelp" placeholder="Enter your Email id">
+     </div>
+    <div class="form-group">
+      <label for="InputPassword1">Password</label>
+      <input type="password" class="form-control" ng-model="data.password" placeholder="Enter Your Password">
+    </div>
+    <div class="form-group">
+
+      <label ><a href="#!Login">already Signup? Login </a></label>
+    </div>
+    <button ng-disabled="form.$invalid" ng-click="submit()" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+  </div>
+    <!-- <form method="post" ng-submit="submit()" "> -->
