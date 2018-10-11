@@ -2,11 +2,9 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 var orderSchema = schema({
-    userid:Number,
-    firstname:String,
-    lastname:String,
-    email:String,
+    name:String,
+    emailid:String,
     password:String,
-    uNumber:Number
+    number:Number
 });
 module.exports = mongoose.model("order",orderSchema);

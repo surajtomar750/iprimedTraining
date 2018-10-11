@@ -69,7 +69,8 @@ app.controller("viewmodifyproductctrl",function($rootScope,$scope,$http,$locatio
           console.log("server returned "+response)
           if(response=='true'){
                 $scope.ProductList.splice(index,1)
-                  $route.reload();
+                console.log($scope.ProductList)
+
           }
 
     })}

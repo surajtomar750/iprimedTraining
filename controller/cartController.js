@@ -1,18 +1,21 @@
 const cartModel = require('../model/cart');
 
-exports.getProductsFromCart = (req,res)=>{
-cartModel.find({userid:req.params.userId},function(err,data){
+exports.getCart = (req,res)=>{
+  console.log("req params "+req.params.emailid)
+cartModel.find({},function(err,data){
     if(err) {throw err}
-    res.send(data) 
+    console.log("data return by mongodb "+data)
+    res.send(data)
 })
 }
 
 
 exports.addProductToCart = (req,res)=>{
     let pObject = cartModel({
-        userid:req.body.userId,
+        emailid:req.body.userId,
         name:req.body.name,
-        price:req.params.price
+        price:req.params.price,
+        quantity:req.params.qantity
     });
 
     pObject.save(function(err,data){

@@ -30,7 +30,7 @@ exports.signup = function(req,res){
 exports.authenticate = function(req,res){
   console.log("data submited for user login ");
   console.log(req.body);
-if(!(body.emailid && body.password)){
+if(!(req.body.emailid && req.body.password)){
     res.send("")
 }
 
@@ -46,6 +46,8 @@ userModel.find({emailid:req.body.emailid}).then((user)=>{
       const token = jwt.sign({emailid: user[0].emailid, userid:user[0]._id },'this_is_secret_for_hashing')
       console.log("token generated "+token)
       res.status(200).json({token: token})
+    }else{
+      res.send("")
     }
 });
 

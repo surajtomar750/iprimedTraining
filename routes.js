@@ -2,6 +2,7 @@ const express = require('express')
 const aController = require('./controller/adminController')
 const pController = require('./controller/productController')
 const uController = require('./controller/userController')
+const cartController = require('./controller/cartController')
 const authcheck= require('./auth/auth-check')
 
 var multer = require('multer');
@@ -60,9 +61,12 @@ mRouter.post('/signupdata',(req,res)=>{
 
 
 
-mRouter.get('/cart/:userId',(req,res)=>{
-    res.send("this is product");
-    });
+// mRouter.get('/cart/:userId',(req,res)=>{
+//     res.send("this is product");
+//   });
+mRouter.get('/cart',(req,res)=>{
+    res.sendFile(__dirname+'/web-content/cart.html')
+  })
 
 
 
@@ -105,12 +109,12 @@ mRouter.get('/product/:_id',(req,res)=>{
    })
 
 
-   mRouter.get('/removeproduct/:_id',authcheck,(req,res)=>{
+   mRouter.get('/removeproduct/:_id',(req,res)=>{
     console.log('delete product requested')
         pController.removeProduct(req,res);
    })
 
-   mRouter.post('/updateproduct',authcheck,(req,res)=>{
+   mRouter.post('/updateproduct',(req,res)=>{
        console.log('update product requested')
        pController.updateProduct(req,res);
    })
@@ -135,6 +139,11 @@ mRouter.get('/product/:_id',(req,res)=>{
    })
    mRouter.post('/admin-signup-data',(req,res)=>{
      aController.signup(req,res);
+   })
+
+   mRouter.get('/cart/:emailid',(req,res)=>{
+     cartController.getCart(req,res)
+
    })
 
 

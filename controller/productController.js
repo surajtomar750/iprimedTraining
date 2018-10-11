@@ -22,13 +22,9 @@ exports.getProduct = (req,res)=>{
 
 // for adding new product
 exports.setProducts = function(req,res){
-    console.log(req.body.id)
-    console.log(req.body.name)
-    console.log(req.body.category)
-    console.log(req.body.description)
-    console.log(req.files)
-    var image = req.files;
 
+    var image = req.files;
+console.log("inside of setProducts")
    var mObject=[];
 //list of image uploaded
     for(let i=0;i<image.length;i++){
@@ -41,7 +37,7 @@ exports.setProducts = function(req,res){
 
 
 
-    let pObject = productModel({
+    let pObject =new productModel({
         name:req.body.name,
         price:req.body.price,
         description:req.body.description,
@@ -50,14 +46,17 @@ exports.setProducts = function(req,res){
 
 
         });
+        console.log(pObject)
     var path = '';
 
     pObject.save(function(err,data){
         if(err){
             console.log(" error not insert : "+err)
+            res.status("")
+        }else{
+          res.redirect('/admin-control-panel/#!/admin-add-product');
         }
-        //res.send("Upload Completed for  product added with id:  into the database");
-        res.send('success').redirect('/admin-control-panel');
+
          });
 
 

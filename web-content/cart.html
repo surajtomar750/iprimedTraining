@@ -1,32 +1,83 @@
-<div class="container">
-    <div class="row">
-        <div class="col-sm-10">
 
-        </div>
-        <div class="col-sm-2">
-                <div class="table-responsive">          
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>Firstname</th>
-                              <th>Lastname</th>
-                              <th>Age</th>
-                              <th>City</th>
-                              <th>Country</th>
-                            </tr>
-                          </thead>
-                          <tbody ng-repeat="item in cart">
-                            <tr>
-                              
-                              <td>{{item.name}}</td>
-                              <td>{{item.quantity}}</td>
-                              <td>{{item.price}}</td>
-                             
-                            </tr>
-                          </tbody>
-                        </table>
-        </div>
-    </div>
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"> -->
+		</script>
 
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+		<!-- <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css"/> -->
+		<!-- <link rel="stylesheet" type="text/css" href="assets/css/custom.css"/> -->
+		<!-- <script src=cart.js> -->
+
+		</script>
+
+
+
+
+		<!-- <nav class="navbar">
+			<div class="container">
+				<a class="navbar-brand" href="#">Your online store</a>
+				<div class="navbar-right">
+					<div class="container minicart"></div>
+				</div>
+			</div>
+		</nav> -->
+<div>
+  <link rel="stylesheet" type="text/css" href="assets/css/custom.css"/>
+  <style>
+  </style>
+		<div class="container-fluid breadcrumbBox text-center">
+			<ol class="breadcrumb">
+				<li><a href="#">Review</a></li>
+				<li class="active"><a href="#">Order</a></li>
+				<li><a href="#">Payment</a></li>
+			</ol>
+		</div>
+
+		<div class="container text-center">
+
+			<div class="col-md-5 col-sm-12">
+				<div class="bigcart"></div>
+				<h1>Your shopping cart</h1>
+				<p>
+					Your cart is empty
+				</p>
+			</div>
+
+			<div class="col-md-7 col-sm-12 text-left">
+				<ul>
+					<li class="row list-inline columnCaptions">
+            <span>#</span>
+						<span>ITEM</span>
+            <span>QTY</span>
+						<span>Price</span>
+					</li>
+					<li class="row"  ng-repeat="item in cart">
+						<span class="quantity">{{item.quantity}}</span>
+						<span class="name">{{item.name}}</span>
+						<span class="popbtn"><a class="arrow"></a></span>
+						<span class="price">{{item.price}}</span>
+					</li>
+
+
+					<li class="row totals">
+						<span class="itemName">Total:</span>
+						<span class="price"></span>
+						<span class="order"> <a class="text-center" ng-click="submit()">ORDER</a></span>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+
+		<!-- The popover content -->
+
+		<div id="popover" style="display: none">
+			<a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
+			<a href="#"><span class="glyphicon glyphicon-remove"></span></a>
+		</div>
+
+		<!-- JavaScript includes -->
+
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="assets/js/bootstrap.min.js"></script>
+		<script src="assets/js/customjs.js"></script>
 </div>
