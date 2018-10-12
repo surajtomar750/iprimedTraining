@@ -28,11 +28,12 @@ exports.signup = function(req,res){
 
 
 exports.authenticate = function(req,res){
+  let check;
   console.log("data submited for user login ");
   console.log(req.body);
-if(!(req.body.emailid && req.body.password)){
-    res.send("")
-}
+// if(req.body.emailid==check || req.body.password==check){
+//     res.send("")
+// }
 
 userModel.find({emailid:req.body.emailid}).then((user)=>{
   console.log("data return by db "+user)
@@ -51,5 +52,5 @@ userModel.find({emailid:req.body.emailid}).then((user)=>{
     }
 });
 
-}).catch(err=>{  res.status(404).json({message:"this is catch block, user not found \n"+err}) })
+}).catch(err=>{  res.status("") })
 }

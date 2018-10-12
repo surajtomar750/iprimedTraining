@@ -76,7 +76,7 @@ mRouter.get('/products',(req,res)=>{
     pController.getProducts(req,res);
     });
 
-mRouter.get('/product/:_id',(req,res)=>{
+mRouter.get('/product/:id',(req,res)=>{
 
     pController.getProduct(req,res);
 

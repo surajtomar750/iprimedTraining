@@ -11,42 +11,88 @@ img{
     widows: 300px;
     height: 400px;
 }
+.row{
+  display: block;
+  margin-top: 20px;
+  border: 1px solid #1111;
+  padding-bottom: 20px;
+  background: #1100;
+}
+
+.constainer{
+  margin-top: 100px;
+
+
+}
+
+.productdesc{
+  display: inline;
+  border-left: 1px solid #1111;
+  border-bottom: 1px solid #1111;
+
+  font-display: block;
+  font-size: 20px;
+  font-family: sans-serif;
+  margin: 10px;
+
+}
+
+.card1{
+  display: block;
+
+
+}
+
+.card1.table{
+  padding-right : 5px;
+}
+.card2{
+  padding-top: 80px;
+}
+.card2 button{
+  width: 180px;
+  height: 40px;
+  border-radius: 30px;
+  font-weight: bold;
+
+}
+
 </style>
 
+<div class="container">
+       <div ng-repeat="item in selectedProduct" class="box">
+<div class="row">
+
+  <div class="col-sm-6">
+  <div class="productdesc">
+      <img src={{item.image[0].image}}>
+  </div>
+  </div>
+  <div class="col-sm-6"><div class="productdesc">
+    <div class="card1">
+      <table>
+          <tr>
+              <td>Name</td><td > {{' '+item.name}}</td>
+          </tr>
+          <tr>
+              <td>Price&nbsp;</td><td>{{' '+item.price}}</td>
+
+          </tr>
+          <tr>
+             <td>Description&nbsp;&nbsp;</td><td>{{' '+item.description}}</td>
+          </tr>
+
+      </table>
+    </div>
+    <div class="card2">
+          <button class="btn btn">Add To Cart</button>
+          <button class="btn" class=""> Buy </button>
+    </div>
+
+ </div>
+</div>
 
 
-       <div ng-repeat="item in selectedProduct">
 
-
-               <img src={{item.image[0].image}}>
-
-
-               <table>
-                   <tr>
-                       <td > {{'name '+item.name}}</td>
-                   </tr>
-                   <tr>
-                       <td>{{'price '+item.price}}</td>
-
-                   </tr>
-                   <tr>
-                       <td>{{'description '+item.description}}</td>
-                   </tr>
-                   <tr>
-                      <td><button class="btn btn">Add To Cart</button></td>
-                       <td><button class="btn"> Buy </button></td>
-                   </tr>
-               </table>
-
-        </div>
-
-
-        <div class="container" ng-repeat="item in selectedProduct">
-          <div class="row" ng-repeat="image in item.image">
-            <div class="col-sm-6" >
-              <img ng-src="{{image.image}}">
-            </div>
-            <div class="col-sm-6">
-            </div>
-          </div>
+           </div>
         </div>

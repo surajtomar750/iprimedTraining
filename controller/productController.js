@@ -12,7 +12,8 @@ productModel.find({},function(err,data){
 
 // for single product
 exports.getProduct = (req,res)=>{
-    productModel.find({_id:req.params._id},function(err,data){
+  console.log(req.params)
+    productModel.find({_id:req.params.id},function(err,data){
         if(err) {throw err}
         console.log("single product requested with params "+req.params.id)
         res.send(data)
@@ -54,7 +55,7 @@ console.log("inside of setProducts")
             console.log(" error not insert : "+err)
             res.status("")
         }else{
-          res.redirect('/admin-control-panel/#!/admin-add-product');
+          res.redirect('/admin-control-panel');
         }
 
          });

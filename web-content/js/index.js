@@ -13,7 +13,7 @@ app.config(function($routeProvider){
                   templateUrl:'products.htm',
                   controller:'productCtrl'
 
-                }).when('/single_product/',{
+                }).when('/single_product/:_id',{
 
                   templateUrl: 'single_product.html',
                   controller: 'singlepctrl'
@@ -83,10 +83,13 @@ app.controller("appController",function($rootScope,$scope,$http,$location){
 
 
 // controller for fetching single product
-app.controller("singlepctrl",function($rootScope,$scope,$http){
+app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams){
   console.log("inside of single product and id is "+$rootScope.pId)
 
-  $http.get("http://localhost:8080/product/"+$rootScope.pId)
+console.log($routeParams._id)
+  //$http.get("http://localhost:8080/product/"+$rootScope.pId)
+  console.log("http://localhost:8080/product/"+$routeParams._id)
+  $http.get("http://localhost:8080/product/"+$routeParams._id)
   .then(function(response) {
     console.log("inside of single product response is here")
         console.log(response.data);
@@ -114,7 +117,7 @@ app.controller("productCtrl",function($rootScope,$scope,$location,$http,dataServ
    //
     $scope.go = function(index){
      $rootScope.pId =$scope.products[index]._id;
-     $location.path('single_product');
+     $location.path('single_product/'+$scope.products[index]._id);
     }
 
     $scope.order='';
@@ -148,6 +151,8 @@ app.controller('signupctrl',function($scope,$http,$location){
       if(response!==""){
         console.log("user registered successful")
         $location.path('products')
+      }else {
+        alert("email id exists use different email")
       }
     })
   }
@@ -159,8 +164,8 @@ app.controller("loginctrl",function($scope,$http,$location){
     $http.post("http://localhost:8080/logindata",$scope.data).then(function(response){
     console.log("response from server "+response)
       if(response!=""){
-        console.log(response.data)
-        console.log("user registered successful")
+        console.log("response "+response.data)
+        console.log("user login successful")
         $location.path('products')
       }
 
