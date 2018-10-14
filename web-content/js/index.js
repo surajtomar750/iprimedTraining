@@ -145,29 +145,70 @@ app.controller("cartctrl",function($scope,$http,$rootScope){
 
 
 app.controller('signupctrl',function($scope,$http,$location){
+  $scope.data={name:"",number:"",emailid:"",password:""};
   $scope.submit = function(){
-    console.log($scope.data)
+      //form validation
+
+      console.log("what inside of data : "+$scope.data);
+    if($scope.data.name=="" || $scope.data.number=="" || $scope.data.emailid=="" || $scope.data.password==""){
+      alert("* all field are requered")
+      return;
+    }
+    else if($scope.data.number.toString().length!=10){
+      alert("!! length of mobile number should be 10 length is "+$scope.data.number.toString().length)
+      return;
+    }
+    else if ($scope.data.password.length<8) {
+        alert("!! length of password should be 8 length is "+$scope.data.password.length)
+        return;
+    }
+
+
     $http.post("http://localhost:8080/signupdata",$scope.data).then(function(response){
-      if(response!==""){
-        console.log("user registered successful")
-        $location.path('products')
-      }else {
+      if(response.data==""){
+          alert("something went wrong")
+      }else if(response.data=="exist")
+      {
         alert("email id exists use different email")
+      }else if(response.data=="success"){
+        console.log("user registered successful")
+        $location.path('Login')
       }
     })
   }
+
+
 })
 
 app.controller("loginctrl",function($scope,$http,$location){
+  $scope.data={emailid:"",password:""};
   $scope.submit = function(){
     console.log($scope.data)
+    let undef;
+
+    if($scope.data.password==""||$scope.data.emailid=="" || $scope.data.password==undef ||$scope.data.emailid==undef){
+      alert("* all field are requered")
+      return;
+    }else if ($scope.data.password.length<8) {
+        alert("!! length of password should be 8 length is "+$scope.data.password.length)
+        return;
+    }
+
+
     $http.post("http://localhost:8080/logindata",$scope.data).then(function(response){
-    console.log("response from server "+response)
-      if(response!=""){
+    console.log("response from server "+response.data)
+      if(response.data==""){
         console.log("response "+response.data)
+
+      }else if(response.data=="error"){
+        console.log("error")
+
+      }else if(response.data.token){
+        console.log("token "+response.data.token)
         console.log("user login successful")
         $location.path('products')
       }
+
 
 
     })

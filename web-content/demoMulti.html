@@ -1,0 +1,37 @@
+<style>
+.container{
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+ul.thumb{
+  padding: 0;
+  margin: 0 auto;
+  float: left;
+}
+ul.thumb li{
+  list-style: none;
+  margin: 0 10px;
+  width: 100px;
+  height: 100px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+ul.thumb li{
+  width: 100%;
+}
+
+.imgBox{
+  float: left;
+  width: 500px;
+  height: 500px;
+}
+</style>
+<div class="container">
+  <ul class="thumb">
+  <li>  <a href="image/img1.jpg" taget="imgBox"><img src="image/img1.jpg"></a></li>
+  <li>  <a href="image/img2.jpg" taget="imgBox"><img src="image/img2.jpg"></a></li>
+  <li>  <a href="image/img3.jpg" taget="imgBox"><img src="image/img3.jpg"></a></li>
+</ul>
+  <div class="imgBox"><img src="image/img1.jpeg"></div>
+</div>

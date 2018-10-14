@@ -69,7 +69,7 @@ app.controller("viewmodifyproductctrl",function($rootScope,$scope,$http,$locatio
           console.log("server returned "+response)
           if(response=='true'){
                 $scope.ProductList.splice(index,1)
-                console.log($scope.ProductList)
+                $location.path('view-modify-product')
 
           }
 

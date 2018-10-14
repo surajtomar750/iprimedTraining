@@ -6,7 +6,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         -->
-  <style>
+
+<style>
    h2{
      text-align: center;
      font-family: sans-serif;
@@ -44,17 +45,24 @@
   #imagelabel:hover{
     box-shadow: 0px 0px 4px 4px;
   }
+  select{
+    height: 28px;
+  }
+
 
    </style>
+
 </head>
 <body>
 
   <div class="container">
+    <!-- <script type="text/javascript" src="js/product_form_validation.js"></script> -->
+
           <div class="row">
 
               <div class="col-sm-12">
                       <div class="table-responsive">
-                             <form  method="post" action="http://localhost:8080/adminaddproduct"  class="card" enctype="multipart/form-data">
+                             <form name="addproductform" method="post" action="http://localhost:8080/adminaddproduct" target="#!admin-add-product" class="card" enctype="multipart/form-data">
                               <legend ><h2 id="admintext">ADMIN</h2></legend>
 
                                 <table class="table">
@@ -73,13 +81,21 @@
                                     <tr>
 
 
-                                      <td><input type="text" name="name" required></td>
-                                      <td><input type="text" name="price" required></td>
+                                      <td><input type="text" name="name" ></td>
+                                      <td><input type="number" name="price" required></td>
                                       <td><input type="text" name="description" required></td>
-                                      <td><input type="text" name="category" required></td>
+                                      <!-- <td><input type="text" name="category" required></td> -->
+                                      <td><select required ng-model="category"  name="category" >
+                                            <option selected value="Camping Equipment">Camping Equipment</option>
+                                            <option value="Golf Equipment">Golf Equipment</option>
+                                            <option  value="Mountaineering Equipment">Mountaineering Equipment</option>
+                                            <option value="Outdoor Protection">Outdoor Protection</option>
+                                            <option value="Personal Accessories">Personal Accessories</option>
+                                          </select>
+                                        </td>
                                       <td>
-                                        <label for="inputpicker" #labelimagepicker" class="btn primary">add images</label></div>
-                                        <input type="file" style="z-index: 2; opacity: 0; position: relative" id=inputpicker name="image"  multiple  accept="image/png, image/jpeg" (change)="#labelimagepicker.value="images added">
+                                        <label  for="inputpicker" #labelimagepicker" class="btn primary">add images</label></div>
+                                        <input type="file" required style="z-index: 2; opacity: 0; position: relative" id=inputpicker name="image"  multiple  accept="image/png, image/jpeg" (change)="#labelimagepicker.value="images added">
 
                                       </td>
 
@@ -92,12 +108,18 @@
                                           <td></td>
 
 
-                                          <td ><button class="btn"  >SUBMIT</button></td> </tr>
+                                          <td ><input class="btn" type="submit" ></td> </tr>
                                   </tbody>
                                 </table>
 
 
                              </form>
+
+                             <span>{{name}}</span>
+                             <span>{{price}}</span>
+                             <span>{{description}}</span>
+                             <span>{{category}}</span>
+
               </div>
              <style>
 
@@ -107,4 +129,5 @@
              </style>
 
 </body>
+
 </html>

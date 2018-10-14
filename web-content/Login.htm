@@ -45,7 +45,7 @@ padding-right: 25px;
 <h2 class="mHeading">LOGIN FORM</h2>
 <div class="container">
   <div class="list-group-item" >
-  <form method="post" class="myform" novalidate>
+  <form method="post" class="myform">
       <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
         <input type="email" required class="form-control" ng-model="data.emailid" aria-describedby="emailHelp" placeholder="Enter email">
@@ -65,6 +65,7 @@ padding-right: 25px;
       </div>
       <button ng-disabled="form.$invalid" ng-click="submit(data)" class="btn btn-primary mybtn">Login</button>
     </form>
+    <span>{{data.emailid}}</span>
   </div>
 
 </div>
