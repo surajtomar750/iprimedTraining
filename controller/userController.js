@@ -64,22 +64,23 @@ userModel.find({emailid:req.body.emailid}).then((user)=>{
 
 
 exports.placeOrder = function(req,res){
-  console.log(req.params.orderdata.quantity)
+  console.log(req.body.emailid)
 
-    // let oObject = new orderModel({
-    //   name:req.params.orderdata.name,
-    //   product_id:req.params.orderdata.product_id,
-    //   number:req.params.orderdata.number,
-    //   quantity:req.params.orderdata.quantity
-    // })
-    //
-    // oObject.save(oObject).then(function(err,data){
-    //   if(err){
-    //     console.log("error while saving data "+err)
-    //     res.send("")
-    //   }else{
-    //     console.log("order placed successfully")
-    //     res.send('success');
-    //   }
-    // })
+    let oObject = new orderModel({
+      emailid:req.body.emailid,
+      name:req.body.name,
+      product_id:req.body.product_id,
+      number:req.body.number,
+      quantity:req.body.quantity
+    })
+
+    oObject.save(function(err,data){
+      if(err){
+        console.log("error while saving data "+err)
+        res.send("")
+      }else{
+        console.log("order placed successfully")
+        res.send('success');
+      }
+    })
 }

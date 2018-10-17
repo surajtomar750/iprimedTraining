@@ -37,8 +37,16 @@ app.config(function($routeProvider){
 
 app.controller("appController",function($rootScope,$scope,$http,$location,$cookies){
   console.log("app controller is loaded")
-
   $rootScope.loginbtn='LOGIN'
+  if($cookies.loggedin=="true"){
+    $rootScope.loginbtn='LOGOUT'
+  }
+  //code to maintain value of cart afetr restart
+
+  rootScope.cart = $cookies.get("cart")
+
+
+
 
 
   $scope.login = function(loginpage){
@@ -83,7 +91,7 @@ app.controller("appController",function($rootScope,$scope,$http,$location,$cooki
 // controller for fetching single product
 app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cookies){
   $scope.quantity=1;
-  $scope.order = {emailid:"",product_id:"",name:"",quantity:"",number:""}
+  $scope.order = {emailid:"",product_id:"",name:"",quantity:"",number:"",image:""}
   console.log("inside of single product and id is "+$rootScope.pId)
 
   console.log($routeParams._id)
@@ -101,17 +109,18 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
   $scope.submitOrder = function(index){
 
     $scope.order.emailid=$cookies.get('emailid');
-
+    $scope.order.number=$cookies.get('number');
     $scope.order.product_id=$rootScope.selectedProduct[0]._id;
     $scope.order.name=$rootScope.selectedProduct[0].name;
+    $scope.order.image = $rootScope.selectedProduct[0].image[0].image
     $scope.order.quantity = $scope.quantity;
-    alert($scope.order.quantity)
+
 
 
 
     if($cookies.get('loggedin')=="true"){
 
-      $http.get("http://localhost:8080/placeOrder/"+$scope.order).then(function(response){
+      $http.post("http://localhost:8080/placeOrder",$scope.order).then(function(response){
           if(response.data=="success"){
              alert("order placed ")
 
@@ -121,8 +130,9 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
       $rootScope.currentPage='/signup/'+$routeParams._id
       $location.path('Login')
     }
+  }
 
-
+  $scope.addToCart = function(index){
 
   }
 })
@@ -219,6 +229,8 @@ app.controller('signupctrl',function($rootScope,$scope,$http,$location,$cookies)
 
 app.controller("loginctrl",function($rootScope,$scope,$http,$location,$cookies){
   $scope.data={emailid:"",password:""};
+
+
   $scope.submit = function(){
     console.log($scope.data)
     let undef;
@@ -252,8 +264,7 @@ app.controller("loginctrl",function($rootScope,$scope,$http,$location,$cookies){
         $cookies.put("username",response.data.name)
         $cookies.put("number",response.data.number)
         console.log("user login successful")
-        $rootScope.loginbtn="Logout"
-
+        $rootScope.loginbtn="LOGOUT"
         $location.path('products')
       }
 
@@ -261,6 +272,8 @@ app.controller("loginctrl",function($rootScope,$scope,$http,$location,$cookies){
 
     })
   }
+
+
 })
 
 //this service is not working
