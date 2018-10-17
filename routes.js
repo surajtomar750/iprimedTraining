@@ -36,6 +36,12 @@ mRouter.get('/',(req,res)=>{
   res.sendFile(__dirname+'/web-content/home.html')
 })
 
+mRouter.get('/placeOrder/:orderdata',(req,res)=>{
+  console.log("user ordering a product")
+  uController.placeOrder(req,res);
+
+})
+
 mRouter.get('/admin',(req,res)=>{
     res.sendFile(__dirname+"/web-content/admin.html");
 })

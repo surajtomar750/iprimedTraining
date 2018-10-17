@@ -3,8 +3,9 @@ const schema = mongoose.Schema;
 
 var orderSchema = schema({
     name:String,
+    product_id:String,
     emailid:String,
-    password:String,
-    number:Number
+    number:Number,
+    quantity:Number
 });
 module.exports = mongoose.model("order",orderSchema);

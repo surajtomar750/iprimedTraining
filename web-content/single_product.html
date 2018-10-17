@@ -56,6 +56,10 @@ img{
   font-weight: bold;
 
 }
+#quantity { padding:5px;
+            width:80px;
+            border: 1px solid #555;
+          }
 
 </style>
 
@@ -101,12 +105,18 @@ function showDivs(n) {
           <tr>
              <td>Description&nbsp;&nbsp;</td><td>{{' '+item.description}}</td>
           </tr>
+          <tr>
+            <td>
+              <label for="quantity">Qty: </label>
+              <input min="1" type="number"ng-model="quantity" id="quantity" name="quantity" value="1" />
+            </td>
+          </tr>
 
       </table>
     </div>
     <div class="card2">
-          <button class="btn btn">Add To Cart</button>
-          <button class="btn" class=""> Buy </button>
+          <button class="btn" >Add To Cart</button>
+          <button class="btn" class="btn" ng-click="submitOrder($index)"> Buy </button>
     </div>
 
  </div>

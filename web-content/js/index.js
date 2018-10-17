@@ -1,10 +1,10 @@
-var app =angular.module('app',["ngRoute"]);
+var app =angular.module('app',["ngRoute","ngCookies"]);
 app.run(function(dataService){
   dataService.getProductsFromDB();
   console.log("data services is Completed")
 })
 app.config(function($routeProvider){
-    $routeProvider.when('/Login',{
+    $routeProvider.when('/Login', {
 
                     templateUrl: 'Login.htm',
                     controller: 'loginctrl'
@@ -35,46 +35,44 @@ app.config(function($routeProvider){
 
 
 
-app.controller("appController",function($rootScope,$scope,$http,$location){
+app.controller("appController",function($rootScope,$scope,$http,$location,$cookies){
   console.log("app controller is loaded")
-  $scope.submitlogin = function(){
-    console.log($scope.login)
-    $http.post("http://localhost:8080/logindata",$scope.login).then(function(response){
-      if(response!=""){
-        console.log(response.data)
-        console.log("user registered successful")
-        $scope.login.emailid=""
-        $scope.login.password=""
 
-        $location.path('products')
-
-      }
-    })
-  }
-
-  $scope.resetfields= function(arg){
-    console.log("reset function call")
-
-      $scope.signup=""
-      $scope.login=""
+  $rootScope.loginbtn='LOGIN'
 
 
+  $scope.login = function(loginpage){
+     let undef;
+
+      if($cookies.get('loggedin')=="true"){
+          console.log("value of loggedin "+$cookies.get("loggedin"))
+          $cookies.put("loggedin",false);
+          $cookies.remove("emailid")
+          $cookies.remove("username")
+          $cookies.remove("token")
+          $rootScope.loginbtn="LOGIN"
+          $location.path('/')
+        }else{
+          $location.path('Login')
+        }
 
   }
-  $scope.submitsignup = function(signup){
-    console.log($scope.signup)
-    $http.post("http://localhost:8080/signupdata",$scope.signup).then(function(response){
-      if(response!==""){
-        console.log("user registered successful")
-        $scope.signup.name=""
-        $scope.signup.number=""
-        $scope.signup.emailid=""
-        $scope.signup.password="";
 
-        $location.path('products')
-      }
-    })
-  }
+
+  // $scope.submitsignup = function(signup){
+  //   console.log($scope.signup)
+  //   $http.post("http://localhost:8080/signupdata",$scope.signup).then(function(response){
+  //     if(response.data!==""){
+  //       console.log("user registered successful")
+  //       $scope.signup.name=""
+  //       $scope.signup.number=""
+  //       $scope.signup.emailid=""
+  //       $scope.signup.password="";
+  //
+  //       $location.path('Login')
+  //     }
+  //   })
+  // }
 
 
 
@@ -83,11 +81,13 @@ app.controller("appController",function($rootScope,$scope,$http,$location){
 
 
 // controller for fetching single product
-app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams){
+app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cookies){
+  $scope.quantity=1;
+  $scope.order = {emailid:"",product_id:"",name:"",quantity:"",number:""}
   console.log("inside of single product and id is "+$rootScope.pId)
 
-console.log($routeParams._id)
-  //$http.get("http://localhost:8080/product/"+$rootScope.pId)
+  console.log($routeParams._id)
+
   console.log("http://localhost:8080/product/"+$routeParams._id)
   $http.get("http://localhost:8080/product/"+$routeParams._id)
   .then(function(response) {
@@ -96,7 +96,44 @@ console.log($routeParams._id)
        $rootScope.selectedProduct = response.data;
 
   });
+
+
+  $scope.submitOrder = function(index){
+
+    $scope.order.emailid=$cookies.get('emailid');
+
+    $scope.order.product_id=$rootScope.selectedProduct[0]._id;
+    $scope.order.name=$rootScope.selectedProduct[0].name;
+    $scope.order.quantity = $scope.quantity;
+    alert($scope.order.quantity)
+
+
+
+    if($cookies.get('loggedin')=="true"){
+
+      $http.get("http://localhost:8080/placeOrder/"+$scope.order).then(function(response){
+          if(response.data=="success"){
+             alert("order placed ")
+
+          }
+      })
+    }else {
+      $rootScope.currentPage='/signup/'+$routeParams._id
+      $location.path('Login')
+    }
+
+
+
+  }
 })
+
+
+
+
+
+
+
+
 
 
 app.controller("productCtrl",function($rootScope,$scope,$location,$http,dataService){
@@ -144,7 +181,7 @@ app.controller("cartctrl",function($scope,$http,$rootScope){
  })
 
 
-app.controller('signupctrl',function($scope,$http,$location){
+app.controller('signupctrl',function($rootScope,$scope,$http,$location,$cookies){
   $scope.data={name:"",number:"",emailid:"",password:""};
   $scope.submit = function(){
       //form validation
@@ -180,7 +217,7 @@ app.controller('signupctrl',function($scope,$http,$location){
 
 })
 
-app.controller("loginctrl",function($scope,$http,$location){
+app.controller("loginctrl",function($rootScope,$scope,$http,$location,$cookies){
   $scope.data={emailid:"",password:""};
   $scope.submit = function(){
     console.log($scope.data)
@@ -199,13 +236,24 @@ app.controller("loginctrl",function($scope,$http,$location){
     console.log("response from server "+response.data)
       if(response.data==""){
         console.log("response "+response.data)
+        alert("wrong user id or password")
+        return;
 
       }else if(response.data=="error"){
         console.log("error")
+        alert(" error : wrong user id or password")
+        return;
 
-      }else if(response.data.token){
+      }else if(response.data.token!=""){
         console.log("token "+response.data.token)
+        $cookies.put("token",response.data.token)
+        $cookies.put("loggedin",true)
+        $cookies.put("emailid",response.data.emailid)
+        $cookies.put("username",response.data.name)
+        $cookies.put("number",response.data.number)
         console.log("user login successful")
+        $rootScope.loginbtn="Logout"
+
         $location.path('products')
       }
 

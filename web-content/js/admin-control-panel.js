@@ -67,7 +67,7 @@ app.controller("viewmodifyproductctrl",function($rootScope,$scope,$http,$locatio
     console.log("deleteing item of id " +$scope.ProductList[index]._id)
     $http.get("http://localhost:8080/removeproduct/"+$scope.ProductList[index]._id).then(function(response){
           console.log("server returned "+response)
-          if(response=='true'){
+          if(response.data=='true'){
                 $scope.ProductList.splice(index,1)
                 $location.path('view-modify-product')
 
