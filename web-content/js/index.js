@@ -37,13 +37,22 @@ app.config(function($routeProvider){
 
 app.controller("appController",function($rootScope,$scope,$http,$location,$cookies){
   console.log("app controller is loaded")
-  $rootScope.loginbtn='LOGIN'
-  if($cookies.loggedin=="true"){
-    $rootScope.loginbtn='LOGOUT'
-  }
-  //code to maintain value of cart afetr restart
 
-  rootScope.cart = $cookies.get("cart")
+  if($cookies.get("loggedin")=="true" || $cookies.get("loggedin")==true){
+    $rootScope.loginbtn='LOGOUT'
+  }else {
+      $rootScope.loginbtn='LOGIN'
+  }
+  //code to maintain value of cart after restart
+  let undef
+
+  console.log('cart is created')
+    if($cookies.get("cart")==undef ||$cookies.get("cart")==""){
+          $rootScope.cart=[]
+    }else {
+      $rootScope.cart=$cookies.get('cart')
+    }
+
 
 
 
@@ -54,7 +63,7 @@ app.controller("appController",function($rootScope,$scope,$http,$location,$cooki
 
       if($cookies.get('loggedin')=="true"){
           console.log("value of loggedin "+$cookies.get("loggedin"))
-          $cookies.put("loggedin",false);
+          $cookies.put("loggedin","false");
           $cookies.remove("emailid")
           $cookies.remove("username")
           $cookies.remove("token")
@@ -89,7 +98,7 @@ app.controller("appController",function($rootScope,$scope,$http,$location,$cooki
 
 
 // controller for fetching single product
-app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cookies){
+app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cookies,$location){
   $scope.quantity=1;
   $scope.order = {emailid:"",product_id:"",name:"",quantity:"",number:"",image:""}
   console.log("inside of single product and id is "+$rootScope.pId)
@@ -114,11 +123,9 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
     $scope.order.name=$rootScope.selectedProduct[0].name;
     $scope.order.image = $rootScope.selectedProduct[0].image[0].image
     $scope.order.quantity = $scope.quantity;
-
-
-
-
-    if($cookies.get('loggedin')=="true"){
+    $scope.order.status = "processing"
+    console.log("value of loggedin")
+    if($cookies.get('loggedin')=="true" ){
 
       $http.post("http://localhost:8080/placeOrder",$scope.order).then(function(response){
           if(response.data=="success"){
@@ -126,13 +133,36 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
 
           }
       })
-    }else {
-      $rootScope.currentPage='/signup/'+$routeParams._id
+    }
+    else {
+      //$rootScope.currentPage='/si/'+$routeParams._id
       $location.path('Login')
     }
   }
 
   $scope.addToCart = function(index){
+    // $scope.order.emailid=$cookies.get('emailid');
+    // $scope.order.number=$cookies.get('number');
+    $scope.order.product_id=$rootScope.selectedProduct[0]._id;
+    $scope.order.name=$rootScope.selectedProduct[0].name;
+    $scope.order.image = $rootScope.selectedProduct[0].image[0].image
+    $scope.order.quantity = $scope.quantity;
+    let vCart = '{name:'+$scope.order.name+',product_id:'+$scope.order.product_id+',image:'+$scope.order.image+'}'
+    let undef;
+
+
+    $rootScope.cart=[];
+    $rootScope.cart.push(vCart);
+    $cookies.put("cart",$rootScope.cart)
+    if($rootScope.cartlength==undef){
+      console.log("if")
+        $rootScope.cartlength=1;
+    }else{  console.log("else")
+        $rootScope.cartlength=$rootScope.cartlength+1;
+    }
+
+
+
 
   }
 })

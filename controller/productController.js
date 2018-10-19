@@ -55,7 +55,7 @@ console.log("inside of setProducts")
             console.log(" error not insert : "+err)
             res.status("")
         }else{
-          res.redirect('/admin-control-panel');
+          res.redirect('success');
         }
 
          });

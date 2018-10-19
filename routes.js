@@ -3,6 +3,7 @@ const aController = require('./controller/adminController')
 const pController = require('./controller/productController')
 const uController = require('./controller/userController')
 const cartController = require('./controller/cartController')
+const lController = require('./controller/logisticController')
 const authcheck= require('./auth/auth-check')
 
 var multer = require('multer');
@@ -150,6 +151,22 @@ mRouter.get('/product/:id',(req,res)=>{
    mRouter.get('/cart/:emailid',(req,res)=>{
      cartController.getCart(req,res)
 
+   })
+
+   //logistic routes
+   mRouter.get('/logistics-control-panel',(req,res)=>{
+     res.sendFile(__dirname+'/web-content/logistics-control-panel.html')
+   })
+
+   mRouter.get('/getOrders',(req,res)=>{
+     console.log('getOrders is requested')
+      lController.getOrders(req,res);
+   })
+
+
+   mRouter.post('/update-status',(req,res)=>{
+     console.log("update status")
+     lController.updateOrder(req,res);
    })
 
 

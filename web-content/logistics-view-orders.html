@@ -1,0 +1,87 @@
+
+  <style>
+    .product-list-div{
+     font-size: 12px;
+     width: 100%;
+     margin: 0;
+    }
+    .list-group-item{
+      max-width: 100%;
+
+
+
+    }
+    .list-group-item div{
+
+      border: solid black;
+      display: inline;
+      margin-left:5px ;
+      margin-right: 5px
+    }
+  #editData{
+    display: inline;
+  }
+
+  thead{
+    text-align: left;
+  }
+  input{
+    border: none;
+  }
+  textarea{
+    border: none;
+  }
+  .btn{background-color: white;}
+  </style>
+</head>
+
+
+
+    <!-- <header class="w3-container w3-light-grey w3-padding-16">
+
+    </header> -->
+      <ul class="w3-ul"   >
+
+
+
+                      <div class="list-group" >
+
+
+                            <div class="list-group-item"  >
+
+                                 <table class="table">
+                                  <thead>
+
+                                    <th>order id</th>
+                                    <th>product id</th>
+                                    <th>name</th>
+                                    <th>quantity</th>
+                                    
+                                    <th>status</th>
+                                    <th>operation</th>
+                                      </thead>
+                                    <tr style="text-align:center" id="view-data" ng-repeat="x in orderList" width="100%">
+                                      <td><input type="text" disabled ng-model="x._id" style="width:150px;"></td>
+                                      <td><input type="text" disabled ng-model="x.product_id"></td>
+                                      <td><input type="text" disabled ng-model="x.name"></td>
+                                      <td><input ng-model="x.quantity" disabled></td>
+                                      <td><img src="{{x.image}}"
+                                      <td><input type="text" disabled ng-model="x.status"></td>
+                                      <td>
+                                            <button ng-click="updateStatus($index)"  style="cursor:pointer; border:1px solid blue" class="w3-right w3-margin-right btn primary">update</button>
+
+
+                                      </td>
+                                    </tr>
+
+
+                                </table>
+
+
+                      </div>
+
+                </div>
+
+
+
+        </ul>

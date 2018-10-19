@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!-- <script type="text/javascript" src="js/modify-product.js" -->
+<html>
+<style>
+.item{
+  width: 100%;
+  margin-top: 20px;
+  position: relative;
+}
+</style>
+<div class="container">
+
+  <div class="list-group-item item"  >
+    <h2 style="text-align:center">Update Product</h2>
+<div style="width:26%;margin-left:37%"  >
+  <!-- <form method="post"   > -->
+      <div class="form-group">
+        <label for="name">order id</label>
+        <input type="text" disabled class="form-control"  ng-model="updateorder._id"id="Name"  >
+         </div>
+         <div class="form-group">
+           <label for="name">status</label>
+           <select   class="form-control"  ng-model="updateorder.status"id="Name"  >
+              <option selected  value="processing">processing</option>
+              <option value="ready-for-dispatch">ready-for-dispatch</option>
+              <option value="dispatched">dispatched</option>
+              <option value="out-for-delivery">out-for-delivery</option>
+              <option value="delivered">delivered</option>
+           </select>
+            </div>
+      <button  class="btn btn-primary" ng-click="submitUpdate(updateorder)" >Update</button>
+    <!-- </form> -->
+  </div>
+
+  </div>
+
+</div>
+
+
+
+</html>

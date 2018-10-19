@@ -1,0 +1,70 @@
+
+<style>
+.container{
+  width:26%;
+  margin-left:37%;
+ margin-top:50px;
+ width: 500px;
+ height: 500px;
+}
+.list-group-item{
+padding-top: 40px;
+padding-left: 25px;
+padding-right: 25px;
+  width: 350px;
+  height: 400px;
+}
+.myform{
+
+  width: 300px;
+  height: 350px;
+  padding-top: 30;
+}
+.mHeading{
+  text-align:center;
+  margin-top: 20px;
+  font-family: sans-serif;
+}
+.myform input.ng-invalid.ng-touched {
+			background-color:#24254;
+		}
+.myform input.ng-invalid.ng-untouched {
+    			background-color:#24254;
+    		}
+
+
+		.myform input.ng-valid.ng-touched {
+			background-color: #78FA89;
+		}
+    .mybtn{
+      border-radius: 40px;
+      width: 300px;
+    }
+
+</style>
+
+
+
+<div class="container">
+
+  <div class="list-group-item" >
+    <h2 class="mHeading">LOGISTICS LOGIN</h2>
+    <br>
+  <form method="post" class="myform">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" required class="form-control" ng-model="data.emailid" aria-describedby="emailHelp" placeholder="Enter email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" required class="form-control" ng-model="data.password" placeholder="Password">
+      </div>
+
+
+      <button ng-disabled="form.$invalid" ng-click="submitlogin(data)" class="btn btn-primary mybtn">Login</button>
+    </form>
+    <!-- <span>{{data.emailid}}</span> -->
+  </div>
+
+</div>
