@@ -110,3 +110,41 @@ exports.placeMultiOrder = (req,res)=>{
 
   }
 }
+
+
+
+exports.getOrder = function(req,res){
+    orderModel.find({emailid:req.params.emailid},function(err,data){
+      console.log("response by mongodb : "+data)
+      if(err){
+        console.log("error "+err)
+        res.send('')
+      }
+      res.send(data)
+    })
+}
+
+
+
+exports.setCart = function(req,res){
+  let undef;
+    console.log('seting cart : req.body')
+    try{
+        
+    }
+    catch(err){
+      console.log('error occurred: '+err)
+    }
+}
+
+
+exports.getCart = function(req,res){
+    cartModel.find({emailid:req.params.emailid},function(err,data){
+      console.log("response by mongodb : "+data)
+      if(err){
+        console.log("error "+err)
+        res.send('')
+      }
+      res.send(data)
+    })
+}

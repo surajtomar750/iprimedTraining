@@ -121,7 +121,9 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
 
   });
 
-
+  $scope.increment = (quantity)=>{
+    $scope.quantity=quantity;
+  }
   $scope.submitOrder = function(index){
 
     $scope.order.emailid=$cookies.get('emailid');
@@ -130,7 +132,7 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
     $scope.order.name=$rootScope.selectedProduct[0].name;
     $scope.order.image = $rootScope.selectedProduct[0].image[0].image
     $scope.order.quantity = $scope.quantity;
-    $scope.order.price = $rootScope.selectedProduct[0].price
+    $scope.order.price = $rootScope.selectedProduct[0].price*$scope.quantity
     $scope.order.status = "processing"
     console.log("value of loggedin")
     if($cookies.get('loggedin')=="true" ){
@@ -209,6 +211,8 @@ app.controller("productCtrl",function($rootScope,$scope,$location,$http,dataServ
      $scope.order=order;
     }
 
+
+
 })
 
 // controller for cart data
@@ -251,7 +255,11 @@ app.controller("cartctrl",function($scope,$http,$rootScope){
   //
   // }
 
-
+  $scope.remove = (index)=>{
+    $scope.cart.splice(index,1);
+    $rootScope.cart.splice(index,1)
+    $cookies.putObject('cart',JSON.stringify($rootScope.cart))
+  }
  })
 
 
@@ -321,6 +329,8 @@ app.controller("loginctrl",function($rootScope,$scope,$http,$location,$cookies){
         return;
 
       }else if(response.data.token!=""){
+        $cookies.remove('cart')
+        $rootScope.cartlength=0;
         console.log("token "+response.data.token)
         $cookies.put("token",response.data.token)
         $cookies.put("loggedin",true)
@@ -342,8 +352,9 @@ app.controller("loginctrl",function($rootScope,$scope,$http,$location,$cookies){
 
 
 //testing purpose only
-app.controller('ordersctrl',function($scope,$http,$rootScope){
-  $http.get('http://localhost:8080/getOrders').then((response)=>{
+app.controller('ordersctrl',function($scope,$http,$rootScope,$cookies){
+  console.log('this is email of user logged in '+$cookies.get('emailid'))
+  $http.get('http://localhost:8080/getOrder/'+$cookies.get('emailid')).then((response)=>{
     $scope.orderlist = response.data;
   })
 })

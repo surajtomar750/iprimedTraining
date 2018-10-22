@@ -108,7 +108,7 @@ function showDivs(n) {
           <tr>
             <td>
               <label for="quantity">Qty: </label>
-              <input min="1" type="number"ng-model="quantity" id="quantity" name="quantity" value="1" />
+              <input  type="number" ng-change="increment(quantity)" ng-model="quantity" id="quantity" name="quantity"  />
             </td>
           </tr>
 

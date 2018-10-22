@@ -13,6 +13,17 @@ exports.getOrders = function(req,res){
     })
 }
 
+// exports.getOrder = function(req,res){
+//     orderModel.find({emailid:req.params.emailid},function(err,data){
+//       console.log("response by mongodb : "+data)
+//       if(err){
+//         console.log("error "+err)
+//         res.send('')
+//       }
+//       res.send(data)
+//     })
+// }
+
 exports.updateOrder = function(req,res){
   console.log("status is "+req.body.status)
   orderModel.findByIdAndUpdate(req.body._id,{$set:req.body},function(err,data){
@@ -40,7 +51,7 @@ exports.authenticate = function(req,res){
 adminModel.find({emailid:req.body.emailid}).then((user)=>{
  console.log("data return by db "+user)
   console.log("password by user "+req.body.password)
-  
+
   bcrypt.compare(req.body.password,user[0].password, function(err, result) {
     // res == true
     if(err){ console.log("error : "+err)

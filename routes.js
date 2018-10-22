@@ -81,6 +81,12 @@ mRouter.get('/cart',(req,res)=>{
     res.sendFile(__dirname+'/web-content/cart.html')
   })
 
+mRouter.get('/getCart/:emailid',(req,res)=>{
+    console.log('getCart requested')
+    uController.getCart(req,res);
+
+  })
+
 
 
 
@@ -167,6 +173,12 @@ mRouter.get('/product/:id',(req,res)=>{
    mRouter.get('/getOrders',(req,res)=>{
      console.log('getOrders is requested')
       lController.getOrders(req,res);
+   })
+
+   mRouter.get('/getOrder/:emailid',(req,res)=>{
+     console.log('getOrder is requested')
+     console.log("emailid submitted by user "+req.params.emailid)
+      uController.getOrder(req,res);
    })
 
 
