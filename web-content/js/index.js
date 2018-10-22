@@ -1,4 +1,4 @@
-var app =angular.module('app',["ngRoute","ngCookies"]);
+var app =angular.module('app',["ngRoute","ngCookies","ngStorage"]);
 app.run(function(dataService){
   dataService.getProductsFromDB();
   console.log("data services is Completed")
@@ -30,6 +30,9 @@ app.config(function($routeProvider){
               }).when('/cart',{
                 templateUrl:'cart.html',
                 controller:'cartctrl'
+              }).when('/orders',{
+                templateUrl:'orders.html',
+                controller:'ordersctrl'
               })
    });
 
@@ -47,10 +50,12 @@ app.controller("appController",function($rootScope,$scope,$http,$location,$cooki
   let undef
 
   console.log('cart is created')
-    if($cookies.get("cart")==undef ||$cookies.get("cart")==""){
+    if($cookies.getObject("cart")==undef ||$cookies.getObject("cart")==""){
           $rootScope.cart=[]
     }else {
-      $rootScope.cart=$cookies.get('cart')
+      $rootScope.cart=  JSON.parse($cookies.getObject('cart'))
+      console.log($rootScope.cart)
+      $rootScope.cartlength = $rootScope.cart.length;
     }
 
 
@@ -58,7 +63,7 @@ app.controller("appController",function($rootScope,$scope,$http,$location,$cooki
 
 
 
-  $scope.login = function(loginpage){
+  $scope.login = function(){
      let undef;
 
       if($cookies.get('loggedin')=="true"){
@@ -100,12 +105,14 @@ app.controller("appController",function($rootScope,$scope,$http,$location,$cooki
 // controller for fetching single product
 app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cookies,$location){
   $scope.quantity=1;
-  $scope.order = {emailid:"",product_id:"",name:"",quantity:"",number:"",image:""}
+  $scope.order = {emailid:"",product_id:"",name:"",quantity:"",number:"",image:"",price:""}
+  $scope.item = {emailid:"",product_id:"",name:"",quantity:"",number:"",image:"",price:""}
+
   console.log("inside of single product and id is "+$rootScope.pId)
 
   console.log($routeParams._id)
 
-  console.log("http://localhost:8080/product/"+$routeParams._id)
+  //console.log("http://localhost:8080/product/"+$routeParams._id)
   $http.get("http://localhost:8080/product/"+$routeParams._id)
   .then(function(response) {
     console.log("inside of single product response is here")
@@ -123,6 +130,7 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
     $scope.order.name=$rootScope.selectedProduct[0].name;
     $scope.order.image = $rootScope.selectedProduct[0].image[0].image
     $scope.order.quantity = $scope.quantity;
+    $scope.order.price = $rootScope.selectedProduct[0].price
     $scope.order.status = "processing"
     console.log("value of loggedin")
     if($cookies.get('loggedin')=="true" ){
@@ -143,23 +151,21 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
   $scope.addToCart = function(index){
     // $scope.order.emailid=$cookies.get('emailid');
     // $scope.order.number=$cookies.get('number');
-    $scope.order.product_id=$rootScope.selectedProduct[0]._id;
-    $scope.order.name=$rootScope.selectedProduct[0].name;
-    $scope.order.image = $rootScope.selectedProduct[0].image[0].image
-    $scope.order.quantity = $scope.quantity;
-    let vCart = '{name:'+$scope.order.name+',product_id:'+$scope.order.product_id+',image:'+$scope.order.image+'}'
+
+    $scope.item.product_id=$rootScope.selectedProduct[0]._id;
+    $scope.item.name=$rootScope.selectedProduct[0].name;
+    $scope.item.image = $rootScope.selectedProduct[0].image[0].image
+    $scope.item.quantity = $scope.quantity;
+    $scope.item.price =  $rootScope.selectedProduct[0].price
+
     let undef;
-
-
-    $rootScope.cart=[];
-    $rootScope.cart.push(vCart);
-    $cookies.put("cart",$rootScope.cart)
-    if($rootScope.cartlength==undef){
-      console.log("if")
-        $rootScope.cartlength=1;
-    }else{  console.log("else")
-        $rootScope.cartlength=$rootScope.cartlength+1;
+    if($rootScope.cart){
+      $rootScope.cart.push($scope.item)
+      $cookies.putObject("cart",JSON.stringify($rootScope.cart))
+      $rootScope.cartlength = $rootScope.cart.length;
     }
+
+
 
 
 
@@ -207,15 +213,43 @@ app.controller("productCtrl",function($rootScope,$scope,$location,$http,dataServ
 
 // controller for cart data
 app.controller("cartctrl",function($scope,$http,$rootScope){
-  console.log("cart controller loaded")
 
-      $http.get("http://localhost:8080/cart/robot@mail")
-     .then(function(response) {
-          $scope.cart = response.data;
-          console.log("result from server "+response.data)
-
-
-     });
+  console.log("cart controller loaded");
+  $scope.cart = $rootScope.cart;
+      $scope.total =0;
+  for(let i=0;i<$scope.cart.length;i++){
+    $scope.total=$scope.total+$scope.cart[i].price;
+  }
+  $scope.order = {emailid:"",product_id:"",name:"",quantity:"",number:"",image:"",price:""}
+  //
+  // $scope.submitOrderFromCart = ()=>{
+  //   if($cookies.get('loggedin')!="true"){
+  //     alert('please login first')
+  //     $location.path('Login')
+  //     return;
+  //   }
+  //   let listOfOrders=[]
+  //   for(let i=0;i<$scope.cart.length;i++){
+  //     $scope.order.emailid=$cookies.get('emailid');
+  //     $scope.order.number=$cookies.get('number');
+  //     $scope.order.product_id=$scope.cart[0]._id;
+  //     $scope.order.name=$scope.cart[0].name;
+  //     $scope.order.image = $scope.cart[0].image[0].image
+  //     $scope.order.quantity = $scope.cart[0].quantity;
+  //     $scope.order.price = $scope.cart[0].price
+  //     $scope.order.status = "processing"
+  //     listOfOrders.push($scope.order)
+  //   }
+  //   let data = {orders:listOfOrders}
+  //   $http.post('http://localhost:8080/placeOrders',data).then(function(response){
+  //     if(response.data==""){
+  //       alert('something went wrong')
+  //     }else {
+  //         alert('success')
+  //     }
+  //   })
+  //
+  // }
 
 
  })
@@ -305,6 +339,18 @@ app.controller("loginctrl",function($rootScope,$scope,$http,$location,$cookies){
 
 
 })
+
+
+//testing purpose only
+app.controller('ordersctrl',function($scope,$http,$rootScope){
+  $http.get('http://localhost:8080/getOrders').then((response)=>{
+    $scope.orderlist = response.data;
+  })
+})
+
+
+
+
 
 //this service is not working
 app.service('dataService',function($http){

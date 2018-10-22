@@ -9,11 +9,7 @@
 
 		</script>
 
-<style media="screen">
-	li{
-		list-style-type: none;
-	}
-</style>
+
 
 
 		<!-- <nav class="navbar">
@@ -27,45 +23,70 @@
 <div>
   <link rel="stylesheet" type="text/css" href="assets/css/custom.css"/>
   <style>
+			.mcontainer{
+				margin-top: 40px;
+			}
+			.mcontainer ul{
+				list-style-type: none;
+			}
+			.quantity{
+				text-align: center;
+				margin-left: 10px;
+				font-size: 16px;
+				color: #727578;
+				float: right;
+			}
+			.itemName{
+				margin-right: 45px;
+
+			}
+			.status{
+				float: right;
+				font-size: 16px;
+				color: #727578;
+				font-weight: bold;
+				margin-right: 10px;
+			}
+.price{
+	margin-right: 15px;
+}
   </style>
-		<div class="container-fluid breadcrumbBox text-center">
+		<!-- <div class="container-fluid breadcrumbBox text-center">
 			<ol class="breadcrumb">
 				<li><a href="#">Review</a></li>
 				<li class="active"><a href="#">Order</a></li>
 				<li><a href="#">Payment</a></li>
 			</ol>
-		</div>
+		</div> -->
 
-		<div class="container text-center">
+		<div class="container-fluid text-center mcontainer">
 
-			<div class="col-md-5 col-sm-12">
-				<div class="bigcart"></div>
-				<h1>Your shopping cart</h1>
-				<p>
-					Your cart has {{cartlength}} items
-				</p>
-			</div>
 
-			<div class="col-md-7 col-sm-12 text-left">
+
+			<div class="col-md-12 col-sm-12 text-left">
 				<ul>
 					<li class="row list-inline columnCaptions">
-						<span>QTY</span>
-						<span>ITEM</span>
-						<span>Price</span>
+						<span class="itemName">#</span>
+						<span class="itemName">ITEM</span>
+
+						<span class="quantity">Price</span>
+						<span class="quantity">QTY</span>
+						<span class="quantity">status</span>
+
 					</li>
-					<li class="row"  ng-repeat="item in cart">
-						<span class="quantity">{{item.quantity}}</span>
+					<li class="row"  ng-repeat="item in orderlist">
+            <span><a href={{"#!single_product/"+item.product_id}}><img src="{{item.image}}"></span>
+							<span class="itemName seq">{{$index+1}}</span>
 						<span class="itemName">{{item.name}}</span>
-						<span class="popbtn"><a class="arrow"></a></span>
+
+						<!-- <span class="popbtn"><a class="arrow"></a></span> -->
 						<span class="price">{{item.price}}</span>
+						<span class="quantity">{{item.quantity}}</span>
+						<span class="status">{{item.status}}</span>
 					</li>
 
 
-					<li class="row totals">
-						<span class="itemName">Total:</span>
-						<span class="price">{{total}}</span>
-						<span class="order"> <a class="text-center" ng-click="submitOrderFromCart()">ORDER</a></span>
-					</li>
+
 				</ul>
 			</div>
 
@@ -74,6 +95,7 @@
 		<!-- The popover content -->
 
 		<div id="popover" style="display: none">
+			<a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
 			<a href="#"><span class="glyphicon glyphicon-remove"></span></a>
 		</div>
 

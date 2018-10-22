@@ -4,14 +4,7 @@ var jwt = require('jsonwebtoken')
 
 exports.signup = function(req,res){
 
-  aObject.find(req.body.emailid,(err,data)=>{
-    if(err){
-      console.log(err);
-    }
-    else if(data){
-      res.send("")
-    }
-  })
+
   console.log("new admin is being registered "+req.body.name)
   console.log("new admin is being registered "+req.body.emailid)
   console.log("new admin is being registered "+req.body.password)
@@ -26,7 +19,7 @@ exports.signup = function(req,res){
 
     aObject.save((err,data)=>{
       if(err){console.log(" error in admin-signup controller "+err)
-        res.send("");
+        res.send("error");
         }
         res.send('success')
     });

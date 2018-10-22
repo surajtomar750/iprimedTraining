@@ -43,6 +43,12 @@ mRouter.post('/placeOrder',(req,res)=>{
 
 })
 
+mRouter.post('/placeOrders',(req,res)=>{
+  console.log("user ordering a product")
+  uController.placeMultiOrder(req,res);
+
+})
+
 mRouter.get('/admin',(req,res)=>{
     res.sendFile(__dirname+"/web-content/admin.html");
 })
@@ -167,6 +173,11 @@ mRouter.get('/product/:id',(req,res)=>{
    mRouter.post('/update-status',(req,res)=>{
      console.log("update status")
      lController.updateOrder(req,res);
+   })
+
+   mRouter.post('/logisticsLogin',(req,res)=>{
+     console.log('logisticsLogin requested')
+     lController.authenticate(req,res);
    })
 
 

@@ -71,7 +71,8 @@ exports.placeOrder = function(req,res){
       name:req.body.name,
       product_id:req.body.product_id,
       number:req.body.number,
-      quantity:req.body.quantity
+      quantity:req.body.quantity,
+      price:req.body.price
     })
 
     oObject.save(function(err,data){
@@ -83,4 +84,29 @@ exports.placeOrder = function(req,res){
         res.send('success');
       }
     })
+}
+
+exports.placeMultiOrder = (req,res)=>{
+  for(let i=0;i<req.body.orders.length;i++){
+    let oObject = new orderModel({
+      emailid:req.body.orders[i].emailid,
+      name:req.body.orders[i].name,
+      product_id:req.body.orders[i].product_id,
+      number:req.body.orders[i].number,
+      quantity:req.body.orders[i].quantity,
+      price:req.body.orders[i].price
+    })
+
+    oObject.save(function(err,data){
+      if(err){
+        console.log("error while saving data "+err)
+        res.send("")
+        return;
+      }
+    })
+
+    res.send('success')
+
+
+  }
 }

@@ -7,6 +7,7 @@ var orderSchema = schema({
     emailid:String,
     number:Number,
     quantity:Number,
+    price:Number,
     status:String
 });
 module.exports = mongoose.model("order",orderSchema);
