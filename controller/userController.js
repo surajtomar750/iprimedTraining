@@ -1,5 +1,6 @@
 var userModel = require('../model/user')
 var orderModel = require('../model/order')
+var cartModel = require('../model/cart')
 var bcrypt = require('bcryptjs')
 var jwt = require('jsonwebtoken')
 
@@ -64,7 +65,7 @@ userModel.find({emailid:req.body.emailid}).then((user)=>{
 
 
 exports.placeOrder = function(req,res){
-  console.log(req.body.emailid)
+  console.log(req.body)
 
     let oObject = new orderModel({
       emailid:req.body.emailid,
@@ -128,13 +129,33 @@ exports.getOrder = function(req,res){
 
 exports.setCart = function(req,res){
   let undef;
-    console.log('seting cart : req.body')
-    try{
-        
-    }
-    catch(err){
-      console.log('error occurred: '+err)
-    }
+    console.log('data is : '+req.body.emailid)
+
+        // if(req.body.emailid==undef){
+        //   res.send("invalid")
+        //   return;
+        // }
+
+        let cObject = new cartModel({
+          emailid:req.body.emailid,
+          product_id:req.body.product_id,
+          name:req.body.name,
+          price:req.body.price,
+          quantity:req.body.quantity,
+          image:req.body.image
+        })
+
+        cObject.save(function(err,data){
+          if(err){
+            console.log('error : '+err)
+            res.send('error')
+            return;
+          }else{
+            res.send('success')
+          }
+        })
+
+
 }
 
 
@@ -144,7 +165,20 @@ exports.getCart = function(req,res){
       if(err){
         console.log("error "+err)
         res.send('')
+        return;
       }
       res.send(data)
     })
 }
+
+exports.removeFromCart = function(req,res){
+  cartModel.findByIdAndDelete(req.params.id,(err)=>{
+      if(err){
+          console.log("error in removeProduct function "+err)
+          res.send("error")
+      }else{
+         res.send("success");
+      }
+
+
+})}

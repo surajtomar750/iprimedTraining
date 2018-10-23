@@ -1,4 +1,4 @@
-var app =angular.module('app',["ngRoute"]);
+var app =angular.module('app',["ngRoute","ngCookies"]);
 app.config(function($routeProvider){
     $routeProvider.when('/admin-login',{
 
@@ -6,8 +6,8 @@ app.config(function($routeProvider){
                     controller: 'adminloginctrl'
 
                 }).when('/',{
-                  templateUrl:'admin-login.html',
-                  controller:'adminloginctrl'
+                  templateUrl: 'view-modify-product.htm',
+                  controller: 'viewmodifyproductctrl'
                 }).when('/admin',{
 
                     templateUrl: 'admin.html',
@@ -40,22 +40,90 @@ app.config(function($routeProvider){
 
 
 // controller for fetching products for admin
-app.controller("adminctrlpanel",function($rootScope,$scope,$http){
-  console.log("inside the controller adminctrlpanel")
-  $http.get("http://localhost:8080/products")
-  .then(function(response) {
-    console.log("inside of single product response is here")
-        console.log(response.data);
-       $rootScope.ProductList = response.data;
-       console.log($rootScope.ProductList);
+app.controller("adminctrlpanel",function($rootScope,$scope,$http,$cookies,$location){
+  $rootScope.loginbtn = "LOGIN"
 
-  });
+  if($cookies.get("adminloggedin")=="true"){
+    $rootScope.loginbtn = "LOGOUT"
+    console.log($cookies.get("adminloggedin"))
+    $location.path('view-modify-product')
+
+  }else{
+    $rootScope.loginbtn = "LOGIN"
+    $location.path('/admin-login')
+
+  }
+
+
+
+  $scope.login = function(){
+     let undef;
+     console.log("login check is called")
+      if($cookies.get('adminloggedin')=="true"){
+          console.log("value of loggedin "+$cookies.get("adminloggedin"))
+          $cookies.put("adminloggedin","false");
+          $rootScope.loginbtn="LOGIN"
+          $location.path('admin-login')
+        }else{
+
+          $location.path('admin-login')
+        }
+
+  }
+
+$scope.gotoaddproductpage = function(){
+  if($cookies.get('adminloggedin')=="true"){
+      console.log("value of loggedin "+$cookies.get("adminloggedin"))
+      $location.path('admin-add-product')
+    }else{
+      $location.path('admin-login')
+    }
+}
+
+
+
+$scope.gotoviewproductspage = function(){
+  if($cookies.get('adminloggedin')=="true"){
+      console.log("value of loggedin "+$cookies.get("adminloggedin"))
+      $location.path('view-modify-product')
+    }else{
+      $location.path('admin-login')
+    }
+}
+
+
+
+  // console.log("inside the controller adminctrlpanel")
+  // $http.get("http://localhost:8080/products")
+  // .then(function(response) {
+  //   console.log("inside of single product response is here")
+  //       console.log(response.data);
+  //      $rootScope.ProductList = response.data;
+  //      console.log($rootScope.ProductList);
+  //
+  // });
+
+
+
 })
 
 
 
 
-app.controller("viewmodifyproductctrl",function($rootScope,$scope,$http,$location,$window,$route){
+app.controller("viewmodifyproductctrl",function($rootScope,$scope,$http,$location,$cookies,$route){
+
+  if($cookies.get("adminloggedin")=="true"){
+    $rootScope.loginbtn = "LOGOUT"
+    console.log($cookies.get("adminloggedin"))
+    //$location.path('view-modify-product')
+
+  }else{
+    $rootScope.loginbtn = "LOGIN"
+    $location.path('/admin-login')
+
+  }
+
+
   $http.get("http://localhost:8080/products")
   .then(function(response) {
     $scope.ProductList = response.data;
@@ -94,19 +162,36 @@ app.controller("viewmodifyproductctrl",function($rootScope,$scope,$http,$locatio
 
 
 
-app.controller('adminloginctrl',function($scope,$http,$location){
-  $scope.submitAdminLogin  = function(){
-    console.log("email submitted "+$scope.data.emailid)
-    console.log("password submited"+$scope.data.password)
-    console.log($scope.data)
+app.controller('adminloginctrl',function($scope,$http,$location,$cookies,$rootScope){
+
+  $scope.submitAdminLogin  = function(data){
+    let undef;
 
 
-    $http.post("http://localhost:8080/admin-login-check",$scope.data).then(function(response){
-      if(response){
-        console.log(response.data);
-        $location.path('view-modify-product')
-      }
-    })
+    if($cookies.get("adminloggedin")=="true"){
+      $location.path('view-modify-product')
+    }
+
+    if(data == undef || data.emailid==undef || data.password == undef){
+      alert("all field required")
+      return;
+    }else{
+      console.log("else")
+      $http.post("http://localhost:8080/admin-login-check",data).then(function(response){
+        if(response.data.token!=""){
+          $cookies.put("adminloggedin","true")
+          $rootScope.loginbtn = "LOGOUT"
+          console.log(response.data.token);
+          $location.path('view-modify-product')
+        }else{
+          console.log("id or paaaword is wrong")
+        }
+      })
+    }
+
+
+
+
   }
 })
 
@@ -115,7 +200,7 @@ app.controller('adminloginctrl',function($scope,$http,$location){
 
 
 
-
+//not in use
 app.controller("admin-add-product-Ctrl",function($scope,$http){
 
   $scope.submitProduct = ()=>{
@@ -171,3 +256,36 @@ console.log("data submitted"+data.name)
        })
      }
 })
+
+
+
+function submitproduct(){
+  console.log("function is working")
+  let name = document.getElementById("nameofproduct")
+  let price = document.getElementById("priceofproduct")
+  let desc = document.getElementById("descofproduct")
+  let cat = document.getElementById("catofproduct")
+  console.log("value of cat is "+cat.value)
+  if(name.value==""){
+    alert("please provide name")
+    return false;
+  }else if(price.value==""){
+    alert("please provide price")
+    return false;
+  }else if(desc.value==""){
+    alert("please provide description")
+    return false;
+
+  }else if(cat.value=='? undefined:undefined ?'){
+    alert("please provide category")
+    return false;
+  }
+}
+
+
+function clearproduct(){
+document.getElementById("nameofproduct").value=""
+document.getElementById("priceofproduct").value=""
+document.getElementById("descofproduct").value=""
+document.getElementById("catofproduct").value=""
+}

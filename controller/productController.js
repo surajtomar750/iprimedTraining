@@ -53,9 +53,9 @@ console.log("inside of setProducts")
     pObject.save(function(err,data){
         if(err){
             console.log(" error not insert : "+err)
-            res.status("")
+            res.send("product exists")
         }else{
-          res.redirect('success');
+          res.send("success");
         }
 
          });

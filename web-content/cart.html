@@ -13,6 +13,17 @@
 	li{
 		list-style-type: none;
 	}
+
+
+	.arrow{
+		width: 0;
+		height: 0;
+		border-left: 6px solid transparent;
+		border-right: 6px solid transparent;
+		border-top: 6px solid #858e97;
+		margin-bottom: 40px;
+	}
+
 </style>
 
 
@@ -54,10 +65,18 @@
 						<span>Price</span>
 					</li>
 					<li class="row"  ng-repeat="item in cart">
+						<table>
+							<tr>
+
+							</tr>
+						</table>
 						<span class="quantity">{{item.quantity}}</span>
 						<span class="itemName">{{item.name}}</span>
-						<span class="popbtn"><a class="arrow"></a></span>
+						<span class="popbtn"><a ng-click="deletefromcart($index)">X</a></span>
 						<span class="price">{{item.price}}</span>
+
+						<!-- <button type="button" name="button" id="removeitemcart" class="right">X</button> -->
+
 					</li>
 
 
@@ -73,9 +92,7 @@
 
 		<!-- The popover content -->
 
-		<div id="popover" style="display: none">
-			<a href="#"><span class="glyphicon glyphicon-remove"></span></a>
-		</div>
+
 
 		<!-- JavaScript includes -->
 

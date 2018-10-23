@@ -87,6 +87,20 @@ mRouter.get('/getCart/:emailid',(req,res)=>{
 
   })
 
+mRouter.post('/setCart',(req,res)=>{
+    console.log('setCart requested')
+    console.log('data is : '+req.body)
+    uController.setCart(req,res);
+
+  })
+
+mRouter.get('/removeFromCart/:id',(req,res)=>{
+  console.log("removeFromCart")
+  uController.removeFromCart(req,res)
+})
+
+
+
 
 
 

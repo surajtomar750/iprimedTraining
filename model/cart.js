@@ -3,8 +3,10 @@ const schema = mongoose.Schema;
 
 var cartSchema = schema({
     emailid:String,
+    product_id:String,
     name:String,
     price:String,
-    quantity:Number
+    quantity:Number,
+    image:String
 });
-module.exports = mongoose.model("cart",cartSchema);
+module.exports = mongoose.model("carts",cartSchema);
