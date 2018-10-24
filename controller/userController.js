@@ -152,6 +152,7 @@ exports.setCart = function(req,res){
             for(let i=0; i<data.length && exists != true;i++){
               if(data[i].name==req.body.name){
                 exists =  true
+                product = data[i]
               }
             }
             if(!exists){
@@ -173,23 +174,25 @@ exports.setCart = function(req,res){
                   res.send('success')
                 }
               })
-            }else if(exists){
+            }else{
               console.log('product exists')
+              console.log(data._id)
+              product.quantity=product.quantity+1
               let cObject = {
                 _id:product._id,
                 emailid:req.body.emailid,
                 product_id:req.body.product_id,
                 name:req.body.name,
-                price:req.body.price,
-                quantity:parseInt(req.body.quantity)+1,
+                price:req.body.price*product.quantity,
+                quantity:product.quantity,
                 image:req.body.image
               }
 
-              cartModel.findByIdAndUpdate(product._id,{$set:cObject},(err,data)=>{
+              cartModel.findByIdAndUpdate(product._id,{$set:cObject},(err,newdata)=>{
                 if(err){
                   console.log('ERROR: '+err)
                   res.send('')
-                }else {
+                }else { console.log('updateting quantity')
                   res.send('success')
                 }
               })
@@ -246,10 +249,6 @@ exports.setCart = function(req,res){
         //     }
         //   })
         // }
-
-
-
-
 
 }
 
