@@ -3,6 +3,7 @@ var orderModel = require('../model/order')
 var cartModel = require('../model/cart')
 var bcrypt = require('bcryptjs')
 var jwt = require('jsonwebtoken')
+var _ = require('underscore');
 
 exports.signup = function(req,res){
   console.log("new user is being registered "+req.body.emailid)
@@ -88,6 +89,8 @@ exports.placeOrder = function(req,res){
 }
 
 exports.placeMultiOrder = (req,res)=>{
+  let result=true;
+  console.log("items in the cart to be placed : "+req.body.orders.length)
   for(let i=0;i<req.body.orders.length;i++){
     let oObject = new orderModel({
       emailid:req.body.orders[i].emailid,
@@ -101,14 +104,18 @@ exports.placeMultiOrder = (req,res)=>{
     oObject.save(function(err,data){
       if(err){
         console.log("error while saving data "+err)
-        res.send("")
-        return;
+        result=false
+      }else{
+        console.log("item "+i+" has been saved")
       }
     })
 
+  }
+
+  if(result){
     res.send('success')
-
-
+  }else {
+    res.send('')
   }
 }
 
@@ -128,32 +135,120 @@ exports.getOrder = function(req,res){
 
 
 exports.setCart = function(req,res){
-  let undef;
-    console.log('data is : '+req.body.emailid)
-
-        // if(req.body.emailid==undef){
-        //   res.send("invalid")
-        //   return;
-        // }
-
-        let cObject = new cartModel({
-          emailid:req.body.emailid,
-          product_id:req.body.product_id,
-          name:req.body.name,
-          price:req.body.price,
-          quantity:req.body.quantity,
-          image:req.body.image
-        })
-
-        cObject.save(function(err,data){
+        let undef;
+        let exists=false;
+        let product;
+        console.log('emailid  is : '+req.body.emailid)
+        cartModel.find({emailid:req.body.emailid},function(err,data){
           if(err){
-            console.log('error : '+err)
-            res.send('error')
+            console.log('error:line 144 : '+err)
+            res.send('')
             return;
-          }else{
-            res.send('success')
+          }
+          //console.log('data from database '+data)
+          console.log(!_.isEqual(data,null))
+
+          if(!_.isEqual(data,null)){
+            for(let i=0; i<data.length && exists != true;i++){
+              if(data[i].name==req.body.name){
+                exists =  true
+              }
+            }
+            if(!exists){
+              console.log('product not exists')
+              let cObject = new cartModel({
+                emailid:req.body.emailid,
+                product_id:req.body.product_id,
+                name:req.body.name,
+                price:req.body.price,
+                quantity:req.body.quantity,
+                image:req.body.image
+              })
+
+              cObject.save(function(err,data){
+                if(err){
+                  console.log('error : '+err)
+                  res.send('')
+                }else{
+                  res.send('success')
+                }
+              })
+            }else if(exists){
+              console.log('product exists')
+              let cObject = {
+                _id:product._id,
+                emailid:req.body.emailid,
+                product_id:req.body.product_id,
+                name:req.body.name,
+                price:req.body.price,
+                quantity:parseInt(req.body.quantity)+1,
+                image:req.body.image
+              }
+
+              cartModel.findByIdAndUpdate(product._id,{$set:cObject},(err,data)=>{
+                if(err){
+                  console.log('ERROR: '+err)
+                  res.send('')
+                }else {
+                  res.send('success')
+                }
+              })
+            }
+
+
+
+
+
+
+          }else {
+            console.log('product not exists')
           }
         })
+
+        // if(!exists){
+        //   console.log('product not exists')
+        //   let cObject = new cartModel({
+        //     emailid:req.body.emailid,
+        //     product_id:req.body.product_id,
+        //     name:req.body.name,
+        //     price:req.body.price,
+        //     quantity:req.body.quantity,
+        //     image:req.body.image
+        //   })
+        //
+        //   cObject.save(function(err,data){
+        //     if(err){
+        //       console.log('error : '+err)
+        //       res.send('')
+        //     }else{
+        //       res.send('success')
+        //     }
+        //   })
+        // }
+        // else if(exists){
+        //   console.log('product exists')
+        //   let cObject = {
+        //     _id:product._id,
+        //     emailid:req.body.emailid,
+        //     product_id:req.body.product_id,
+        //     name:req.body.name,
+        //     price:req.body.price,
+        //     quantity:parseInt(req.body.quantity)+1,
+        //     image:req.body.image
+        //   }
+        //
+        //   cartModel.findByIdAndUpdate(product._id,{$set:cObject},(err,data)=>{
+        //     if(err){
+        //       console.log('ERROR: '+err)
+        //       res.send('')
+        //     }else {
+        //       res.send('success')
+        //     }
+        //   })
+        // }
+
+
+
 
 
 }
@@ -161,7 +256,7 @@ exports.setCart = function(req,res){
 
 exports.getCart = function(req,res){
     cartModel.find({emailid:req.params.emailid},function(err,data){
-      console.log("response by mongodb : "+data)
+
       if(err){
         console.log("error "+err)
         res.send('')
@@ -179,6 +274,4 @@ exports.removeFromCart = function(req,res){
       }else{
          res.send("success");
       }
-
-
 })}

@@ -36,13 +36,13 @@ const path = require('path');
 mRouter.get('/',(req,res)=>{
   res.sendFile(__dirname+'/web-content/home.html')
 })
-
+// for placing single order
 mRouter.post('/placeOrder',(req,res)=>{
   console.log("user ordering a product")
   uController.placeOrder(req,res);
 
 })
-
+// for placing multiple orders
 mRouter.post('/placeOrders',(req,res)=>{
   console.log("user ordering a product")
   uController.placeMultiOrder(req,res);

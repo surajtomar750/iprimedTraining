@@ -40,14 +40,17 @@ app.config(function($routeProvider){
 
 app.controller("appController",function($rootScope,$scope,$http,$location,$cookies){
   console.log("app controller is loaded")
-//this part of code check if user loogedin or not and accordingly set cartlength and cart
+
+//check if user loogedin or not and accordingly set cartlength and cart
   if($cookies.get("loggedin")=="true" || $cookies.get("loggedin")==true){
     $rootScope.loginbtn='LOGOUT'
     let emailid = $cookies.get('emailid')
-    $http.get('http:localhost:8080/getCart/'+emailid).then(function(response){
+    $http.get('http://localhost:8080/getCart/'+emailid).then(function(response){
 
       if(response.data){
         $rootScope.cart = response.data;
+        $rootScope.cartlength=$rootScope.cart.length;
+
       }else{
         alert("something went wrong")
       }
@@ -55,21 +58,21 @@ app.controller("appController",function($rootScope,$scope,$http,$location,$cooki
   }else {
       $rootScope.loginbtn='LOGIN'
   }
-  //code to maintain value of cart after restart
+
+//code to maintain value of cart after restart
   let undef
 
-  console.log('cart is created')
-    if($rootScope.cart=="" || $rootScope.cart==undef){
-          $rootScope.cart=[]
+    if($rootScope.cart==undef || $rootScope.cart==""){
+      $rootScope.cart=[]
+      $rootScope.cartlength=0;
+      console.log('cart is created')
     }else {
+      console.log('cart already exists with length: '+$rootScope.cart.length)
       $rootScope.cartlength = $rootScope.cart.length;
     }
 
 
-
-
-
-
+//to handle login or logout button events
   $scope.login = function(){
      let undef;
 
@@ -86,41 +89,6 @@ app.controller("appController",function($rootScope,$scope,$http,$location,$cooki
         }
 
   }
-
-
-  // $scope.submitsignup = function(signup){
-  //   console.log($scope.signup)
-  //   $http.post("http://localhost:8080/signupdata",$scope.signup).then(function(response){
-  //     if(response.data!==""){
-  //       console.log("user registered successful")
-  //       $scope.signup.name=""
-  //       $scope.signup.number=""
-  //       $scope.signup.emailid=""
-  //       $scope.signup.password="";
-  //
-  //       $location.path('Login')
-  //     }
-  //   })
-  // }
-//if loggedin then
-let emailid = $cookies.get("emailid")
-  if(emailid){
-    console.log(emailid)
-    $http.get('http://localhost:8080/getCart/'+emailid).then(function(response){
-      if(response.data!=""){
-        $rootScope.cart = response.data;
-        console.log('something we get from server')
-        $rootScope.cartlength = $rootScope.cart.length;
-      }else{
-        console.log("something went wrong")
-      }
-    })
-  }else {
-    console.log("not logged in")
-  }
-
-
-
 
 })
 
@@ -166,11 +134,11 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
       })
     }
     else {
-      //$rootScope.currentPage='/si/'+$routeParams._id
       $location.path('Login')
     }
   }
 
+// to adding product to carts collection in mongodb
   $scope.addToCart = function(index){
     console.log('addToCart is called')
     let undef;
@@ -181,6 +149,7 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
     $scope.item.image = $rootScope.selectedProduct[0].image[0].image
     $scope.item.quantity = $scope.quantity;
     $scope.item.price =  $rootScope.selectedProduct[0].price
+    // for debugging
     console.log(" item is "+$scope.item.emailid)
     console.log(" item is "+$scope.item.name)
     console.log(" item is "+$scope.item.number)
@@ -191,11 +160,10 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
 
 
     if($cookies.get('loggedin')=="true" ){
-      if($rootScope.cart=="")
-
       $http.post("http://localhost:8080/setCart",$scope.item).then(function(response){
           if(response.data=="success"){
              alert("item is added to to the cart ")
+             $rootScope.cartlength = parseInt($rootScope.cartlength)+1;
           }else{
             console.log('some error occured')
             alert("some error occured ")
@@ -203,27 +171,13 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
       })
     }
     else {
-      //$rootScope.currentPage='/si/'+$routeParams._id
       $location.path('Login')
     }
-
-
-
-
-
-
   }
 })
 
 
-
-
-
-
-
-
-
-
+//controller for product view or product.html
 app.controller("productCtrl",function($rootScope,$scope,$location,$http,dataService){
 
     $http.get("http://localhost:8080/products")
@@ -235,20 +189,15 @@ app.controller("productCtrl",function($rootScope,$scope,$location,$http,dataServ
         console.log(response.data)
       }
       });
-   //$scope.products= dataService.getProducts();
 
-
-
-   //
     $scope.go = function(index){
      $rootScope.pId =$scope.products[index]._id;
      $location.path('single_product/'+$scope.products[index]._id);
     }
 
     $scope.order='';
-
     $scope.orderList=function(order){
-     $scope.order=order;
+      $scope.order=order;
     }
 
 
@@ -264,7 +213,7 @@ app.controller("cartctrl",function($scope,$http,$rootScope,$cookies){
   $http.get('http://localhost:8080/getCart/'+emailid).then(function(response){
     if(response.data!=""){
       $scope.cart = response.data;
-      console.log('something we get from server')
+      console.log('success')
       $scope.getTotal();
     }else{
       console.log("something went wrong")
@@ -275,7 +224,7 @@ $scope.deletefromcart = function(index){
   let item =$scope.cart[index]._id;
   $http.get('http://localhost:8080/removeFromCart/'+item).then(function(response){
     if(response.data=="success"){
-      alert('item deleted')
+      console.log('item deleted')
       $scope.cart.splice(index,1)
       $rootScope.cartlength = $scope.cart.length
       $scope.getTotal()
@@ -293,36 +242,47 @@ $scope.getTotal = function(){
 }
 
 
-  $scope.order = {emailid:"",product_id:"",name:"",quantity:"",number:"",image:"",price:""}
-  //
-  // $scope.submitOrderFromCart = ()=>{
-  //   if($cookies.get('loggedin')!="true"){
-  //     alert('please login first')
-  //     $location.path('Login')
-  //     return;
-  //   }
-  //   let listOfOrders=[]
-  //   for(let i=0;i<$scope.cart.length;i++){
-  //     $scope.order.emailid=$cookies.get('emailid');
-  //     $scope.order.number=$cookies.get('number');
-  //     $scope.order.product_id=$scope.cart[0]._id;
-  //     $scope.order.name=$scope.cart[0].name;
-  //     $scope.order.image = $scope.cart[0].image[0].image
-  //     $scope.order.quantity = $scope.cart[0].quantity;
-  //     $scope.order.price = $scope.cart[0].price
-  //     $scope.order.status = "processing"
-  //     listOfOrders.push($scope.order)
-  //   }
-  //   let data = {orders:listOfOrders}
-  //   $http.post('http://localhost:8080/placeOrders',data).then(function(response){
-  //     if(response.data==""){
-  //       alert('something went wrong')
-  //     }else {
-  //         alert('success')
-  //     }
-  //   })
-  //
-  // }
+  $scope.submitOrderFromCart = ()=>{
+    if($cookies.get('loggedin')!="true"){
+      alert('please login first')
+      $location.path('Login')
+      return;
+    }
+    let listOfOrders=[]
+    for(let i=0;i<$scope.cart.length;i++){
+      let order = {emailid:"",product_id:"",name:"",quantity:"",number:"",image:"",price:"",status:""}
+
+      order.emailid=$cookies.get('emailid');
+      order.number=$cookies.get('number');
+      order.product_id=$scope.cart[i]._id;
+      order.name=$scope.cart[i].name;
+      order.image = $scope.cart[i].image[0].image
+      order.quantity = $scope.cart[i].quantity;
+      order.price = $scope.cart[i].price
+      order.status = "processing"
+      listOfOrders.push(order)
+
+    }
+// creating object in which all products will be stored
+    let data = {orders:listOfOrders}
+    $http.post('http://localhost:8080/placeOrders',data).then(function(response){
+      if(response.data=="success"){
+
+// a loop to delete items from carts collection in mongodb
+        for(let i=0;i<$scope.cart.length;i++){
+          $scope.deletefromcart(i);
+        }
+        // to delete items carts array
+        $scope.cart.splice(0,$scope.cart.length)
+        $rootScope.cartlength = 0;
+
+        alert('orders placed successfully')
+      }else {
+          alert('something went wrong')
+      }
+    })
+
+  }
 
   $scope.remove = (index)=>{
     $scope.cart.splice(index,1);
