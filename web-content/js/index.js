@@ -83,6 +83,7 @@ app.controller("appController",function($rootScope,$scope,$http,$location,$cooki
           $cookies.remove("username")
           $cookies.remove("token")
           $rootScope.loginbtn="LOGIN"
+          $rootScope.cartlength=0;
           $location.path('/')
         }else{
           $location.path('Login')
@@ -158,12 +159,18 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
     console.log(" item is "+$scope.item.price)
     console.log(" item is "+$scope.item.image)
 
-
+//Now following code will submit item to server
+//  responses from server
+//    success means item is unique in carts
+//    updated means quantity is has been updated
+//    "" or null or empty response means some error
     if($cookies.get('loggedin')=="true" ){
       $http.post("http://localhost:8080/setCart",$scope.item).then(function(response){
           if(response.data=="success"){
              alert("item is added to to the cart ")
              $rootScope.cartlength = parseInt($rootScope.cartlength)+1;
+          }else if("updated"){
+            alert("item is added to to the cart ")
           }else{
             console.log('some error occured')
             alert("some error occured ")
@@ -327,7 +334,7 @@ app.controller('signupctrl',function($rootScope,$scope,$http,$location,$cookies)
 
 
 })
-
+//controller for login controller
 app.controller("loginctrl",function($rootScope,$scope,$http,$location,$cookies){
   $scope.data={emailid:"",password:""};
 

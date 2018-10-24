@@ -193,7 +193,7 @@ exports.setCart = function(req,res){
                   console.log('ERROR: '+err)
                   res.send('')
                 }else { console.log('updateting quantity')
-                  res.send('success')
+                  res.send('updated')
                 }
               })
             }
