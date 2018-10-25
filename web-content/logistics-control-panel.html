@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><link href='https://fonts.googleapis.com/css?family=Finger Paint' rel='stylesheet'>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
         <script src="https://code.angularjs.org/1.6.0/angular-cookies.min.js"></script>
@@ -40,22 +40,48 @@ body, html {
 }
 
 /* Style the tab content (and add height:100% for full page content) */
-.tabcontent {
-    color: white;
-    display: none;
-    padding: 100px 20px;
-    height: 100%;
-}
+
 .my-nav{
   color: white;
   font-weight: bold;
   font-size: 25;
+  margin-bottom: 0px;
+  margin-top: 0px;
 }
 
 #Add-product {background-color: rgb(255, 255, 255);}
 #View-product {background-color: rgb(81, 116, 81);}
 #Contact {background-color: rgb(53, 53, 58);}
 #About {background-color: rgb(83, 75, 58);}
+
+
+.nav-link{
+    font-size: 25;
+    margin-top:0px;
+    margin-bottom: 0px;
+    border-radius:5px;
+    border: 1px solid rgb(53, 53, 58);
+    
+
+}
+.nav-link:hover{
+    border: 1px solid blueviolet;
+    font-display: blueviolet;
+    cursor: pointer;
+    
+
+}
+
+#company{
+    font-size: 25px;
+    margin-right: 10px;
+    cursor:context-menu;
+    font-family: Finger Paint;
+}
+
+#logistics-nav-login{
+    margin-left: 10px;
+}
 </style>
 </head>
 <body ng-app="app" ng-controller="appController">
@@ -64,13 +90,17 @@ body, html {
                 <div class="form-group my-nav">
                 <table>
                     <tr>
-                        <td><a href="#!" class="nav-link">GREAT OUTDOORS</a> </td>
-                         <td> <a class="nav-link w3-right w3-margin-right" ng-click="login()" class="">{{loginbtn}}<span class="sr-only"></span></a></td>
+                        <td id="company"><a >GREAT OUTDOORS</a> </td>
+                         <td> <a class="nav-link w3-right w3-margin-right" id="logistics-nav-login" ng-click="login()" >{{loginbtn}}<span class="sr-only"></span></a></td>
 
-                         <td> <a class="nav-link w3-right w3-margin-right" href="#!logistics-view-orders">VIEW ORDERS<span  class="sr-only"></span></a></td>
-                         <td> <a class="nav-link"  href="#!logistics-view-orders">{{userName}}<span  class="sr-only"></span></a></td>
+                         <td> <a class="nav-link w3-right w3-margin-right" id="logistics-nav-view" href="#!logistics-view-orders">VIEW ORDERS<span  class="sr-only"></span></a></td>
+                         <td> </td>
 
                 </table>
+                
+                </div>
+                <div >
+                        <a class="nav-link "  href="#!logistics-view-orders" id="logistics-nav-name">s<span  class="sr-only"></span></a>
 
                 </div>
 

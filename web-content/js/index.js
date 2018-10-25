@@ -162,7 +162,7 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
 //Now following code will submit item to server
 //  responses from server
 //    success means item is unique in carts
-//    updated means quantity is has been updated
+//    updated means quantity has been updated
 //    "" or null or empty response means some error
     if($cookies.get('loggedin')=="true" ){
       $http.post("http://localhost:8080/setCart",$scope.item).then(function(response){
@@ -197,9 +197,8 @@ app.controller("productCtrl",function($rootScope,$scope,$location,$http,dataServ
       }
       });
 
-    $scope.go = function(index){
-     $rootScope.pId =$scope.products[index]._id;
-     $location.path('single_product/'+$scope.products[index]._id);
+    $scope.go = function(id){
+          $location.path('single_product/'+id);
     }
 
     $scope.order='';
@@ -253,6 +252,10 @@ $scope.getTotal = function(){
     if($cookies.get('loggedin')!="true"){
       alert('please login first')
       $location.path('Login')
+      return;
+    }
+    if($scope.cart.length==0){
+      alert('cart is empty')
       return;
     }
     let listOfOrders=[]
@@ -375,6 +378,15 @@ app.controller("loginctrl",function($rootScope,$scope,$http,$location,$cookies){
         $cookies.put("number",response.data.number)
         console.log("user login successful")
         $rootScope.loginbtn="LOGOUT"
+
+        $http.get('http://localhost:8080/getCart/'+emailid).then(function(response){
+          if(response.data!=""){
+            $rootScope.cartlength = response.data.length;
+          }
+         
+        })
+
+
         $location.path('products')
       }
 

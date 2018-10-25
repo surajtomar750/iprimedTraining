@@ -75,7 +75,8 @@
 
 					</li>
 					<li class="row"  ng-repeat="item in orderlist">
-            <span><a href={{"#!single_product/"+item.product_id}}><img src="{{item.image}}"></span>
+						<!-- here <a> should have href property -->
+            <span><a ><img src="{{item.image}}"></span>
 							<span class="itemName seq">{{$index+1}}</span>
 						<span class="itemName">{{item.name}}</span>
 

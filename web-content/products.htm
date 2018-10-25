@@ -1,16 +1,20 @@
-
-
-
-    <style>
+<style>
 button{
-    display: block; border: 1px solid #555; width: 50px;margin:
+    display: block; 
+    border: 1px solid #555;
+    width: 50px;
 }
 #button1{
   margin-bottom: 5px;
 }
 .pro-name{
   font-size:25px;
+  text-align: center;
 }
+.pro-info{
+    font-size: 15px;
+}
+
 
  a{
     text-decoration: none;
@@ -33,9 +37,7 @@ button{
                                                     <button id="category_check_box" class="btn btn-primary" ng-click="orderList('category')">Category</button>
                                                 <br></td>
                                             </tr>
-                                            <!-- <tr>
-                                                <td><input ng-model="myRange" type=range min=100 max=100000 ng-model="myRange"></td>
-                                            </tr> -->
+                                         
 
                                     </table>
                             </div>
@@ -48,7 +50,7 @@ button{
 
                <div class="row">
 
-                  <div class="col-md-4" ng-repeat="product in products | filter:myFilter | orderBy:order">
+                  <div class="col-md-4" ng-repeat="product in products | filter:myFilter | orderBy:order" >
                         <div class="card " style="border: 1px solid #555;">
 
                             <img ng-src="{{product.image[0].image}}" class="card-img-top" >
@@ -58,7 +60,7 @@ button{
                             <p class="pro-info">{{"CATEGORY: "+product.category}}</p>
 
 
-                                <button class="btn btn-primary" id="button1" ng-click="go($index)">VIEW</button>
+                                <a class="btn btn-primary" style="display: block; border: 1px solid #555; width: 285px; " id="button1" href="#!single_product/{{product._id}}">VIEW</a>
 
                                 <!-- <div class="btn" style="display: block; border: 1px solid #555; width: 120px;"><a href="#!single_product">go to product</a></div> -->
 

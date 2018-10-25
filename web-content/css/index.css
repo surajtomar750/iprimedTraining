@@ -3,7 +3,7 @@
 shape-outside: -webkit-linear-gradient();
 }
 ng-view{
-  margin-top: 30px;
+  margin-top: 40px;
 }
 
 .card {
@@ -38,6 +38,20 @@ ng-view{
     font-size: 18px;
     transition: .25s color linear, 1.25s background-color linear;
   }
+
+  .card a {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color:azure;
+    background-color: #555;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+    transition: .50s color linear, 1.25s background-color linear;
+  }
+  
   
   .card button:hover {
     opacity: 0.7;

@@ -8,6 +8,10 @@
         -->
 
 <style>
+  #admin-nav-add{
+    border: 1px solid blueviolet;
+  }
+
    h2{
      text-align: center;
      font-family: sans-serif;
@@ -69,11 +73,11 @@
                                   <thead>
                                     <tr>
 
-                                      <th>product name</th>
-                                      <th>price</th>
-                                      <th>product desc</th>
+                                      <th>Product Name</th>
+                                      <th>Price</th>
+                                      <th>Product Description</th>
                                       <th>Category</th>
-                                      <th>image</th>
+                                      <th>Image</th>
 
                                     </tr>
                                   </thead>
@@ -106,7 +110,7 @@
                                           <td></td>
                                           <td></td>
                                           <td ><input onclick="return submitproduct()" class="btn form-control" type="submit" ></td>
-                                          <td><button onclick="clearproduct()" class="btn form-control"  >Clear</button></td>
+                                          <td><button type = "button" onclick="clearproduct()" class="btn form-control"  >Clear</button></td>
 
 
                                            </tr>
