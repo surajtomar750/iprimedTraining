@@ -1,4 +1,10 @@
 <style>
+    body{
+        background-color: #e4ffff;
+    }
+.custom{
+    background-color: #e4ffff;
+}
 button{
     display: block; 
     border: 1px solid #555;
@@ -19,8 +25,16 @@ button{
  a{
     text-decoration: none;
   }
+
+
+.outer-row{
+    margin-top: 30px;
+}
+.col-md-10{
+    margin-top: 0px;
+}
     </style>
-          <div class="row">
+          <div class="row outer-row">
             <div class="col-md-2">
 
 
@@ -29,15 +43,49 @@ button{
                                     <table>
 
                                             <tr>
-                                                <td>Sort By </td>
+                                                <td>FILTERS <br><br></td>
                                             </tr>
+                                            
                                             <tr>
                                                 <td><button id="price_check_box"  class="btn btn-primary"  ng-click="orderList('price')" >Price</button></td></tr>
                                             <tr> <td><br>
                                                     <button id="category_check_box" class="btn btn-primary" ng-click="orderList('category')">Category</button>
                                                 <br></td>
                                             </tr>
-                                         
+                                            <tr> <td><br><br>
+                                                <label>Maximum Price</label>
+                                                <select id="category_check_box" class="form-control" ng-model="pricemax">
+                                                    <option selected>20000</option>
+                                                    <option>10000</option>
+                                                    <option>5000</option>
+                                                    <option>2000</option>
+                                                    <option>1000</option>
+                                                </select>
+                                                <br></td>
+                                             </tr>
+                                            <tr> <td><br>
+                                                <label>Minimum Price</label>
+                                                <select id="category_check_box" class="form-control" ng-model="pricemin">
+                                                        <option selected>50</option>
+                                                        <option>100</option>
+                                                        <option>200</option>
+                                                        <option>300</option>
+                                                        <option>500</option>
+                                                    </select>
+                                                <br></td>
+                                             </tr>
+                                             <tr>
+                                                 <td><br>
+                                                    <label>Category</label>
+                                                    <select  ng-model="cat"  name="category" id="catofproduct" class="form-control">
+                                                            <option selected value="17">Camping Equipment</option>
+                                                            <option value=14>Golf Equipment</option>
+                                                            <option  value=24>Mountaineering Equipment</option>
+                                                            <option value=18>Outdoor Protection</option>
+                                                            <option value=20>Personal Accessories</option>
+                                                          </select>
+                                                 <br></td>
+                                             </tr>
 
                                     </table>
                             </div>
@@ -50,7 +98,7 @@ button{
 
                <div class="row">
 
-                  <div class="col-md-4" ng-repeat="product in products | filter:myFilter | orderBy:order" >
+                  <div class="col-md-4" ng-repeat="product in products | filter:myFilter | orderBy:order | pCategory:cat | priceGreaterThan:pricemin | priceLessThan:pricemax" >
                         <div class="card " style="border: 1px solid #555;">
 
                             <img ng-src="{{product.image[0].image}}" class="card-img-top" >

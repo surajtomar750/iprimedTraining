@@ -64,10 +64,10 @@
                                       </thead>
                                     <tr style="text-align:center" id="view-data" ng-repeat="x in ProductList" width="100%">
                                       <td><img src="{{x.image[0].image}}" style="width:150px;"></td>
-                                      <td><input type="text" disabled ng-model="x.name"></td>
-                                      <td><input type="text" disabled ng-model="x.price"></td>
-                                      <td><textarea ng-model="x.description" disabled></textarea></td>
-                                      <td><input type="text" disabled ng-model="x.category"></td>
+                                      <td><input type="text" disabled ng-model="x.name" class="form-control"></td>
+                                      <td><input type="text" disabled ng-model="x.price" class="form-control"></td>
+                                      <td><textarea ng-model="x.description" disabled class="form-control"></textarea></td>
+                                      <td><input type="text" disabled ng-model="x.category" class="form-control"></td>
                                       <td>
                                             <button ng-click="editItem($index)"  style="cursor:pointer; border:1px solid blue" class="w3-right w3-margin-right btn primary">edit</button>
                                             <button ng-click="deleteItem($index)" style="cursor:pointer; border: 1px solid blue;" class="w3-right w3-margin-right btn primary">delete</button>

@@ -206,6 +206,11 @@ mRouter.get('/product/:id',(req,res)=>{
      lController.authenticate(req,res);
    })
 
+  mRouter.get('/setAddress',(req,res)=>{
+    console.log('setAddress requested')
+    uController.setAddress(req,res);
+  })
+
 
 
 module.exports = mRouter;

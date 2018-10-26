@@ -14,8 +14,10 @@ ng-view{
     text-align: left;
     font-family: arial;
    padding: 5px;
+   background-color: #ffffff;
   
   }
+  
   
   .pro-info {
     color:grey;

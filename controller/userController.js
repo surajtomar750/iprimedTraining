@@ -1,6 +1,7 @@
 var userModel = require('../model/user')
 var orderModel = require('../model/order')
 var cartModel = require('../model/cart')
+var address = require('../model/address')
 var bcrypt = require('bcryptjs')
 var jwt = require('jsonwebtoken')
 var _ = require('underscore');
@@ -274,3 +275,18 @@ exports.removeFromCart = function(req,res){
          res.send("success");
       }
 })}
+
+exports.setAddress = function(req,res){
+  let aObject = new address({
+    emailid:req.body.emailid,
+    name:req.body.name,
+    number:req.body.number,
+    pin:req.body.pin,
+    locality:req.body.locality,
+    address:req.body.address,
+    city:req.body.city,
+    state:req.body.state,
+    landmark:req.body.landmark,
+    altnumber:req.body.altnumber
+  })
+}

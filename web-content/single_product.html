@@ -1,20 +1,54 @@
 
 <style>
+  .product{
+	border: 1px solid #dddddd;
+	height: 321px;
+}
 
+.product>img{
+	max-width: 230px;
+}
+
+.product-rating{
+	font-size: 20px;
+	margin-bottom: 25px;
+}
+
+.product-title{
+	font-size: 30px;
+}
+
+.product-desc{
+	font-size: 17px;
+}
+
+.product-price{
+	font-size: 22px;
+}
+
+.product-stock{
+	color: #74DF00;
+	font-size: 20px;
+	margin-top: 10px;
+}
+
+.product-info{
+		margin-top: 50px;
+}
 button{
     margin: 0;
     color:white;
     background-color: black;
     font-style: bold;
 }
-img{
+/* img{
     widows: 300px;
     height: 400px;
-}
+} */
 .row{
   display: block;
   margin-top: 20px;
-  border: 1px solid #1111;
+
   padding-bottom: 20px;
   background: #1100;
 }
@@ -27,16 +61,18 @@ img{
 
 .productdesc{
   display: inline;
-  border-left: 1px solid #1111;
-  border-bottom: 1px solid #1111;
+
 
   font-display: block;
   font-size: 20px;
   font-family: sans-serif;
   margin: 10px;
+  padding-left: 90px;
 
 }
-
+.multicard{
+  width:200px;
+}
 .card1{
   display: block;
 
@@ -60,7 +96,24 @@ img{
             width:80px;
             border: 1px solid #555;
           }
-
+/*zoom*/
+/* .frame {
+  height: 200px;
+  width: 200px;
+  overflow: hidden;
+}
+.zoomin img {
+  height: 200px;
+  width: 200px;
+  -webkit-transition: all 2s ease;
+     -moz-transition: all 2s ease;
+      -ms-transition: all 2s ease;
+          transition: all 2s ease;
+}
+.zoomin img:hover {
+  width: 500px;
+  height: 500px;
+} */
 </style>
 
 <script>
@@ -82,21 +135,64 @@ function showDivs(n) {
   x[slideIndex-1].style.display = "block";
 }
 </script>
-
-<div class="container">
+		<link rel="stylesheet" href="./css/st.css">
+<div class="container-fluid">
        <div ng-repeat="item in selectedProduct" class="box">
 <div class="row">
-
-  <div class="col-sm-6">
+<!--Suraj img-->
+<div class="col-md-1">
+    <ul class="preview-thumbnail nav" style="width:100%">
+        <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="{{item.image[0].image}}" /></a></li>
+        <li><a data-target="#pic-2" data-toggle="tab"><img src="{{item.image[1].image}}"  /></a></li>
+        <li><a data-target="#pic-3" data-toggle="tab"><img src="{{item.image[2].image}}"  /></a></li>
+        <li><a data-target="#pic-4" data-toggle="tab"><img src="{{item.image[3].image}}"  /></a></li>
+        <li><a data-target="#pic-5" data-toggle="tab"><img src="{{item.image[4].image}}"  /></a></li>
+        <li><a data-target="#pic-6" data-toggle="tab"><img src="{{item.image[5].image}}"  /></a></li>
+        <li><a data-target="#pic-7" data-toggle="tab"><img src="{{item.image[6].image}}"  /></a></li>
+        <li><a data-target="#pic-8" data-toggle="tab"><img src="{{item.image[7].image}}"  /></a></li>
+        <li><a data-target="#pic-9" data-toggle="tab"><img src="{{item.image[8].image}}"  /></a></li>
+      </ul>
+</div>
+  <div class="col-sm-5">
   <div class="productdesc">
-      <img src={{item.image[0].image}}>
+      <div class="container">
+          <div class="multicard">
+            <div class="container-fliud">
+              <div class="wrapper row">
+                <div class="preview col-md-8">
+                  
+                  <div class="preview-pic tab-content zoomin frame " style="width:500px; height: 1000px;">
+                    <div class="tab-pane active" id="pic-1" ><img src="{{item.image[0].image}}" alt="1"/></div>
+                    <div class="tab-pane" id="pic-2"><img src="{{item.image[1].image}}"  /></div>
+                    <div class="tab-pane" id="pic-3"><img src="{{item.image[2].image}}"  /></div>
+                    <div class="tab-pane" id="pic-4"><img src="{{item.image[3].image}}"  /></div>
+                    <div class="tab-pane" id="pic-5"><img src="{{item.image[4].image}}"  /></div>
+                    <div class="tab-pane" id="pic-6"><img src="{{item.image[5].image}}"  /></div>
+                    <div class="tab-pane" id="pic-7"><img src="{{item.image[6].image}}"  /></div>
+                    <div class="tab-pane" id="pic-8"><img src="{{item.image[7].image}}"  /></div>
+                    <div class="tab-pane" id="pic-9"><img src="{{item.image[8].image}}"  /></div>
+                    
+                  </div>
+                  <!-- <ul class="preview-thumbnail nav nav-tabs">
+                    <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="{{item.image[0].image}}" alt="1" /></a></li>
+                    <li><a data-target="#pic-2" data-toggle="tab"><img src="{{item.image[1].image}}" alt="2" /></a></li>
+                    <li><a data-target="#pic-3" data-toggle="tab"><img src="{{item.image[2].image}}" alt="3" /></a></li>
+                    <li><a data-target="#pic-4" data-toggle="tab"><img src="{{item.image[3].image}}" alt="4" /></a></li>
+                    <li><a data-target="#pic-5" data-toggle="tab"><img src="{{item.image[4].image}}" alt="5" /></a></li>
+                  </ul> -->
+                </div>
+              
+              </div>
+            </div>
+          </div>
+        </div><!--Multiple img-->
   </div>
   </div>
   <div class="col-sm-6"><div class="productdesc">
     <div class="card1">
-      <table>
+      <!-- <table>
           <tr>
-              <td>Name</td><td > {{' '+item.name}}</td>
+             <td > {{' '+item.name}}</td>
           </tr>
           <tr>
               <td>Price&nbsp;</td><td>{{' '+item.price}}</td>
@@ -108,15 +204,27 @@ function showDivs(n) {
           <tr>
             <td>
               <label for="quantity">Qty: </label>
-              <input  type="number" ng-change="increment(quantity)" ng-model="quantity" id="quantity" name="quantity"  />
+              <input min="1" type="number"ng-model="quantity" id="quantity" name="quantity" value="1" />
             </td>
           </tr>
 
-      </table>
+      </table> -->
+      <div class="product-title"> {{item.name}}</div>
+      <div class="product-price">${{item.price}}</div>
+      <hr style="color: blue"/>
+      <div class="product-stock">In Stock</div>
+      <div class="product-desc">{{item.description}}</div>
+      
     </div>
     <div class="card2">
-          <button class="btn" ng-click="addToCart($index)">Add To Cart</button>
-          <button class="btn" ng-click="submitOrder($index)"> Buy </button>
+        <div><label for="quantity">Qty: </label>
+          <input min="1" type="number" ng-change="increment(quantity)" ng-model="quantity" id="quantity" name="quantity" value="1" />
+        </div>
+        <br>
+         <!--  <button class="btn" ng-click="addToCart($index)" ><span><i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 30px"></i></span> ADD TO CART</button>-->
+         <a class="btn btn-primary btn-product" ng-click="addToCart($index)" style="width:200px"><span class="glyphicon glyphicon-shopping-cart"></span> Add To Cart</a>  
+         <a class="btn btn-success btn-product" ng-click="submitOrder($index)" style="width:200px"><span class="glyphicon glyphicon-play"></span> Buy</a> 
+          <!-- <a href="#" class="btn btn-success btn-product" ng-click="submitOrder($index)"><span class="glyphicon glyphicon-shopping-cart"></span> Buy</a> -->
     </div>
 
  </div>

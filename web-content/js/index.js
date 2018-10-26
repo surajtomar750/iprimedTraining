@@ -3,6 +3,75 @@ app.run(function(dataService){
   dataService.getProductsFromDB();
   console.log("data services is Completed")
 })
+
+// custom filters start
+
+
+app.filter('priceLessThan', function () {
+  return function (input, price) {
+      var output = [];
+      if (isNaN(price)) {
+          output = input;
+      }
+      else {
+          angular.forEach(input, function (item) {
+              if (item.price <= price) {
+                  output.push(item)
+              }
+          });
+      }
+      return output;
+  }
+})
+
+
+
+
+app.filter('priceGreaterThan', function () {
+  return function (input, price) {
+      var output = [];
+      if (isNaN(price)) {
+          output = input;
+      }
+      else {
+          angular.forEach(input, function (item) {
+              if (item.price >= price) {
+                  output.push(item)
+              }
+          });
+      }
+      return output;
+  }
+})
+
+
+
+app.filter('pCategory', function () {
+  return function (input, category) {
+      var output = [];
+      var undef;
+      if(category=="" | category==undef){
+        output=input;
+      }else{
+        angular.forEach(input, function (item) {
+          if (item.category.length==category) {
+                output.push(item)
+            }
+        });
+      }
+     
+
+        
+      
+      return output;
+  }
+})
+
+
+
+
+//custom filters end
+
 app.config(function($routeProvider){
     $routeProvider.when('/Login', {
 
@@ -33,6 +102,9 @@ app.config(function($routeProvider){
               }).when('/orders',{
                 templateUrl:'orders.html',
                 controller:'ordersctrl'
+              }).when('/address',{
+                templateUrl:'address.html',
+                controller:'addressctrl'
               })
    });
 
@@ -90,6 +162,11 @@ app.controller("appController",function($rootScope,$scope,$http,$location,$cooki
         }
 
   }
+
+$scope.gotoCat = function(cat){
+  $rootScope.cat = cat;
+}
+
 
 })
 
@@ -186,7 +263,7 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
 
 //controller for product view or product.html
 app.controller("productCtrl",function($rootScope,$scope,$location,$http,dataService){
-
+    
     $http.get("http://localhost:8080/products")
    .then(function(response) {
       if(!$scope.products){
@@ -196,6 +273,9 @@ app.controller("productCtrl",function($rootScope,$scope,$location,$http,dataServ
         console.log(response.data)
       }
       });
+
+
+    $rootScope.cat =undefined;
 
     $scope.go = function(id){
           $location.path('single_product/'+id);
@@ -221,6 +301,7 @@ app.controller("cartctrl",function($scope,$http,$rootScope,$cookies){
       $scope.cart = response.data;
       console.log('success')
       $scope.getTotal();
+      $rootScope.cartlength=$scope.cart.length;
     }else{
       console.log("something went wrong")
     }
@@ -379,12 +460,7 @@ app.controller("loginctrl",function($rootScope,$scope,$http,$location,$cookies){
         console.log("user login successful")
         $rootScope.loginbtn="LOGOUT"
 
-        $http.get('http://localhost:8080/getCart/'+emailid).then(function(response){
-          if(response.data!=""){
-            $rootScope.cartlength = response.data.length;
-          }
-         
-        })
+      
 
 
         $location.path('products')
@@ -408,7 +484,19 @@ app.controller('ordersctrl',function($scope,$http,$rootScope,$cookies){
 })
 
 
-
+app.controller('addressctrl',function($scope,$http,$rootscope,$location,$cookies){
+  $scope.submitAddress = (addr)=>{
+    addr.emailid = $cookies.get('emailid')
+    $http.post('http://localhost:8080/setAddress',addr).then(function(response){
+      if(response.data!=""){
+        alert('address added successfully')
+        $location.path('products');
+      }else{
+        alert('error please try again')
+      }
+    })
+  }
+})
 
 
 //this service is not working

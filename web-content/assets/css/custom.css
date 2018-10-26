@@ -128,7 +128,7 @@ a:hover {
 	color: #7e93a7;
 	font-size:12px;
 	text-transform: uppercase;
-	padding: 0;
+
 	box-shadow: 0 0 0;
 	background-color: #f2f6f9;
 }
@@ -218,7 +218,9 @@ a:hover {
 	margin-top: 40px;
 	padding-left: 5px;
 	cursor: pointer;
+	padding-right: 10px;
 }
+
 
 .order a{
 	background-color: #f08573;
@@ -226,6 +228,7 @@ a:hover {
 	font-weight: bold;
 	border-radius: 2px;
 	padding: 20px 30px;
+	
 }
 
 

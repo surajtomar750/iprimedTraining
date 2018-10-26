@@ -1,0 +1,128 @@
+
+<style>
+
+button{
+    margin: 0;
+    color:white;
+    background-color: black;
+    font-style: bold;
+}
+img{
+    widows: 300px;
+    height: 400px;
+}
+.row{
+  display: block;
+  margin-top: 20px;
+  border: 1px solid #1111;
+  padding-bottom: 20px;
+  background: #1100;
+}
+
+.constainer{
+  margin-top: 100px;
+
+
+}
+
+.productdesc{
+  display: inline;
+  border-left: 1px solid #1111;
+  border-bottom: 1px solid #1111;
+
+  font-display: block;
+  font-size: 20px;
+  font-family: sans-serif;
+  margin: 10px;
+
+}
+
+.card1{
+  display: block;
+
+
+}
+
+.card1.table{
+  padding-right : 5px;
+}
+.card2{
+  padding-top: 80px;
+}
+.card2 button{
+  width: 180px;
+  height: 40px;
+  border-radius: 30px;
+  font-weight: bold;
+
+}
+#quantity { padding:5px;
+            width:80px;
+            border: 1px solid #555;
+          }
+
+</style>
+
+<script>
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";
+  }
+  x[slideIndex-1].style.display = "block";
+}
+</script>
+
+<div class="container">
+       <div ng-repeat="item in selectedProduct" class="box">
+<div class="row">
+
+  <div class="col-sm-6">
+  <div class="productdesc">
+      <img src={{item.image[0].image}}>
+  </div>
+  </div>
+  <div class="col-sm-6"><div class="productdesc">
+    <div class="card1">
+      <table>
+          <tr>
+              <td>Name</td><td > {{' '+item.name}}</td>
+          </tr>
+          <tr>
+              <td>Price&nbsp;</td><td>{{' '+item.price}}</td>
+
+          </tr>
+          <tr>
+             <td>Description&nbsp;&nbsp;</td><td>{{' '+item.description}}</td>
+          </tr>
+          <tr>
+            <td>
+              <label for="quantity">Qty: </label>
+              <input  type="number" ng-change="increment(quantity)" ng-model="quantity" id="quantity" name="quantity"  />
+            </td>
+          </tr>
+
+      </table>
+    </div>
+    <div class="card2">
+          <button class="btn" ng-click="addToCart($index)">Add To Cart</button>
+          <button class="btn" ng-click="submitOrder($index)"> Buy </button>
+    </div>
+
+ </div>
+</div>
+
+
+
+           </div>
+        </div>
