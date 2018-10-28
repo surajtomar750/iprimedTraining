@@ -34,7 +34,11 @@
   textarea{
     border: none;
   }
-  .btn{background-color: white;}
+  .my-0{background-color: white;
+  background-color: rgb(95, 88, 88);
+  color: rgb(228, 218, 236);
+  }
+
   </style>
 </head>
 
@@ -62,16 +66,17 @@
                                     <th>Category</th>
                                     <th>Modify</th>
                                       </thead>
-                                    <tr style="text-align:center" id="view-data" ng-repeat="x in ProductList" width="100%">
+                                    <tr style="text-align:center" id="view-data" ng-repeat="x in ProductList | pCategory:cat | filter:{name:searchparam}" width="100%">
                                       <td><img src="{{x.image[0].image}}" style="width:150px;"></td>
                                       <td><input type="text" disabled ng-model="x.name" class="form-control"></td>
                                       <td><input type="text" disabled ng-model="x.price" class="form-control"></td>
                                       <td><textarea ng-model="x.description" disabled class="form-control"></textarea></td>
                                       <td><input type="text" disabled ng-model="x.category" class="form-control"></td>
+                                      
                                       <td>
-                                            <button ng-click="editItem($index)"  style="cursor:pointer; border:1px solid blue" class="w3-right w3-margin-right btn primary">edit</button>
-                                            <button ng-click="deleteItem($index)" style="cursor:pointer; border: 1px solid blue;" class="w3-right w3-margin-right btn primary">delete</button>
-
+                                             <button ng-click="deleteItem($index)" style="cursor:pointer; border: 1px solid #343A40;" class="w3-right w3-margin-right btn btn-rounded my-0"><span class="fa fa-trash" aria-hidden="true"></span></button>
+                                             <button ng-click=editItem(x)  style="cursor:pointer; border:1px solid #343A40" class="w3-right w3-margin-right btn  btn-rounded  my-0">Edit</button>
+                                           
                                       </td>
                                     </tr>
 

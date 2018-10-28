@@ -49,9 +49,9 @@ mRouter.post('/placeOrders',(req,res)=>{
 
 })
 
-mRouter.get('/admin',(req,res)=>{
-    res.sendFile(__dirname+"/web-content/admin.html");
-})
+// mRouter.get('/admin',(req,res)=>{
+//     res.sendFile(__dirname+"/web-content/admin.html");
+// })
 
 
 
@@ -77,9 +77,9 @@ mRouter.post('/signupdata',(req,res)=>{
 // mRouter.get('/cart/:userId',(req,res)=>{
 //     res.send("this is product");
 //   });
-mRouter.get('/cart',(req,res)=>{
-    res.sendFile(__dirname+'/web-content/cart.html')
-  })
+// mRouter.get('/cart',(req,res)=>{
+//     res.sendFile(__dirname+'/web-content/cart.html')
+//   })
 
 mRouter.get('/getCart/:emailid',(req,res)=>{
     console.log('getCart requested')
@@ -132,14 +132,14 @@ mRouter.get('/product/:id',(req,res)=>{
        res.sendFile(__dirname+'/web-content/admin-control-panel.html');
    })
 
-   mRouter.post('/admin-control-panel',(req,res)=>{
-       res.sendFile(__dirname+'/web-content/admin-control-panel.html');
-   })
+  //  mRouter.post('/admin-control-panel',(req,res)=>{
+  //      res.sendFile(__dirname+'/web-content/admin-control-panel.html');
+  //  })
 
 
-   mRouter.get('/view-modify-product',(req,res)=>{
-    res.sendFile(__dirname+'/web-content/view-modify-product.html');
-   })
+  //  mRouter.get('/view-modify-product',(req,res)=>{
+  //   res.sendFile(__dirname+'/web-content/view-modify-product.html');
+  //  })
 
 
    mRouter.get('/removeproduct/:_id',(req,res)=>{
@@ -151,15 +151,15 @@ mRouter.get('/product/:id',(req,res)=>{
        console.log('update product requested')
        pController.updateProduct(req,res);
    })
-   mRouter.get('/modify-product',(req,res)=>{
-          res.sendFile(__dirname+'/web-content/modify-product.html')
-        }
+  //  mRouter.get('/modify-product',(req,res)=>{
+  //         res.sendFile(__dirname+'/web-content/modify-product.html')
+  //       }
 
-   )
+  //  )
 
-   mRouter.get('/admin-login',(req,res)=>{
-    res.sendFile(__dirname+'/web-content/admin-login.html');
-   })
+  //  mRouter.get('/admin-login',(req,res)=>{
+  //   res.sendFile(__dirname+'/web-content/admin-login.html');
+  //  })
 
     mRouter.post('/admin-login-check',(req,res)=>{
         console.log("admin-login-check")

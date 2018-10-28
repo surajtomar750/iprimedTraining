@@ -1,4 +1,26 @@
 var app =angular.module('app',["ngRoute","ngCookies"]);
+
+// filters
+
+
+app.filter('pCategory', function () {
+  return function (input, category) {
+      var output = [];
+      var undef;
+      if(category=="" | category==undef){
+        output=input;
+      }else{
+        angular.forEach(input, function (item) {
+          if (item.category===category) {
+                output.push(item)
+            }
+        });
+      }     
+      
+      return output;
+  }
+})
+//filters end
 app.config(function($routeProvider){
     $routeProvider.when('/admin-login',{
 
@@ -93,18 +115,6 @@ $scope.gotoviewproductspage = function(){
 
 
 
-  // console.log("inside the controller adminctrlpanel")
-  // $http.get("http://localhost:8080/products")
-  // .then(function(response) {
-  //   console.log("inside of single product response is here")
-  //       console.log(response.data);
-  //      $rootScope.ProductList = response.data;
-  //      console.log($rootScope.ProductList);
-  //
-  // });
-
-
-
 })
 
 
@@ -143,10 +153,9 @@ app.controller("viewmodifyproductctrl",function($rootScope,$scope,$http,$locatio
 
     })}
 
-    $scope.editItem = function(index){
-      console.log(index);
-      console.log($scope.ProductList[index])
-      $rootScope.updateproduct = $scope.ProductList[index];
+    $scope.editItem = function(product){
+      console.log(product)
+      $rootScope.selectedProduct={_id:product._id,image:product.image,name:product.name,description:product.description,price:product.price,category:product.category}
       $location.path('modify-product')
 
     }
@@ -218,20 +227,25 @@ app.controller("admin-add-product-Ctrl",function($scope,$http){
   }
 
 })
-app.controller("modify-product-ctrl",function($rootScope,$scope,$location,$http){
+app.controller("modify-product-ctrl",function($rootScope,$scope,$location,$http,$routeParams){
     console.log("controllerworking")
-    $scope.temp;
-    if($rootScope.updateproduct==$scope.temp){
+
+    
+  
+
+    let undef;
+    if($rootScope.selectedProduct == undef){
       $location.path('view-modify-product')
     }
-    $scope.p=$rootScope.updateproduct
+    
+    $scope.p=$rootScope.selectedProduct;
     $scope.updateproduct=[{_id:$scope.p._id,image:$scope.p.image,name:$scope.p.name,description:$scope.p.description,price:$scope.p.price,category:$scope.p.category}]
-    console.log($scope.updateproduct)
+    //console.log($scope.updateproduct)
     $scope.submitUpdate=function(index){
       console.log($scope.updateproduct[index]);
       $http.post("http://localhost:8080/updateproduct/",$scope.updateproduct[index]).then(response=>{
         if(response.data!=""){
-          $rootScope.updateproduct=""
+          $rootScope.selectedProduct=""
           $scope.updateproduct==""
           $location.path('view-modify-product')
        }

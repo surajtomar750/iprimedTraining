@@ -494,10 +494,11 @@ app.controller('ordersctrl',function($scope,$http,$rootScope,$cookies){
 
 app.controller('addressctrl',function($scope,$http,$rootscope,$location,$cookies){
 console.log('addressctrl loaded')
-
+alert('loaded')
 
   $scope.submitAddress = (addr)=>{
     addr.emailid = $cookies.get('emailid')
+    alert('test')
     $http.post('http://localhost:8080/setAddress',addr).then(function(response){
       if(response.data!=""){
         alert('address added successfully')
