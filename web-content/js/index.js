@@ -1,3 +1,5 @@
+var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 var app =angular.module('app',["ngRoute","ngCookies","ngStorage"]);
 app.run(function(dataService){
   dataService.getProductsFromDB();
@@ -165,6 +167,7 @@ app.controller("appController",function($rootScope,$scope,$http,$location,$cooki
 
 $scope.gotoCat = function(cat){
   $rootScope.cat = cat;
+  $location.path('products')
 }
 
 
@@ -384,7 +387,7 @@ $scope.getTotal = function(){
 
 
 app.controller('signupctrl',function($rootScope,$scope,$http,$location,$cookies){
-  $scope.data={name:"",number:"",emailid:"",password:""};
+    $scope.data={name:"",number:"",emailid:"",password:""};
   $scope.submit = function(){
       //form validation
 
@@ -396,6 +399,14 @@ app.controller('signupctrl',function($rootScope,$scope,$http,$location,$cookies)
     else if($scope.data.number.toString().length!=10){
       alert("!! length of mobile number should be 10 length is "+$scope.data.number.toString().length)
       return;
+    }
+    else if(!re.test($scope.data.emailid)){
+     
+          
+          alert('email format if not correct')
+          return;
+        
+      
     }
     else if ($scope.data.password.length<8) {
         alert("!! length of password should be 8 length is "+$scope.data.password.length)
@@ -411,7 +422,8 @@ app.controller('signupctrl',function($rootScope,$scope,$http,$location,$cookies)
         alert("email id exists use different email")
       }else if(response.data=="success"){
         console.log("user registered successful")
-        $location.path('Login')
+
+        $location.path('products')
       }
     })
   }
@@ -459,10 +471,6 @@ app.controller("loginctrl",function($rootScope,$scope,$http,$location,$cookies){
         $cookies.put("number",response.data.number)
         console.log("user login successful")
         $rootScope.loginbtn="LOGOUT"
-
-      
-
-
         $location.path('products')
       }
 
@@ -485,6 +493,9 @@ app.controller('ordersctrl',function($scope,$http,$rootScope,$cookies){
 
 
 app.controller('addressctrl',function($scope,$http,$rootscope,$location,$cookies){
+console.log('addressctrl loaded')
+
+
   $scope.submitAddress = (addr)=>{
     addr.emailid = $cookies.get('emailid')
     $http.post('http://localhost:8080/setAddress',addr).then(function(response){
