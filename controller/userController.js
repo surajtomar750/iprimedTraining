@@ -158,11 +158,15 @@ exports.setCart = function(req,res){
             }
             if(!exists){
               console.log('product not exists')
+              if(req.body.quantity>4){
+                res.send("exceed");
+                return;
+              }
               let cObject = new cartModel({
                 emailid:req.body.emailid,
                 product_id:req.body.product_id,
                 name:req.body.name,
-                price:req.body.price,
+                price:req.body.price*req.body.quantity,
                 quantity:req.body.quantity,
                 image:req.body.image
               })
@@ -177,8 +181,12 @@ exports.setCart = function(req,res){
               })
             }else{
               console.log('product exists')
-              console.log(data._id)
-              product.quantity=product.quantity+1
+              console.log(product._id)
+              product.quantity=product.quantity+req.body.quantity;
+              if(product.quantity>4){
+                res.send("exceed");
+                return;
+              }
               let cObject = {
                 _id:product._id,
                 emailid:req.body.emailid,

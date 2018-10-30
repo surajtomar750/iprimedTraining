@@ -218,7 +218,7 @@ function showDivs(n) {
     </div>
     <div class="card2">
         <div><label for="quantity">Qty: </label>
-          <input min="1" type="number" ng-change="increment(quantity)" ng-model="quantity" id="quantity" name="quantity" value="1" />
+          <input min="1" max="4" type="number" ng-change="increment(quantity)" ng-model="quantity" id="quantity" name="quantity" value="1" />
         </div>
         <br>
          <!--  <button class="btn" ng-click="addToCart($index)" ><span><i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 30px"></i></span> ADD TO CART</button>-->
@@ -226,7 +226,7 @@ function showDivs(n) {
          <a class="btn btn-success btn-product" ng-click="submitOrder($index)" style="width:200px"><span class="glyphicon glyphicon-play"></span> Buy</a> 
           <!-- <a href="#" class="btn btn-success btn-product" ng-click="submitOrder($index)"><span class="glyphicon glyphicon-shopping-cart"></span> Buy</a> -->
     </div>
-
+<span>{{quantity}}</span>
  </div>
 </div>
 

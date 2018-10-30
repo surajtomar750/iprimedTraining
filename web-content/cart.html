@@ -1,13 +1,13 @@
 
 		<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"> -->
-		</script>
+		<!-- </script> -->
 
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 		<!-- <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css"/> -->
 		<!-- <link rel="stylesheet" type="text/css" href="assets/css/custom.css"/> -->
 		<!-- <script src=cart.js> -->
 
-		</script>
+		<!-- </script> -->
 
 <style media="screen">
 	li{
@@ -55,7 +55,7 @@
 
 		<div class="container text-center">
 
-			<div class="col-md-5 col-sm-12">
+			<div class="col-md-3 col-sm-12">
 				<div class="bigcart"></div>
 				<h1>Your shopping cart</h1>
 				<p>
@@ -63,9 +63,10 @@
 				</p>
 			</div>
 
-			<div class="col-md-7 col-sm-12 text-left">
+			<div class="col-md-9 col-sm-12 text-left">
 				<ul>
 					<li class="row list-inline columnCaptions">
+						<span>product</span>
 						<span>QTY</span>
 						<span>ITEM</span>
 						<span>Price</span>
@@ -76,8 +77,9 @@
 
 							</tr>
 						</table>
+						<span class="quantity" style="margin-right: 50px;"><img ng-src={{item.image}}></span>
 						<span class="quantity">{{item.quantity}}</span>
-						<span class="itemName">{{item.name}}</span>
+						<a href="#!single_product/{{item.product_id}}"><span class="itemName">{{item.name}}</span></a>
 						<span class="popbtn"><a ng-click="deletefromcart($index)"><span class="glyphicon glyphicon-remove"></span></a></span>
 						<span class="price">{{item.price}}</span>
 

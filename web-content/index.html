@@ -2,15 +2,17 @@
 <html>
 <head>
 		<!-- <meta charset="UTF-8">  -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<script src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.js"
+  		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  		crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   	<link rel="stylesheet" href="css/index.css">
 	<link rel = "stylesheet" href="css/style.css">
-
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Roboto+Mono:400,500|Material+Icons" rel=stylesheet>
+   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
@@ -20,7 +22,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular-cookies.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.11/ngStorage.js"></script>
 
-	</script>
+	
   <script type = "text/javascript" src="js/index.js"></script>
 	<script type="text/text/javascript" src="js/dropdown.js"></script>
   <style>
@@ -36,20 +38,36 @@
 
 
 
-#intro {
-    height: 100%;
+
+
+
+.navbar-inverse {
+    background-color: #4285F4;
+    border-color: #080789;
+   	padding-top: 7px;
+	height: 70px;
+	font-size: initial;
+	/* font-family: roboto; */
+	color:rgb(0, 0, 0);
+	
 }
 
-ng-view {
-    background: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full%20page/img%20%283%29.jpg")no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+.navbar-fixed-top {
+    top: 0;
+    border-width: 0px 0px 0px 0px;
+    z-index: 100;
+	box-shadow: 0px 0px 5px 0px;
+	color:rgb(0, 0, 0);
+}
+.navbar-brand{
+	padding: 12px 15px;
+	font-size: 20px;
+	color:rgb(0, 0, 0);
 }
 
-
-
+.my-nav-color{
+	color:rgb(0, 0, 0);
+}
 
 
   </style>
@@ -64,8 +82,7 @@ ng-view {
 					class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="#"><span
-				class="glyphicon glyphicon-home" href="#login"></span> Great
-				Outdoors
+				class="glyphicon glyphicon-home" href="#login"></span id=company> <font color="white">Great Outdoors</font>
 			</a>
 		</div>
 
@@ -75,9 +92,9 @@ ng-view {
 				<li>
 					<form class="navbar-form navbar-left">
 						<div class="input-group">
-							<input type="text" class="form-control" ng-model="myFilter" placeholder="Search" style="height: 30px; width: 400px;"> <span class="input-group-btn">
+							<input type="text" class="form-control" ng-model="myFilter" placeholder="Search" style="height: 40px; width: 400px;"> <span class="input-group-btn">
 								<button type="button" class="btn btn"
-									style="height: 30px; width: 40px;">
+									style="height: 40px; width: 40px;">
 									<span class="glyphicon glyphicon-search"></span>
 							</button>
 							</span>
@@ -92,7 +109,7 @@ ng-view {
 			&nbsp; &nbsp;
 			<li>
 				<a >
-				<span	class="glyphicon "></span > <span ng-click="login('Login')" id="loginbtn">{{loginbtn}}</span>
+				<span	class="glyphicon "></span > <span ng-click="login('Login')" id="loginbtn" style="color:white">{{loginbtn}}</span>
 			  </a></li>
 		</ul>
 		<!-- <ul class="nav navbar-nav navbar-right">
@@ -102,7 +119,7 @@ ng-view {
 		</ul> -->
 			<!--  end -->
 			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My
+				<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"  style="color:white">My
 						account <span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu" role="menu">
@@ -116,7 +133,7 @@ ng-view {
 						<li><a href="#login" data-toggle="modal" data-target="#myModal"><span
 								class="glyphicon glyphicon-log-in"></span> Login</a>
 						</li> -->
-						<li class="divider"></li>
+						<!-- <li class="divider"></li> -->
 						<li><a href="#!myadd"><span
 								class="glyphicon glyphicon-log-in"></span> my address</a></li>
 						<li class="divider"></li>
@@ -124,14 +141,14 @@ ng-view {
 								class="glyphicon glyphicon-user"></span> My orders</a></li>
 					</ul>
 				</li>
-				<li><a href="#!cart"> <span
+				<li><a href="#!cart" class="my-nav-color" style="color:white"> <span
 						class="glyphicon glyphicon-shopping-cart"></span> My Cart{{'('+cartlength+')'}}
 				</a></li>
-				<li>...</li>
+				
 			</ul>
 			<!-- Category -->
 			<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">Category <span class="caret"></span>	</a>
+					<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" style="color:white">Category <span class="caret"></span>	</a>
 						<ul class="dropdown-menu" role="menu">
 
 							<li><a ng-click="gotoCat(17)"><span
@@ -207,30 +224,18 @@ ng-view {
 		</div>
 	</div>
 </div>
-<!-- Signup -->
-
-<!-- Bootstrap grid where sidebar and product page -->
-<div>
 
 
-<!--Mask-->
-<div id="intro" class="view">
-
-		<div class="mask">
-	  
-		</div>
-	  
-	  </div>
-	  <!--/.Mask-->
-
-
-
-	<div class="row">
-
-	  <div class="col-md-12">
-		<ng-view></ng-view>
-	   </div>
-	</div>
+<div class="row" style="backface-visibility: 0.4">
+<div class="col-md-12">
+#product
+		<ng-view style="margin-bottom:20px"></ng-view>
+	   
+	
 </div>
+</div>
+
+
+<div class="footer" style=" height: 200px; margin: -50px; background-color: #111111"></div>
 </body>
 </html>

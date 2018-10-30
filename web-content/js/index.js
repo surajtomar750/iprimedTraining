@@ -107,6 +107,9 @@ app.config(function($routeProvider){
               }).when('/address',{
                 templateUrl:'address.html',
                 controller:'addressctrl'
+              }).when('/home',{
+                templateUrl:'home.html',
+                controller:'homectrl'
               })
    });
 
@@ -164,15 +167,25 @@ app.controller("appController",function($rootScope,$scope,$http,$location,$cooki
         }
 
   }
-
+// for modifying filters
 $scope.gotoCat = function(cat){
   $rootScope.cat = cat;
   $location.path('products')
 }
-
-
+//for opening popup
+$scope.open = function (titlename) {
+  var modalInstance = $modal.open({
+  templateUrl: 'Popup.html',
+  controller: 'PopupCont',
+  resolve: {
+  titlename2: function () {
+  return titlename;
+                          }
+          }
+  });
+  }
+  
 })
-
 
 // controller for fetching single product
 app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cookies,$location){
@@ -249,8 +262,11 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
           if(response.data=="success"){
              alert("item is added to to the cart ")
              $rootScope.cartlength = parseInt($rootScope.cartlength)+1;
-          }else if("updated"){
+          }else if(response.data=="updated"){
             alert("item is added to to the cart ")
+          }else if(response.data=="exceed"){
+            console.log('exceed maximum quantity')
+            alert("exceed maximum quantity")
           }else{
             console.log('some error occured')
             alert("some error occured ")
@@ -265,7 +281,7 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
 
 
 //controller for product view or product.html
-app.controller("productCtrl",function($rootScope,$scope,$location,$http,dataService){
+app.controller("productCtrl",function($rootScope,$scope,$location,$http){
     
     $http.get("http://localhost:8080/products")
    .then(function(response) {
@@ -493,7 +509,7 @@ app.controller('ordersctrl',function($scope,$http,$rootScope,$cookies){
 
 
 app.controller('addressctrl',function($scope,$http,$rootscope,$location,$cookies){
-console.log('addressctrl loaded')
+alert('addressctrl loaded')
 alert('loaded')
 
   $scope.submitAddress = (addr)=>{
@@ -532,3 +548,8 @@ app.service('dataService',function($http){
    return this.products[index];
   }
 })
+
+
+
+//for home page
+

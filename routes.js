@@ -211,6 +211,10 @@ mRouter.get('/product/:id',(req,res)=>{
     uController.setAddress(req,res);
   })
 
+  mRouter.get('/home',(req,res)=>{
+    res.sendFile(__dirname+'/web-content/home.html');
+  })
+
 
 
 module.exports = mRouter;
