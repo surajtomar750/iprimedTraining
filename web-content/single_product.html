@@ -35,12 +35,7 @@
 .product-info{
 		margin-top: 50px;
 }
-button{
-    margin: 0;
-    color:white;
-    background-color: black;
-    font-style: bold;
-}
+
 /* img{
     widows: 300px;
     height: 400px;
@@ -92,28 +87,37 @@ button{
   font-weight: bold;
 
 }
-#quantity { padding:5px;
-            width:80px;
-            border: 1px solid #555;
+#quantity {
+           opacity: 0;
+           width:0;
+           height: 0;
+
           }
-/*zoom*/
-/* .frame {
-  height: 200px;
-  width: 200px;
-  overflow: hidden;
+         
+
+.displayinline{
+  display: inline;
+ 
+  cursor:context-menu;
 }
-.zoomin img {
-  height: 200px;
-  width: 200px;
-  -webkit-transition: all 2s ease;
-     -moz-transition: all 2s ease;
-      -ms-transition: all 2s ease;
-          transition: all 2s ease;
+
+.qt:hover{
+  background-color: azure;
+  color: black;
 }
-.zoomin img:hover {
-  width: 500px;
-  height: 500px;
-} */
+
+
+.qt{
+    padding: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0;
+    color:white;
+    background-color: rgb(22, 97, 116);
+    font-style: bold;
+    cursor: pointer;
+}
+
 </style>
 
 <script>
@@ -190,25 +194,7 @@ function showDivs(n) {
   </div>
   <div class="col-sm-6"><div class="productdesc">
     <div class="card1">
-      <!-- <table>
-          <tr>
-             <td > {{' '+item.name}}</td>
-          </tr>
-          <tr>
-              <td>Price&nbsp;</td><td>{{' '+item.price}}</td>
-
-          </tr>
-          <tr>
-             <td>Description&nbsp;&nbsp;</td><td>{{' '+item.description}}</td>
-          </tr>
-          <tr>
-            <td>
-              <label for="quantity">Qty: </label>
-              <input min="1" type="number"ng-model="quantity" id="quantity" name="quantity" value="1" />
-            </td>
-          </tr>
-
-      </table> -->
+      
       <div class="product-title"> {{item.name}}</div>
       <div class="product-price">${{item.price}}</div>
       <hr style="color: blue"/>
@@ -217,8 +203,18 @@ function showDivs(n) {
       
     </div>
     <div class="card2">
-        <div><label for="quantity">Qty: </label>
-          <input min="1" max="4" type="number" ng-change="increment(quantity)" ng-model="quantity" id="quantity" name="quantity" value="1" />
+        <div><label >Qty: </label>
+          <div class="displayinline">
+             <span class="qt" ng-click="decrement()"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                   
+          </div>
+          <div  class="displayinline">
+              <span class="qt" ng-bind="qtshow">1</span>
+          </div>
+          <div 
+           class="displayinline">
+              <span class="qt" ng-click="increment()"><i class="fa fa-plus" aria-hidden="true"></i></span>
+          </div>
         </div>
         <br>
          <!--  <button class="btn" ng-click="addToCart($index)" ><span><i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 30px"></i></span> ADD TO CART</button>-->
@@ -226,11 +222,12 @@ function showDivs(n) {
          <a class="btn btn-success btn-product" ng-click="submitOrder($index)" style="width:200px"><span class="glyphicon glyphicon-play"></span> Buy</a> 
           <!-- <a href="#" class="btn btn-success btn-product" ng-click="submitOrder($index)"><span class="glyphicon glyphicon-shopping-cart"></span> Buy</a> -->
     </div>
-<span>{{quantity}}</span>
+
  </div>
 </div>
 
+<input min="1" max="4" type="number"   ng-model="" id="quantity" name="quantity" value="1" />
+         
 
-
-           </div>
+</div>
         </div>

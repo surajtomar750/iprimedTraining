@@ -1,5 +1,5 @@
 var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
+var jq = jQuery();
 var app =angular.module('app',["ngRoute","ngCookies","ngStorage"]);
 app.run(function(dataService){
   dataService.getProductsFromDB();
@@ -117,7 +117,7 @@ app.config(function($routeProvider){
 
 app.controller("appController",function($rootScope,$scope,$http,$location,$cookies){
   console.log("app controller is loaded")
-
+  $scope.qtshow=1;
 //check if user loogedin or not and accordingly set cartlength and cart
   if($cookies.get("loggedin")=="true" || $cookies.get("loggedin")==true){
     $rootScope.loginbtn='LOGOUT'
@@ -173,16 +173,8 @@ $scope.gotoCat = function(cat){
   $location.path('products')
 }
 //for opening popup
-$scope.open = function (titlename) {
-  var modalInstance = $modal.open({
-  templateUrl: 'Popup.html',
-  controller: 'PopupCont',
-  resolve: {
-  titlename2: function () {
-  return titlename;
-                          }
-          }
-  });
+  $rootScope.open = function (titlename) {
+    $scope.dialog=true;
   }
   
 })
@@ -204,8 +196,17 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
 
   });
 
-  $scope.increment = (quantity)=>{
-    $scope.quantity=quantity;
+  $scope.increment = ()=>{
+    if($scope.quantity<5){
+      $scope.quantity=$scope.quantity+1;
+      $scope.qtshow=$scope.qtshow+1
+    }
+  }
+  $scope.decrement = function(){
+    if($scope.quantity>1){
+      $scope.quantity=$scope.quantity-1;
+      $scope.qtshow=$scope.qtshow-1
+    }
   }
   $scope.submitOrder = function(index){
 
@@ -223,6 +224,7 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
       $http.post("http://localhost:8080/placeOrder",$scope.order).then(function(response){
           if(response.data=="success"){
              alert("order placed ")
+             $rootScope.open()
 
           }
       })
@@ -551,5 +553,21 @@ app.service('dataService',function($http){
 
 
 
-//for home page
+//custom directive
+app.directive("showNotifications", ["$interval", function($interval) {
+  return {
+      restrict: "A",
+      link: function(scope, elem, attrs) {
+          //On click
+          $(elem).click(function() {
+              $('#dialog').dialog("open");
+          });
+
+          //On interval
+          // $interval(function() {
+          //     $(elem).popover("open");
+          // }, 1000);
+      }
+  }
+}]);
 

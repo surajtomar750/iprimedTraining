@@ -3,6 +3,8 @@
 <head>
 		<!-- <meta charset="UTF-8">  -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
+     
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.js"
   		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -226,16 +228,14 @@
 </div>
 
 
-<div class="row" style="backface-visibility: 0.4">
+<div class="row" style="backface-visibility: 0.4;z-index:1;">
 <div class="col-md-12">
-#product
+
 		<ng-view style="margin-bottom:20px"></ng-view>
 	   
 	
 </div>
 </div>
 
-
-<div class="footer" style=" height: 200px; margin: -50px; background-color: #111111"></div>
 </body>
 </html>
