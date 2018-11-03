@@ -10,11 +10,32 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
+<script type="text/javascript">
+var app = angular.module("app",["ngRoute","ngCookies"]);
+
+// app.controller('addressctrl',function($scope,$http,$rootscope,$location,$cookies){
+// alert('addressctrl loaded')
+// alert('loaded')
+
+//   $scope.submitAddress = (addr)=>{
+//     addr.emailid = $cookies.get('emailid')
+    
+//     $http.post('http://localhost:8080/setAddress',addr).then(function(response){
+//       if(response.data!=""){
+//         alert('address added successfully')
+//         $location.path('products');
+//       }else{
+//         alert('error please try again')
+//       }
+//     })
+//   }
+// })
+</script>
 </head>
 <body>
 
 
-	<div class="container-contact100">
+	<div class="container-contact100" >
 		<!-- <div class="contact100-map" id="google_map" data-map-x="40.722047" data-map-y="-73.986422" data-pin="images/icons/map-marker.png" data-scrollwhell="0" data-draggable="1"></div> -->
 
 		<div class="wrap-contact100">
@@ -76,7 +97,7 @@
 				</div>
 
 				<div class="container-contact100-form-btn" ng-model="addr.emailid">
-					<button type="button" class="contact100-form-btn" ng-click="submitAddress(addr)">
+					<button type="submit" class="contact100-form-btn" ng-click="submitAddress(addr)">
 						<span>
 							Save Address
 							<!-- <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i> -->

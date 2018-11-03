@@ -1,10 +1,10 @@
 var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-var jq = jQuery();
+
 var app =angular.module('app',["ngRoute","ngCookies","ngStorage"]);
-app.run(function(dataService){
-  dataService.getProductsFromDB();
-  console.log("data services is Completed")
-})
+//app.run(function(dataService){
+  //dataService.getProductsFromDB();
+  //console.log("data services is Completed")
+//})
 
 // custom filters start
 
@@ -69,32 +69,22 @@ app.filter('pCategory', function () {
   }
 })
 
-
-
-
 //custom filters end
 
+// all the routings used by application
 app.config(function($routeProvider){
     $routeProvider.when('/Login', {
-
-                    templateUrl: 'Login.htm',
-                    controller: 'loginctrl'
-
-                }).when('/',{
+                  templateUrl: 'Login.htm',
+                  controller: 'loginctrl'
+               }).when('/',{
                   templateUrl:'products.htm',
                   controller:'productCtrl'
-
-                }).when('/single_product/:_id',{
-
-                  templateUrl: 'single_product.html',
-                  controller: 'singlepctrl'
-
-
+              }).when('/single_product/:_id',{
+                 templateUrl: 'single_product.html',
+                 controller: 'singlepctrl'
               }).when('/signup',{
-
                 templateUrl: 'signup.htm',
                 controller: 'signupctrl'
-
               }).when('/products',{
                 templateUrl: 'products.htm',
                 controller: 'productCtrl'
@@ -105,11 +95,13 @@ app.config(function($routeProvider){
                 templateUrl:'orders.html',
                 controller:'ordersctrl'
               }).when('/address',{
-                templateUrl:'address.html',
-                controller:'addressctrl'
+                templateUrl:'address.html'                
               }).when('/home',{
                 templateUrl:'home.html',
                 controller:'homectrl'
+              }).when('/myaddress',{
+                templateUrl:'myaddress.html',
+                controller: 'myaddressctrl'
               })
    });
 
@@ -151,7 +143,7 @@ app.controller("appController",function($rootScope,$scope,$http,$location,$cooki
 
 //to handle login or logout button events
   $scope.login = function(){
-     let undef;
+   
 
       if($cookies.get('loggedin')=="true"){
           console.log("value of loggedin "+$cookies.get("loggedin"))
@@ -172,13 +164,45 @@ $scope.gotoCat = function(cat){
   $rootScope.cat = cat;
   $location.path('products')
 }
-//for opening popup
-  $rootScope.open = function (titlename) {
-    $scope.dialog=true;
-  }
+// //for opening popup
+//   $rootScope.open = function (titlename) {
+//     $scope.dialog=true;
+//   }
+$rootScope.submitAddress = (addr)=>{
+  addr.emailid = $cookies.get('emailid')
+  
+  $http.post('http://localhost:8080/setAddress',addr).then(function(response){
+    if(response.data!=""){
+      alert('address added successfully')
+      $location.path('products');
+    }else{
+      alert('error please try again')
+    }
+  })
+}
+
+
   
 })
-
+//===============================================================================================
+app.controller('addressctrl',function($scope,$http,$rootscope,$location,$cookies){
+  alert('addressctrl loaded')
+  alert('loaded')
+  
+    $scope.submitAddress = (addr)=>{
+      addr.emailid = $cookies.get('emailid')
+      
+      $http.post('http://localhost:8080/setAddress',addr).then(function(response){
+        if(response.data!=""){
+          alert('address added successfully')
+          $location.path('products');
+        }else{
+          alert('error please try again')
+        }
+      })
+    }
+  })
+// ==============================================================================================
 // controller for fetching single product
 app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cookies,$location){
   $scope.quantity=1;
@@ -404,7 +428,7 @@ $scope.getTotal = function(){
  })
 
 
-app.controller('signupctrl',function($rootScope,$scope,$http,$location,$cookies){
+app.controller('signupctrl',function($rootScope,$scope,$http,$location,$cookies,$window){
     $scope.data={name:"",number:"",emailid:"",password:""};
   $scope.submit = function(){
       //form validation
@@ -441,7 +465,8 @@ app.controller('signupctrl',function($rootScope,$scope,$http,$location,$cookies)
       }else if(response.data=="success"){
         console.log("user registered successful")
 
-        $location.path('products')
+        //$location.path('products')
+        $window.history.back();
       }
     })
   }
@@ -490,6 +515,7 @@ app.controller("loginctrl",function($rootScope,$scope,$http,$location,$cookies){
         console.log("user login successful")
         $rootScope.loginbtn="LOGOUT"
         $location.path('products')
+        //$window.history.back();   //need to work with history tracing
       }
 
 
@@ -510,50 +536,34 @@ app.controller('ordersctrl',function($scope,$http,$rootScope,$cookies){
 })
 
 
-app.controller('addressctrl',function($scope,$http,$rootscope,$location,$cookies){
-alert('addressctrl loaded')
-alert('loaded')
-
-  $scope.submitAddress = (addr)=>{
-    addr.emailid = $cookies.get('emailid')
-    alert('test')
-    $http.post('http://localhost:8080/setAddress',addr).then(function(response){
-      if(response.data!=""){
-        alert('address added successfully')
-        $location.path('products');
-      }else{
-        alert('error please try again')
-      }
-    })
-  }
-})
-
-
-//this service is not working
-app.service('dataService',function($http){
-  this.products=[];
-  this.getProductsFromDB = function(){
-    $http.get("http://localhost:8080/products")
-
-    .then(function(response){
-
-     this.products=response.data;
-     console.log(this.products)
-  })
-  }
-
-
-  this.getProducts= ()=>{
-    return this.products;
-  }
-  this.getProduct=(index)=>{
-   return this.products[index];
-  }
-})
 
 
 
-//custom directive
+//this service is working
+// app.service('dataService',function($http){
+//   this.products=[];
+//   this.getProductsFromDB = function(){
+//     $http.get("http://localhost:8080/products")
+
+//     .then(function(response){
+
+//      this.products=response.data;
+//      console.log(this.products)
+//   })
+//   }
+
+
+//   this.getProducts= ()=>{
+//     return this.products;
+//   }
+//   this.getProduct=(index)=>{
+//    return this.products[index];
+//   }
+// })
+
+
+
+//custom directive and currently not being used
 app.directive("showNotifications", ["$interval", function($interval) {
   return {
       restrict: "A",
@@ -563,11 +573,44 @@ app.directive("showNotifications", ["$interval", function($interval) {
               $('#dialog').dialog("open");
           });
 
-          //On interval
-          // $interval(function() {
-          //     $(elem).popover("open");
-          // }, 1000);
+        
       }
   }
 }]);
+//=========================================================================================
+app.controller('myaddressctrl',function($scope,$http,$cookies,$location,$rootScope){
+  if($cookies.get('loggedin')!='true'){
+    $location.path('Login')
+    return;
+  }
+  console.log('requesting for address of email id :'+$cookies.get('emailid'))
+  $http.get('http://localhost:8080/getAddress/'+$cookies.get('emailid')).then(function(response){
+    if(response.data=="" || response.data==null){
+      alert('please add addess')
+      //$location.path('address')
+    }else{
+      $scope.addresses=response.data;
+      $scope.myaddreditbtn=true;
+    }
+  })
 
+  $scope.editAddress = function(index){
+    $scope.myaddrsavebtn=true;
+    $scope.myaddreditbtn=false;
+  }
+
+  $scope.submitNewAddress = function(newAddress){
+    //let newAddress = addresses[index];
+    $http.post('http://localhost:8080/updateAddress',newAddress).then(function(response){
+      if(response.data!=""){
+        alert('address added successfully')
+        $scope.myaddreditbtn=true;
+        $scope.myaddrsavebtn=false;
+      }else{
+        alert('error please try again')
+      }
+    })
+  }
+
+
+})

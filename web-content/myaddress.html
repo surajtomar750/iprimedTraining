@@ -1,0 +1,100 @@
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="css/util.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+<div class="container-fluid"  style="margin-top:30px; ">
+    <div class="container" ng-repeat="address in addresses" style="border: 1px solid #c8d1df;margin-bottom:10px;">
+        <input type="radio" name="addrChoice">
+            <form class="contact100-form validate-form">
+                   
+    
+                <div style="display:inline">
+                    <div class="wrap-input100 validate-input" data-validate="Name is required">
+                                    <span class="label-input100">Full Name:</span>
+                                    <input class="input100" ng-disable="isDisable" ng-model="address.name" type="text" name="name" placeholder="Enter full name">
+                                    <span class="focus-input100"></span>
+                    </div>
+                            
+                    <div class="wrap-input100 validate-input" data-validate = "number">
+                            <span class="label-input100">Phone:</span>
+                            <input class="input100" type="text" ng-model="address.number" name="Phone" placeholder="Enter Contact Number">
+                            <span class="focus-input100"></span>
+                     </div>
+        
+                        
+                </div>
+                <div>
+                        <div class="wrap-input100 validate-input" data-validate="Phone is required">
+                                <span class="label-input100">Pin:</span>
+                                <input class="input100" type="text" ng-model="address.pin" name="pin" placeholder="Enter Pincode">
+                                <span class="focus-input100"></span>
+                        </div>
+                        <div class="wrap-input100 validate-input" data-validate="Locality is required">
+                                    <span class="label-input100">Locality:</span>
+                                    <input class="input100" type="text" ng-model="address.locality" name="Locality" placeholder="Enter Locality">
+                                    <span class="focus-input100"></span>
+                        </div>
+                </div>
+                   
+    
+                    <div class="wrap-input100 validate-input" data-validate = "Address is required">
+                        <span class="label-input100">Address:</span>
+                        <textarea class="input100" name="message" ng-model="address.address" placeholder="Your Address..."></textarea>
+                        <span class="focus-input100"></span>
+                    </div>
+    
+                    
+                    <div >
+                            <div class="wrap-input100 validate-input" data-validate="City is required">
+                                    <span class="label-input100">City:</span>
+                                    <input class="input100" type="text" ng-model="address.city" name="city" placeholder="Enter City">
+                                    <span class="focus-input100"></span>
+                                </div>
+                
+                                <div class="wrap-input100 validate-input" data-validate="State is required">
+                                    <span class="label-input100">State:</span>
+                                    <input class="input100" type="text" ng-model="address.state" name="state" placeholder="Enter State">
+                                    <span class="focus-input100"></span>
+                                </div>
+                    </div>
+    
+                  
+                    <div>
+                            <div class="wrap-input100 validate-input" data-validate="Landmark is required">
+                                    <span class="label-input100">Landmark:</span>
+                                    <input class="input100" type="text" ng-model="address.landmark" name="Landmark" placeholder="Enter Landmark">
+                                    <span class="focus-input100"></span>
+                                </div>
+                
+                                <div class="wrap-input100 validate-input" data-validate="Alternate Phone is required">
+                                    <span class="label-input100">Alternate Phone:</span>
+                                    <input class="input100" type="text" ng-model="address.altnumber" name="Alternate Phone" placeholder="Enter Alternate Phone">
+                                    <span class="focus-input100"></span>
+                            </div>
+                    </div>
+                    <div class="container-contact100-form-btn" ng-model="address.emailid" >
+                        <button type="submit" class="contact100-form-btn" ng-click="submitNewAddress(address)" ng-show="myaddrsavebtn">
+                            <span>
+                                Save Address
+                                <!-- <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i> -->
+                            </span>
+                        </button>
+                        <button type="button" class="contact100-form-btn" ng-click="editAddress(address)" ng-show="myaddreditbtn">
+                                <span>
+                                    Edit Address
+                                    <!-- <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i> -->
+                                </span>
+                        </button>
+                    </div>
+                </form>
+
+    </div>
+    <button type="button" class="contact100-form-btn " style="float:right" >
+            <span>
+                Add
+                <!-- <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i> -->
+            </span>
+    </button>
+
+
+</div>

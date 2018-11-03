@@ -206,9 +206,18 @@ mRouter.get('/product/:id',(req,res)=>{
      lController.authenticate(req,res);
    })
 
-  mRouter.get('/setAddress',(req,res)=>{
+  mRouter.post('/setAddress',(req,res)=>{
     console.log('setAddress requested')
     uController.setAddress(req,res);
+  })
+
+  mRouter.post('/updateAddress',(req,res)=>{
+    console.log('updateAddress requested')
+    uController.updateAddress(req,res);
+  })
+  mRouter.get('/getAddress/:emailid',(req,res)=>{
+    console.log('getAddress requested')
+    uController.getAddress(req,res)
   })
 
   mRouter.get('/home',(req,res)=>{

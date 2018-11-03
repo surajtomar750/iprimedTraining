@@ -297,4 +297,32 @@ exports.setAddress = function(req,res){
     landmark:req.body.landmark,
     altnumber:req.body.altnumber
   })
+
+  aObject.save(function(err,data){
+    if(err){console.log("ERROR: "+err)
+      res.send('');
+    }else{
+      res.send('success')
+    }
+
+  })
+}
+
+
+exports.getAddress = (req,res)=>{
+  address.find({emailid:req.params.emailid},(err,data)=>{
+    res.send(data)
+  })
+}
+
+
+exports.updateAddress = (req,res)=>{
+  address.findByIdAndUpdate(req.body._id,{$set:req.body},(err,data)=>{
+    if(err){
+      console.log('ERROR: '+err)
+      res.send("")
+      return;
+    }
+    res.send(data)
+  })
 }

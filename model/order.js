@@ -8,6 +8,7 @@ var orderSchema = schema({
     number:Number,
     quantity:Number,
     price:Number,
-    status:String
+    status:String,
+    address:Object
 });
 module.exports = mongoose.model("order",orderSchema);
