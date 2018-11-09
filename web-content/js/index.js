@@ -94,8 +94,9 @@ app.config(function($routeProvider){
               }).when('/orders',{
                 templateUrl:'orders.html',
                 controller:'ordersctrl'
-              }).when('/address',{
-                templateUrl:'address.html'                
+              }).when('/address/:order',{
+                templateUrl:'address.html',
+                controller: 'addressctrl'                
               }).when('/home',{
                 templateUrl:'home.html',
                 controller:'homectrl'
@@ -184,15 +185,35 @@ $rootScope.submitAddress = (addr)=>{
 
   
 })
-//===============================================================================================
-app.controller('addressctrl',function($scope,$http,$rootscope,$location,$cookies){
+//===============================================================================================================================
+app.controller('addressctrl',function($scope,$http,$rootScope,$location,$cookies,$routeParams){
+  $scope.addr;
   alert('addressctrl loaded')
   alert('loaded')
-  
-    $scope.submitAddress = (addr)=>{
-      addr.emailid = $cookies.get('emailid')
-      
-      $http.post('http://localhost:8080/setAddress',addr).then(function(response){
+  let order = $routeParams.order;
+  console.log(order)
+
+  //**********fetching address***********/
+  if($cookies.get('loggedin')!='true'){
+    $location.path('Login')
+    return;
+  }
+
+  //console.log('requesting for address of email id :'+$cookies.get('emailid'))
+  $http.get('http://localhost:8080/getAddress/'+$cookies.get('emailid')).then(function(response){
+    if(response.data=="" || response.data==null){
+      $scope.addresses = response.data[0];
+      $scope.$digest()
+      console.log(response.data[0])
+    }else{
+      $scope.addresses=response.data;
+      $scope.myaddreditbtn=true;
+    }
+  })
+/******function saving this address*/
+  $scope.submitAddress = (addr)=>{
+  addr.emailid = $cookies.get('emailid')
+  $http.post('http://localhost:8080/setAddress',addr).then(function(response){
         if(response.data!=""){
           alert('address added successfully')
           $location.path('products');
@@ -202,16 +223,17 @@ app.controller('addressctrl',function($scope,$http,$rootscope,$location,$cookies
       })
     }
   })
-// ==============================================================================================
-// controller for fetching single product
+
+// ==============================================================================================================================
+// controller for fetching single product and performing related operation
 app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cookies,$location){
+
+//declaring and initializing variables
   $scope.quantity=1;
   $scope.order = {emailid:"",product_id:"",name:"",quantity:"",number:"",image:"",price:""}
   $scope.item = {emailid:"",product_id:"",name:"",quantity:"",number:"",image:"",price:""}
 
-
-
-  console.log($routeParams._id)
+//fetching specific product from database
   $http.get("http://localhost:8080/product/"+$routeParams._id)
   .then(function(response) {
     console.log("inside of single product response is here")
@@ -220,6 +242,10 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
 
   });
 
+/*
+    *increment for increasing quantity of particular item on single product page
+    *decrement for reducing quantity particular item on single product page
+*/
   $scope.increment = ()=>{
     if($scope.quantity<5){
       $scope.quantity=$scope.quantity+1;
@@ -232,6 +258,8 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
       $scope.qtshow=$scope.qtshow-1
     }
   }
+
+  //****Function for submitting orders*****/
   $scope.submitOrder = function(index){
 
     $scope.order.emailid=$cookies.get('emailid');
@@ -241,27 +269,61 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
     $scope.order.image = $rootScope.selectedProduct[0].image[0].image
     $scope.order.quantity = $scope.quantity;
     $scope.order.price = $rootScope.selectedProduct[0].price*$scope.quantity
-    $scope.order.status = "processing"
-    console.log("value of loggedin")
+    $scope.order.status = "processing";
+    
     if($cookies.get('loggedin')=="true" ){
 
-      $http.post("http://localhost:8080/placeOrder",$scope.order).then(function(response){
-          if(response.data=="success"){
-             alert("order placed ")
-             $rootScope.open()
+      // $http.post("http://localhost:8080/placeOrder",$scope.order).then(function(response){
+      //     if(response.data=="success"){
+      //        alert("order placed ")
+      //        $location.path('order')
 
-          }
-      })
-    }
-    else {
+      //     }
+      // })
+      console.log('if block')
+          $location.path('address/'+$scope.order)
+
+    }else{
+      console.log('else block')
       $location.path('Login')
     }
   }
 
+
+
+ //****Function for submitting orders*****/
+ $scope.askForAddress = function(index){
+
+  $scope.order.emailid=$cookies.get('emailid');
+  $scope.order.number=$cookies.get('number');
+  $scope.order.product_id=$rootScope.selectedProduct[0]._id;
+  $scope.order.name=$rootScope.selectedProduct[0].name;
+  $scope.order.image = $rootScope.selectedProduct[0].image[0].image
+  $scope.order.quantity = $scope.quantity;
+  $scope.order.price = $rootScope.selectedProduct[0].price*$scope.quantity
+  $scope.order.status = "processing";
+  
+  if($cookies.get('loggedin')=="true" ){
+
+    // $http.post("http://localhost:8080/placeOrder",$scope.order).then(function(response){
+    //     if(response.data=="success"){
+    //        alert("order placed ")
+    //        $location.path('order')
+
+    //     }
+    // })
+    console.log('if block')
+        $location.path('address/'+$scope.order)
+
+  }else{
+    console.log('else block')
+    $location.path('Login')
+  }
+}
 // to adding product to carts collection in mongodb
   $scope.addToCart = function(index){
     console.log('addToCart is called')
-    let undef;
+    
     $scope.item.emailid=$cookies.get('emailid');
     $scope.item.number=$cookies.get('number');
     $scope.item.product_id=$rootScope.selectedProduct[0]._id;
@@ -269,27 +331,32 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
     $scope.item.image = $rootScope.selectedProduct[0].image[0].image
     $scope.item.quantity = $scope.quantity;
     $scope.item.price =  $rootScope.selectedProduct[0].price
-    // for debugging
-    console.log(" item is "+$scope.item.emailid)
-    console.log(" item is "+$scope.item.name)
-    console.log(" item is "+$scope.item.number)
-    console.log(" item is "+$scope.item.product_id)
-    console.log(" item is "+$scope.item.quantity)
-    console.log(" item is "+$scope.item.price)
-    console.log(" item is "+$scope.item.image)
+
+    //***for debugging*********************************//*
+    console.log(" item is "+$scope.item.emailid)      //*
+    console.log(" item is "+$scope.item.name)        //*
+    console.log(" item is "+$scope.item.number)     //*
+    console.log(" item is "+$scope.item.product_id)//*
+    console.log(" item is "+$scope.item.quantity) //*
+    console.log(" item is "+$scope.item.price)   //*
+    console.log(" item is "+$scope.item.image)  //*
+    //*****************************************//*
 
 //Now following code will submit item to server
 //  responses from server
 //    success means item is unique in carts
 //    updated means quantity has been updated
+//    exceed means quntity you wanted to add exceeds maximum limit
 //    "" or null or empty response means some error
     if($cookies.get('loggedin')=="true" ){
       $http.post("http://localhost:8080/setCart",$scope.item).then(function(response){
           if(response.data=="success"){
              alert("item is added to to the cart ")
              $rootScope.cartlength = parseInt($rootScope.cartlength)+1;
+             $location.path('cart')
           }else if(response.data=="updated"){
-            alert("item is added to to the cart ")
+            alert("quantity is incremented ")
+            $location.path('cart');
           }else if(response.data=="exceed"){
             console.log('exceed maximum quantity')
             alert("exceed maximum quantity")
@@ -305,7 +372,7 @@ app.controller("singlepctrl",function($rootScope,$scope,$http,$routeParams,$cook
   }
 })
 
-
+//=========================================================================================================================
 //controller for product view or product.html
 app.controller("productCtrl",function($rootScope,$scope,$location,$http){
     
@@ -334,7 +401,7 @@ app.controller("productCtrl",function($rootScope,$scope,$location,$http){
 
 
 })
-
+//=========================================================================================================================================
 // controller for cart data
 app.controller("cartctrl",function($scope,$http,$rootScope,$cookies){
   $scope.total =0;
@@ -426,8 +493,8 @@ $scope.getTotal = function(){
     $cookies.putObject('cart',JSON.stringify($rootScope.cart))
   }
  })
-
-
+//=====================================================================================================================
+//controller for signup page
 app.controller('signupctrl',function($rootScope,$scope,$http,$location,$cookies,$window){
     $scope.data={name:"",number:"",emailid:"",password:""};
   $scope.submit = function(){
@@ -473,6 +540,7 @@ app.controller('signupctrl',function($rootScope,$scope,$http,$location,$cookies,
 
 
 })
+//=========================================================================================================================
 //controller for login controller
 app.controller("loginctrl",function($rootScope,$scope,$http,$location,$cookies){
   $scope.data={emailid:"",password:""};
@@ -485,7 +553,12 @@ app.controller("loginctrl",function($rootScope,$scope,$http,$location,$cookies){
     if($scope.data.password==""||$scope.data.emailid=="" || $scope.data.password==undef ||$scope.data.emailid==undef){
       alert("* all field are requered")
       return;
-    }else if ($scope.data.password.length<8) {
+    }else if(!re.test($scope.data.emailid)){
+              
+      alert('email format if not correct')
+      return;  
+    }
+    else if ($scope.data.password.length<8) {
         alert("!! length of password should be 8 length is "+$scope.data.password.length)
         return;
     }
@@ -526,7 +599,7 @@ app.controller("loginctrl",function($rootScope,$scope,$http,$location,$cookies){
 
 })
 
-
+//=============================================================================================================
 //testing purpose only
 app.controller('ordersctrl',function($scope,$http,$rootScope,$cookies){
   console.log('this is email of user logged in '+$cookies.get('emailid'))
@@ -534,34 +607,6 @@ app.controller('ordersctrl',function($scope,$http,$rootScope,$cookies){
     $scope.orderlist = response.data;
   })
 })
-
-
-
-
-
-//this service is working
-// app.service('dataService',function($http){
-//   this.products=[];
-//   this.getProductsFromDB = function(){
-//     $http.get("http://localhost:8080/products")
-
-//     .then(function(response){
-
-//      this.products=response.data;
-//      console.log(this.products)
-//   })
-//   }
-
-
-//   this.getProducts= ()=>{
-//     return this.products;
-//   }
-//   this.getProduct=(index)=>{
-//    return this.products[index];
-//   }
-// })
-
-
 
 //custom directive and currently not being used
 app.directive("showNotifications", ["$interval", function($interval) {
@@ -600,7 +645,6 @@ app.controller('myaddressctrl',function($scope,$http,$cookies,$location,$rootSco
   }
 
   $scope.submitNewAddress = function(newAddress){
-    //let newAddress = addresses[index];
     $http.post('http://localhost:8080/updateAddress',newAddress).then(function(response){
       if(response.data!=""){
         alert('address added successfully')

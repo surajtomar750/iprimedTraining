@@ -216,17 +216,17 @@ function showDivs(n) {
               <span class="qt" ng-click="increment()"><i class="fa fa-plus" aria-hidden="true"></i></span>
           </div>
         </div>
-        <br>
-         <!--  <button class="btn" ng-click="addToCart($index)" ><span><i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 30px"></i></span> ADD TO CART</button>-->
-         <a class="btn btn-primary btn-product" ng-click="addToCart($index)" style="width:200px"><span class="glyphicon glyphicon-shopping-cart"></span> Add To Cart</a>  
-         <a class="btn btn-success btn-product" ng-click="submitOrder($index)" style="width:200px"><span class="glyphicon glyphicon-play"></span> Buy</a> 
-          <!-- <a href="#" class="btn btn-success btn-product" ng-click="submitOrder($index)"><span class="glyphicon glyphicon-shopping-cart"></span> Buy</a> -->
-    </div>
+        <br> 
+          <a class="btn btn-primary btn-product" ng-click="addToCart($index)" style="width:200px"><span class="glyphicon glyphicon-shopping-cart"></span> Add To Cart</a>  
+          <!-- <a class="btn btn-success btn-product" ng-click="submitOrder($index)" style="width:200px"><span class="glyphicon glyphicon-play"></span> Buy</a>  -->
+          <a class="btn btn-success btn-product" ng-click="askForAddress($index)" style="width:200px"><span class="glyphicon glyphicon-play"></span> Buy</a> 
+
+        </div>
 
  </div>
 </div>
 
-<input min="1" max="4" type="number"   ng-model="" id="quantity" name="quantity" value="1" />
+<!-- <input min="1" max="4" type="number"   ng-model="" id="quantity" name="quantity" value="1" > -->
          
 
 </div>
